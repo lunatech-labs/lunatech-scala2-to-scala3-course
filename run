@@ -1,0 +1,71 @@
+#!/bin/bash
+
+DEFAULT_EXERCISE=12
+
+######################################################################
+# Run a clustered Sudoku solver instance on localhost
+# 
+# Usage: run [exercise #] [instance #]
+# 
+#   Arguments:
+#     - exercise #: number of the exercise to run (default = 12)
+#     - instance #: sequence number of node instance (default = 0)
+#
+# Note: This runs a clustered Akka application. To kickstart cluster
+#       formation, instance 0 should be running
+#   
+# Example: ./run 7 1 // Run exercise 7 on node 1
+#
+######################################################################
+
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+RESET='\033[0m' # No Color
+
+printError()
+{
+  echo -e "${RED}$@${RESET}"
+}
+
+printGreen()
+{
+  echo -e "${GREEN}$@${RESET}"
+}
+
+HOST_NUMBER=${2:-0}
+
+AKKA_PORT=$[ $HOST_NUMBER + 2550 ]
+
+EXERCISE=${1:-$DEFAULT_EXERCISE}
+
+EXERCISE_NR=$(printf %03d ${EXERCISE} 2>/dev/null)
+EXERCISE_FOLDER=$(ls -d exercise*${EXERCISE_NR}*/target/universal/exercise*${EXERCISE_NR}* 2>/dev/null| grep -v zip)
+
+if [ -f exercise*${EXERCISE_NR}*/target/universal/exercise*${EXERCISE_NR}*.zip ]; then
+  if [ ! -z "$EXERCISE_FOLDER" ]; then
+    rm -rf $EXERCISE_FOLDER
+  fi 
+  printGreen "Preparing to run new version of exercise "
+  (cd $(dirname exercise*${EXERCISE_NR}*/target/universal/exercise*${EXERCISE_NR}*.zip)
+  unzip *.zip > /dev/null
+  rm $(basename exercise*${EXERCISE_NR}*/target/universal/exercise*${EXERCISE_NR}*.zip)
+  )
+fi 
+
+EXERCISE_FOLDER=$(ls -d exercise*${EXERCISE_NR}*/target/universal/exercise*${EXERCISE_NR}* 2>/dev/null| grep -v zip)
+
+# Check if an exercise was found with the given number, otherwise exit
+if [ -z "$EXERCISE_FOLDER" ]; then
+	printError "No exercise found with exercise number $1"
+  exit -1
+fi
+
+EXERCISE_RUNSCRIPT=$(cd $EXERCISE_FOLDER/bin && ls |grep -v .bat)
+NODE=localhost
+
+printGreen "Running $EXERCISE_RUNSCRIPT on $NODE (ActorSystem port = $AKKA_PORT)"
+
+#sudo pkill -SIGKILL -f "exercise.*_[0-9][0-9][0-9]_.*"
+
+(cd $EXERCISE_FOLDER && bin/$EXERCISE_RUNSCRIPT -Dcluster-node-configuration.node-hostname=$NODE -Dakka.management.http.hostname=$NODE -Dakka.remote.artery.canonical.port=${AKKA_PORT})

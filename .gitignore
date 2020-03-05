@@ -1,0 +1,43 @@
+*.class
+*.log
+.bookmark
+hypriot.img
+collectedLogs/
+collectedLogs.zip
+
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+.target
+.cache
+.classpath
+.project
+.settings/
+.cache-main
+.cache-tests
+
+# Intellij specific
+*.iml
+*.idea/
+*.idea_modules/
+
+# Sublime specific
+*.sublime-project
+*.sublime-workspace
+
+# OS specific
+.DS_Store
+
+# Other
+Preci*.pdf

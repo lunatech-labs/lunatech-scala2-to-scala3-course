@@ -1,0 +1,19 @@
+#!/bin/bash
+
+##################################################
+# Run this command on your laptop to send a sudoku
+# to the Akka HTTP client
+#
+# Example: ./postSudoku <sudoku number>
+#
+# The single argument is a number between 1 and 74
+#
+##################################################
+
+SUDOKU_NR=`printf %03d $1`
+SUDOKU_JSON=`cat sudokus/json/${SUDOKU_NR}.sudoku.json`
+
+echo "Sending sudoku problem:"
+cat sudokus/${SUDOKU_NR}.sudoku
+echo ""
+curl --header 'Content-Type: application/json' --request POST --data "$SUDOKU_JSON" localhost:8084/sudoku
