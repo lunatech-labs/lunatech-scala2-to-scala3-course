@@ -18,8 +18,6 @@
   * limitations under the License.
   */
 
-//import com.lightbend.cinnamon.sbt.Cinnamon
-//import com.lightbend.sbt.javaagent.JavaAgent.JavaAgentKeys
 import sbt.Keys._
 import sbt._
 import sbtstudent.AdditionalSettings
@@ -47,9 +45,6 @@ object CommonSettings {
     publishArtifact in packageSrc := false,
     publishArtifact in packageDoc := false,
     libraryDependencies ++= Dependencies.dependencies,
-//    credentials += Credentials(Path.userHome / ".lightbend" / "commercial.credentials"),
-//    resolvers += "com-mvn" at "https://repo.lightbend.com/commercial-releases/",
-//    resolvers += Resolver.url("com-ivy", url("https://repo.lightbend.com/commercial-releases/"))(Resolver.ivyStylePatterns)
   ) ++
     AdditionalSettings.initialCmdsConsole ++
     AdditionalSettings.initialCmdsTestConsole ++
@@ -59,18 +54,10 @@ object CommonSettings {
     proj
     //.enablePlugins(Cinnamon)
     .settings(CommonSettings.commonSettings: _*)
-//    .settings(
-//      libraryDependencies += Cinnamon.library.cinnamonPrometheus,
-//      libraryDependencies += Cinnamon.library.cinnamonPrometheusHttpServer,
-//      libraryDependencies += Cinnamon.library.cinnamonAkkaHttp,
-//      libraryDependencies += Cinnamon.library.cinnamonOpenTracingZipkin,
-//      libraryDependencies += Cinnamon.library.cinnamonCHMetricsElasticsearchReporter
-//    )
       .enablePlugins(DockerPlugin, JavaAppPackaging)
       .settings(
         mappings in Universal ++=
           Seq(
-            file("nodeFiles/librpi_ws281x.so") -> "lib/librpi_ws281x.so",
             file("sudokus/001.sudoku") -> "sudokus/001.sudoku"
           ),
         javaOptions in Universal ++=
@@ -79,7 +66,6 @@ object CommonSettings {
             "-Dcluster-node-configuration.cluster-id=cluster-0",
             "-Dcluster-status-indicator.led-strip-type=ten-led-non-reversed-order"
           ),
-        //dockerBaseImage := "arm32v7/openjdk",
         dockerBaseImage := "arm32v7/adoptopenjdk",
         dockerCommands ++= Seq( Cmd("USER", "root"),
           Cmd("RUN", "mkdir -p","/dev/mem")  ),

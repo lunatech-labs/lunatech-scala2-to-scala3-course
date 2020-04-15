@@ -2,35 +2,31 @@
 
 ## Description
 
-In this step, we add an actor based Sudoku solver. A solver is started on each
-node and an Akka Group Router is added to distribute the processing of problem
-across all available solvers. The Router is configured using a round-robin
-routing strategy (we override the default one, which is random routing strategy
- - feel free to experiment with that one).
+This application implements a clustered Sudoku Solver. The solver is
+an Akka based application and each solver consists of 29 actors.
 
-An Akka Group Router is cluster-aware: the router will automatically start
-routing messages to new routees (Sudoku solvers in this case), or stop routing
-to routees when these can no longer be accessed (because, for example, of
-network issues) or are stopped.
+The application will also start up a `single` instance of a Sudoku
+problem generator. This is done by running it as a so-called Akka
+Cluster Singleton.
 
-For demonstration purposes, a Sudoku problem generator is added to the set-up,
-and this generator is running as an Akka Cluster Singleton. In practical use
-cases, the problems will most probably be coming from external sources (like a
-Sudoku Solver Client). Running the problem generator allows us to show how the
-system behaves in certain scenarios (like performing a coordinated shutdown of
-the node on which the singleton is running, or when it is stop by a Split Brain
-Resolver in case of a partitioned cluster).
+As the application is clustered, cluster formation needs to take place
+and this process is bootstrapped by starting the so-called first seed
+node (the node with id `0`)
+
 
 ## Steps
 
-- Check out the new code in the file `SudokuSolverMain`
-
-You'll see that two actors are created: a `SudokuSolver` and a
-`SudokuProblemGenerator`. Also, a group router is created.
-
 1. Run `sbt universal:packageBin` to create the packaged binaries.
 2. Run the solver by executing the `run` command with the
-   appropriate exercise number.
+   appropriate exercise number and node number.
+   
+   For example, if this is exercise number 12, run node-0 by
+   executing the following command in the project's root folder:
+   
+```scala
+./run 12 0
+```
+   
 3. Run additional instances of the Sudoku solver by executing the
    `run` command in a new terminal and by passing an instance
    sequence number as the second argument to the `run` command 
