@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 DEFAULT_EXERCISE=12
 

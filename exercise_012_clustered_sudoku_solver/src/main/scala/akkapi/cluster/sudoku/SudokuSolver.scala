@@ -32,7 +32,7 @@ object SudokuSolver {
         val detailProcessorName = implicitly[UpdateSender[A]].processorName(index)
         val detailProcessor = context.spawn(SudokuDetailProcessor(index), detailProcessorName)
         (index, detailProcessor)
-    }.toMap
+    }.toMap // In Scala 2.13 this can be .to(Map)
   }
 
   def apply(sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =

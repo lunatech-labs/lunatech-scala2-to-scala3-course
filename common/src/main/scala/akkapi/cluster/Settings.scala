@@ -22,9 +22,6 @@ package akkapi.cluster
 
 import com.typesafe.config.{Config, ConfigFactory, ConfigValueFactory}
 
-import scala.concurrent.duration.{Duration, FiniteDuration, MILLISECONDS => Millis}
-import scala.jdk.CollectionConverters._
-
 object Settings {
 
   def apply(): Settings = {
