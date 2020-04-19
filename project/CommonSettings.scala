@@ -26,12 +26,11 @@ import com.typesafe.sbt.packager.docker.DockerChmodType.UserGroupWriteExecute
 import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport.{dockerAdditionalPermissions, dockerBaseImage, dockerChmodType, dockerCommands, dockerEnvVars, dockerExposedPorts, dockerRepository}
 import com.typesafe.sbt.packager.docker.{Cmd, DockerChmodType, DockerPlugin}
 import com.typesafe.sbt.packager.universal.UniversalPlugin, UniversalPlugin.autoImport._
+import dotty.tools.sbtplugin.DottyPlugin.autoImport.DottyCompatModuleID
+
 
 object CommonSettings {
   lazy val commonSettings = Seq(
-    organization := "com.lightbend.training",
-    version := "1.3.0",
-    scalaVersion := Version.scalaVer,
     scalacOptions in Compile ++= CompileOptions.compileOptions,
     javacOptions in Compile ++= Seq("--release", "8"),
     unmanagedSourceDirectories in Compile := List((scalaSource in Compile).value, (javaSource in Compile).value),
@@ -45,6 +44,7 @@ object CommonSettings {
     publishArtifact in packageSrc := false,
     publishArtifact in packageDoc := false,
     libraryDependencies ++= Dependencies.dependencies,
+    libraryDependencies ++= Dependencies.crossDependencies.map(_.withDottyCompat(scalaVersion.value))
   ) ++
     AdditionalSettings.initialCmdsConsole ++
     AdditionalSettings.initialCmdsTestConsole ++
