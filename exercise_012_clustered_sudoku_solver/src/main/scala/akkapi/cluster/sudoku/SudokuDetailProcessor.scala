@@ -1,7 +1,8 @@
 package akkapi.cluster.sudoku
 
-import akka.actor.typed.scaladsl.Behaviors
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
+import akkapi.cluster.CborSerializable
 import akkapi.cluster.sudoku.SudokuDetailProcessor.UpdateSender
 
 object SudokuDetailProcessor {
@@ -14,7 +15,7 @@ object SudokuDetailProcessor {
 
   // My responses
   sealed trait Response
-  final case class RowUpdate(id: Int, cellUpdates: CellUpdates) extends Response
+  final case class RowUpdate(id: Int, cellUpdates: CellUpdates) extends Response with CborSerializable
   final case class ColumnUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   final case class BlockUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   case object SudokuDetailUnchanged extends Response
@@ -25,7 +26,7 @@ object SudokuDetailProcessor {
                                             state: ReductionSet = InitialDetailState)
                                            (implicit updateSender: UpdateSender[DetailType]): Behavior[Command] = {
     Behaviors.setup { context =>
-      (new SudokuDetailProcessor[DetailType]).operational(id, state, fullyReduced = false)
+      (new SudokuDetailProcessor[DetailType](context)).operational(id, state, fullyReduced = false)
     }
   }
 
@@ -55,16 +56,16 @@ object SudokuDetailProcessor {
   }
 }
 
-class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] private {
+class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] private (context: ActorContext[SudokuDetailProcessor.Command]) {
 
   import ReductionRules.{reductionRuleOne, reductionRuleTwo}
   import SudokuDetailProcessor._
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
     Behaviors.receiveMessagePartial {
-
     case Update(cellUpdates, replyTo) if ! fullyReduced =>
       val previousState = state
+//      context.log.info(s"~~> state = $state / cellUpdates = $cellUpdates")
       val updatedState = mergeState(state, cellUpdates)
       if (updatedState == previousState && cellUpdates != cellUpdatesEmpty) {
         replyTo ! SudokuDetailUnchanged
@@ -96,7 +97,7 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
   }
 
   private def mergeState(state: ReductionSet, cellUpdates: CellUpdates): ReductionSet = {
-    (cellUpdates foldLeft state) {
+      (cellUpdates foldLeft state) {
       case (stateTally, (index, updatedCellContent)) =>
         stateTally.updated(index, stateTally(index) & updatedCellContent)
     }

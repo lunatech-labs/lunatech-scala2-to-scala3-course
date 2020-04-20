@@ -12,7 +12,7 @@ object SudokuProblemSender {
   // Wrapped responses
   private final case class SolutionWrapper(result: SudokuSolver.Response) extends Command
 
-  private val rowUpdates: Seq[SudokuDetailProcessor.RowUpdate] =
+  private val rowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =
     SudokuIO.readSudokuFromFile(new File("sudokus/001.sudoku"))
       .map { case (rowIndex, update) => SudokuDetailProcessor.RowUpdate(rowIndex, update) }
 
@@ -37,7 +37,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
   private val initialSudokuField = rowUpdates.toSudokuField
 
   private val rowUpdatesSeq = LazyList.continually(
-    Seq(
+    Vector(
       initialSudokuField,
       initialSudokuField.flipVertically,
       initialSudokuField.flipHorizontally,
@@ -69,7 +69,9 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
   def sending(): Behavior[Command] = Behaviors.receiveMessagePartial {
     case SendNewSudoku =>
       context.log.debug("sending new sudoku problem")
-      sudokuSolver ! SudokuSolver.InitialRowUpdates(rowUpdatesSeq.next, solutionWrapper)
+      val nextRowUpdates = rowUpdatesSeq.next
+      context.log.info(s"==> ProblemSender sending $nextRowUpdates")
+      sudokuSolver ! SudokuSolver.InitialRowUpdates(nextRowUpdates, solutionWrapper)
       Behaviors.same
     case SolutionWrapper(solution: SudokuSolver.SudokuSolution) =>
       context.log.info(s"${SudokuIO.sudokuPrinter(solution)}")

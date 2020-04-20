@@ -14,12 +14,13 @@ package object sudoku {
   type ReductionSet = Vector[CellContent]
   type Sudoku = Vector[ReductionSet]
 
-  type CellUpdates = Seq[(Int, Set[Int])]
-  val cellUpdatesEmpty = Seq.empty[(Int, Set[Int])]
+  type CellUpdates = Vector[(Int, Set[Int])]
+  val cellUpdatesEmpty = Vector.empty[(Int, Set[Int])]
 
   import SudokuDetailProcessor.RowUpdate
 
-  implicit class RowUpdatesToSudokuField(val update: Seq[SudokuDetailProcessor.RowUpdate]) extends AnyVal {
+  implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate]) extends AnyVal {
+    import scala.language.implicitConversions
     def toSudokuField: SudokuField = {
       val rows =
         update
@@ -60,6 +61,7 @@ package object sudoku {
     }
 
     def randomSwapAround: SudokuField = {
+      import scala.language.implicitConversions
       val possibleCellValues = Vector(1,2,3,4,5,6,7,8,9)
       // Generate a random swapping of cell values. A value 0 is used as a marker for a cell
       // with an unknown value (i.e. it can still hold all values 0 through 9). As such
@@ -72,7 +74,7 @@ package object sudoku {
       })
     }
 
-    def toRowUpdates: Seq[RowUpdate] = {
+    def toRowUpdates: Vector[RowUpdate] = {
       sudokuField
         .sudoku
         .map(_.zipWithIndex)
