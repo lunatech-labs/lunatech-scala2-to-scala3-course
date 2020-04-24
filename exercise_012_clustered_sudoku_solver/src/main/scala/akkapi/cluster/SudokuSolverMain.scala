@@ -27,6 +27,7 @@ import akka.actor.typed.{ActorSystem, Behavior, Terminated}
 import akka.cluster.typed.{ClusterSingleton, SingletonActor}
 import akka.management.scaladsl.AkkaManagement
 import akkapi.cluster.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
+import scala.io.StdIn
 
 object Main {
   def apply(settings: Settings): Behavior[NotUsed] = Behaviors.setup { context =>
@@ -46,7 +47,19 @@ object Main {
 }
 
 object SudokuSolverMain {
+  val Opt = """(\S+)=(\S+)""".r
+
+  def argsToOpts(args: Seq[String]): Map[String, String] =
+    args.view.collect { case Opt(key, value) => key -> value }.toMap
+
+  def applySystemProperties(options: Map[String, String]): Unit =
+    for ((key, value) <- options if key startsWith "-D")
+      System.setProperty(key substring 2, value)
+
   def main(args: Array[String]): Unit = {
+
+    val opts = argsToOpts(args.toList)
+    applySystemProperties(opts)
 
     val settings = Settings()
     val config = settings.config
@@ -55,5 +68,8 @@ object SudokuSolverMain {
 
     // Start Akka HTTP Management extension
     AkkaManagement(classicSystem).start()
+
+    StdIn.readLine()
+    system.terminate()
   }
 }

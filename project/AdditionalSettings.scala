@@ -30,7 +30,7 @@ object AdditionalSettings {
 
   val initialCmdsConsole: Seq[Def.Setting[String]] =
     if (loadInitialCmds) {
-      Seq(initialCommands in console := "import com.lightbend.training.coffeehouse._")
+      Seq(initialCommands in console := "import ._")
     } else {
       Seq()
     }
@@ -44,8 +44,8 @@ object AdditionalSettings {
 
   // Note that if no command aliases need to be added, assign an empty Seq to cmdAliasesIn
   val cmdAliasesIn: Seq[Def.Setting[(State) => State]] = Seq(
-    //    addCommandAlias("xxx", "help"),
-    //    addCommandAlias("yxy", "help")
+    addCommandAlias("solver0", "runMain akkapi.cluster.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.management.http.hostname=localhost -Dakka.management.http.port=8558 -Dakka.remote.artery.canonical.port=2550"),
+    addCommandAlias("solver1", "runMain akkapi.cluster.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.management.http.hostname=localhost -Dakka.management.http.port=8559 -Dakka.remote.artery.canonical.port=2551")
   ).flatten
 
   val cmdAliases: Seq[Def.Setting[(State) => State]] =
