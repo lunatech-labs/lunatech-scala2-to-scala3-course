@@ -2,13 +2,10 @@ package akkapi.cluster
 
 package object sudoku {
 
-  type Seq[+A] = scala.collection.immutable.Seq[A]
-  val Seq = scala.collection.immutable.Seq
-
   private val N = 9
   val CELLPossibleValues: Vector[Int] = (1 to N).toVector
-  val cellIndexesVector: Vector[Int] = (0 until N).toVector // TODO - Refactor using Vector.range
-  val initialCell: Set[Int] = Set(1 to N: _*)
+  val cellIndexesVector: Vector[Int] = Vector.range(0, N)
+  val initialCell: Set[Int] = Set.range(1, 10)
 
   type CellContent = Set[Int]
   type ReductionSet = Vector[CellContent]
@@ -30,7 +27,7 @@ package object sudoku {
         (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
         x = cellUpdates.to(Map).withDefaultValue(Set(0))
         y = Vector.range(0, 9).map(n => x(n))
-        } yield y
+      } yield y
       SudokuField(sudoku)
     }
   }

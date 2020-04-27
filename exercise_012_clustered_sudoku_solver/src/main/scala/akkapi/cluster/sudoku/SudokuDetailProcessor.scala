@@ -65,7 +65,6 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
     Behaviors.receiveMessagePartial {
     case Update(cellUpdates, replyTo) if ! fullyReduced =>
       val previousState = state
-//      context.log.info(s"~~> state = $state / cellUpdates = $cellUpdates")
       val updatedState = mergeState(state, cellUpdates)
       if (updatedState == previousState && cellUpdates != cellUpdatesEmpty) {
         replyTo ! SudokuDetailUnchanged
@@ -83,7 +82,6 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
       }
 
     case Update(cellUpdates, replyTo) =>
-      //      log.debug(s"State: Nothing left to do ! $state")
       replyTo ! SudokuDetailUnchanged
       Behaviors.same
 

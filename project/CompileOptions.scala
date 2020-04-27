@@ -20,6 +20,12 @@
 
 
 object CompileOptions {
+
+  val rewriteNewSyntax = Seq("-rewrite", "-new-syntax")
+  val rewriteIndent = Seq("-rewrite", "-indent")
+  val rewriteNoIndent = Seq("-rewrite", "-noindent")
+  val rewriteOldSyntax = Seq("-rewrite", "-old-syntax")
+
   val compileOptions = Seq(
     "-unchecked",
     "-deprecation",
