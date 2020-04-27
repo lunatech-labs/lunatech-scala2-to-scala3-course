@@ -5,6 +5,9 @@ hypriot.img
 collectedLogs/
 collectedLogs.zip
 
+# VSCode specific
+.vscode
+
 # Metals/Bloop specific
 .bloop/
 .metals/

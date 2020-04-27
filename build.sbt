@@ -3,7 +3,7 @@ val dottyVersion = "0.23.0-RC1"
 val selectedScalaVersion = dottyVersion
 //val selectedScalaVersion = dottyLatestNightlyBuild.get
 
-lazy val `pi_cluster_master` = (project in file("."))
+lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
     common,
     `exercise_012_clustered_sudoku_solver`,
