@@ -28,6 +28,7 @@ import akka.cluster.typed.{ClusterSingleton, SingletonActor}
 import akka.management.scaladsl.AkkaManagement
 import akkapi.cluster.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
 import scala.io.StdIn
+import Console.{GREEN, RESET}
 
 object Main {
   def apply(settings: Settings): Behavior[NotUsed] = Behaviors.setup { context =>
@@ -69,6 +70,7 @@ object SudokuSolverMain {
     // Start Akka HTTP Management extension
     AkkaManagement(classicSystem).start()
 
+    println(s"${GREEN}Hit RETURN to stop solver${RESET}")
     StdIn.readLine()
     system.terminate()
   }
