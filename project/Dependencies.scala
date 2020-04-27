@@ -24,9 +24,7 @@ object Version {
   val akkaVer           = "2.6.4"
   val akkaHttpVer       = "10.1.11"
   val logbackVer        = "1.2.3"
-  val scalaVer          = "2.13.1"
-  val akkaSBRVer        = "1.1.12"
-  val akkaManagementVer = "1.0.5"
+  val akkaManagementVer = "1.0.6"
   val scalaTestVer      = "3.1.1"
 }
 
@@ -43,11 +41,6 @@ object Dependencies {
     "com.typesafe.akka"             %% "akka-discovery",
     "com.typesafe.akka"             %% "akka-serialization-jackson",
   ).map (_ % Version.akkaVer)
-
-  private val akkaHttpDeps = Seq(
-    "com.typesafe.akka"             %% "akka-http",
-    "com.typesafe.akka"             %% "akka-http-spray-json",
-  ).map (_ % Version.akkaHttpVer)
 
   private val akkaManagementDeps = Seq(
     "com.lightbend.akka.management" %% "akka-management",
@@ -69,7 +62,6 @@ object Dependencies {
 
   val crossDependencies: Seq[ModuleID] =
     akkaDeps ++
-    akkaHttpDeps ++
     akkaManagementDeps ++
     scalaTestDeps ++
     akkaTestkitDeps

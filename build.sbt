@@ -20,7 +20,5 @@ lazy val common = project
 
 lazy val `exercise_012_clustered_sudoku_solver` = project
   .settings(scalaVersion := selectedScalaVersion)
-  .settings(maintainer := "eric.loots@gmail.com")
-  .configure(CommonSettings.configure)
+  .settings(CommonSettings.commonSettings)
   .dependsOn(common % "test->test;compile->compile")
-       

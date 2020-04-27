@@ -21,11 +21,6 @@
 import sbt.Keys._
 import sbt._
 import sbtstudent.AdditionalSettings
-import com.typesafe.sbt.packager.archetypes.{JavaAppPackaging, JavaServerAppPackaging}
-import com.typesafe.sbt.packager.docker.DockerChmodType.UserGroupWriteExecute
-import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport.{dockerAdditionalPermissions, dockerBaseImage, dockerChmodType, dockerCommands, dockerEnvVars, dockerExposedPorts, dockerRepository}
-import com.typesafe.sbt.packager.docker.{Cmd, DockerChmodType, DockerPlugin}
-import com.typesafe.sbt.packager.universal.UniversalPlugin, UniversalPlugin.autoImport._
 import dotty.tools.sbtplugin.DottyPlugin.autoImport.DottyCompatModuleID
 
 
@@ -41,6 +36,7 @@ object CommonSettings {
     parallelExecution in GlobalScope := false,
     parallelExecution in ThisBuild := false,
     fork in Test := false,
+    run / connectInput := true,
     publishArtifact in packageSrc := false,
     publishArtifact in packageDoc := false,
     libraryDependencies ++= Dependencies.dependencies,
@@ -49,30 +45,4 @@ object CommonSettings {
     AdditionalSettings.initialCmdsConsole ++
     AdditionalSettings.initialCmdsTestConsole ++
     AdditionalSettings.cmdAliases
-
-  lazy val configure: Project => Project = (proj: Project) => {
-    proj
-    //.enablePlugins(Cinnamon)
-    .settings(CommonSettings.commonSettings: _*)
-      .enablePlugins(DockerPlugin, JavaAppPackaging)
-      .settings(
-        mappings in Universal ++=
-          Seq(
-            file("sudokus/001.sudoku") -> "sudokus/001.sudoku"
-          ),
-        javaOptions in Universal ++=
-          Seq(
-            "-Djava.library.path=lib",
-            "-Dcluster-node-configuration.cluster-id=cluster-0",
-            "-Dcluster-status-indicator.led-strip-type=ten-led-non-reversed-order"
-          ),
-        dockerBaseImage := "arm32v7/adoptopenjdk",
-        dockerCommands ++= Seq( Cmd("USER", "root"),
-          Cmd("RUN", "mkdir -p","/dev/mem")  ),
-        dockerChmodType := UserGroupWriteExecute,
-        dockerRepository := Some("docker-registry-default.gsa2.lightbend.com/lightbend"),
-        dockerExposedPorts := Seq(8080, 8558, 2550, 9001),
-        dockerAdditionalPermissions ++= Seq((DockerChmodType.UserGroupPlusExecute, "/tmp"))
-      )
-  }
 }
