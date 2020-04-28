@@ -45,4 +45,8 @@ object CommonSettings {
     AdditionalSettings.initialCmdsConsole ++
     AdditionalSettings.initialCmdsTestConsole ++
     AdditionalSettings.cmdAliases
+
+  lazy val configure: Project => Project = (project: Project) => {
+    project.settings(CommonSettings.commonSettings: _*)
+  }
 }

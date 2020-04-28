@@ -6,7 +6,8 @@ val selectedScalaVersion = dottyVersion
 lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
     common,
-    `exercise_012_clustered_sudoku_solver`,
+    `exercise_000_clustered_sudoku_solver_initial_state`,
+    `exercise_002_top_level_definitions`,
   ).settings(
     scalaVersion := selectedScalaVersion,
     organization := "org.lunatech.scala",
@@ -18,7 +19,13 @@ lazy val common = project
   .settings(scalaVersion := selectedScalaVersion)
   .settings(CommonSettings.commonSettings: _*)
 
-lazy val `exercise_012_clustered_sudoku_solver` = project
+lazy val `exercise_000_clustered_sudoku_solver_initial_state` = project
   .settings(scalaVersion := selectedScalaVersion)
-  .settings(CommonSettings.commonSettings)
+  .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
+
+lazy val `exercise_002_top_level_definitions` = project
+  .settings(scalaVersion := selectedScalaVersion)
+  .configure(CommonSettings.configure)
+  .dependsOn(common % "test->test;compile->compile")
+
