@@ -1,4 +1,4 @@
-package akkapi.cluster.sudoku
+package org.lunatechlabs.dotty.sudoku
 
 import com.typesafe.config.{Config, ConfigFactory}
 

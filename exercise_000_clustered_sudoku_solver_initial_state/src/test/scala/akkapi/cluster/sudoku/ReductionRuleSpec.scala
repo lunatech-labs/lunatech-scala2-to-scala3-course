@@ -1,4 +1,4 @@
-package akkapi.cluster.sudoku
+package org.lunatechlabs.dotty.sudoku
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

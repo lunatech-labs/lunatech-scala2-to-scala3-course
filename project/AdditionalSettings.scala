@@ -44,8 +44,7 @@ object AdditionalSettings {
 
   // Note that if no command aliases need to be added, assign an empty Seq to cmdAliasesIn
   val cmdAliasesIn: Seq[Def.Setting[(State) => State]] = Seq(
-    addCommandAlias("solver0", "runMain akkapi.cluster.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.management.http.hostname=localhost -Dakka.management.http.port=8558 -Dakka.remote.artery.canonical.port=2550"),
-    addCommandAlias("solver1", "runMain akkapi.cluster.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.management.http.hostname=localhost -Dakka.management.http.port=8559 -Dakka.remote.artery.canonical.port=2551")
+    addCommandAlias("runSolver", "runMain org.lunatechlabs.dotty.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.remote.artery.canonical.port=2550"),
   ).flatten
 
   val cmdAliases: Seq[Def.Setting[(State) => State]] =

@@ -1,4 +1,4 @@
-package akkapi.cluster.sudoku
+package org.lunatechlabs.dotty.sudoku
 
 import java.io.File
 
@@ -70,7 +70,6 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
     case SendNewSudoku =>
       context.log.debug("sending new sudoku problem")
       val nextRowUpdates = rowUpdatesSeq.next
-      context.log.info(s"==> ProblemSender sending $nextRowUpdates")
       sudokuSolver ! SudokuSolver.InitialRowUpdates(nextRowUpdates, solutionWrapper)
       Behaviors.same
     case SolutionWrapper(solution: SudokuSolver.SudokuSolution) =>

@@ -1,4 +1,4 @@
-package akkapi.cluster.sudoku
+package org.lunatechlabs.dotty.sudoku
 
 import akkapi.cluster.sudoku.CellMappings._
 import org.scalatest.matchers.should.Matchers

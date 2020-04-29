@@ -1,9 +1,8 @@
-package akkapi.cluster.sudoku
+package org.lunatechlabs.dotty.sudoku
 
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
-import akkapi.cluster.CborSerializable
-import akkapi.cluster.sudoku.SudokuDetailProcessor.UpdateSender
+import SudokuDetailProcessor.UpdateSender
 
 object SudokuDetailProcessor {
 
@@ -15,7 +14,7 @@ object SudokuDetailProcessor {
 
   // My responses
   sealed trait Response
-  final case class RowUpdate(id: Int, cellUpdates: CellUpdates) extends Response with CborSerializable
+  final case class RowUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   final case class ColumnUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   final case class BlockUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   case object SudokuDetailUnchanged extends Response

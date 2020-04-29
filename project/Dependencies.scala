@@ -32,21 +32,9 @@ object Dependencies {
   
   private val akkaDeps = Seq(
     "com.typesafe.akka"             %% "akka-actor-typed",
-    "com.typesafe.akka"             %% "akka-serialization-jackson",
-    "com.typesafe.akka"             %% "akka-cluster-typed",
-    "com.typesafe.akka"             %% "akka-cluster-sharding-typed",
-    "com.typesafe.akka"             %% "akka-persistence-typed",
     "com.typesafe.akka"             %% "akka-slf4j",
     "com.typesafe.akka"             %% "akka-stream",
-    "com.typesafe.akka"             %% "akka-discovery",
-    "com.typesafe.akka"             %% "akka-serialization-jackson",
   ).map (_ % Version.akkaVer)
-
-  private val akkaManagementDeps = Seq(
-    "com.lightbend.akka.management" %% "akka-management",
-    "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap",
-    "com.lightbend.akka.management" %% "akka-management-cluster-http",
-  ).map (_ % Version.akkaManagementVer)
 
   private val scalaTestDeps = Seq(
     "org.scalatest"                 %% "scalatest" % Version.scalaTestVer % Test
@@ -62,7 +50,6 @@ object Dependencies {
 
   val crossDependencies: Seq[ModuleID] =
     akkaDeps ++
-    akkaManagementDeps ++
     scalaTestDeps ++
     akkaTestkitDeps
 

@@ -1,4 +1,4 @@
-package akkapi.cluster
+package org.lunatechlabs.dotty
 
 package object sudoku {
 

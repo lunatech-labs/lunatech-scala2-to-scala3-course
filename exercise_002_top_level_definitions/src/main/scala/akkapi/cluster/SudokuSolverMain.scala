@@ -18,27 +18,23 @@
   * limitations under the License.
   */
 
-package akkapi.cluster
+package org.lunatechlabs.dotty
 
 import akka.NotUsed
 import akka.actor.typed.scaladsl.adapter.TypedActorSystemOps
 import akka.actor.typed.scaladsl.{Behaviors, Routers}
 import akka.actor.typed.{ActorSystem, Behavior, Terminated}
-import akka.cluster.typed.{ClusterSingleton, SingletonActor}
-import akka.management.scaladsl.AkkaManagement
-import akkapi.cluster.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
+import org.lunatechlabs.dotty.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
 import scala.io.StdIn
 import Console.{GREEN, RESET}
 
 object Main {
-  def apply(settings: Settings): Behavior[NotUsed] = Behaviors.setup { context =>
+  def apply(): Behavior[NotUsed] = Behaviors.setup { context =>
     val sudokuSolverSettings = SudokuSolverSettings("sudokusolver.conf")
-    // Start SodukuSolver: we'll run one instance/cluster node
-    context.spawn(SudokuSolver(sudokuSolverSettings), s"sudoku-solver")
-    // We'll use a [cluster-aware] group router
-    val sudokuSolverGroup = context.spawn(Routers.group(SudokuSolver.Key).withRoundRobinRouting(), "sudoku-solvers")
-    // And run one instance if the Sudoku problem sender in the cluster
-    ClusterSingleton(context.system).init(SingletonActor(SudokuProblemSender(sudokuSolverGroup, sudokuSolverSettings), "sudoku-problem-sender"))
+    // Start a SodukuSolver
+    val sudokuSolver = context.spawn(SudokuSolver(sudokuSolverSettings), s"sudoku-solver")
+    // Start a Sudoku problem sender
+    context.spawn(SudokuProblemSender(sudokuSolver, sudokuSolverSettings), "sudoku-problem-sender")
 
     Behaviors.receiveSignal {
       case (_, Terminated(_)) =>
@@ -48,27 +44,10 @@ object Main {
 }
 
 object SudokuSolverMain {
-  val Opt = """(\S+)=(\S+)""".r
-
-  def argsToOpts(args: Seq[String]): Map[String, String] =
-    args.view.collect { case Opt(key, value) => key -> value }.toMap
-
-  def applySystemProperties(options: Map[String, String]): Unit =
-    for ((key, value) <- options if key startsWith "-D")
-      System.setProperty(key substring 2, value)
 
   def main(args: Array[String]): Unit = {
 
-    val opts = argsToOpts(args.toList)
-    applySystemProperties(opts)
-
-    val settings = Settings()
-    val config = settings.config
-    val system = ActorSystem[NotUsed](Main(settings), settings.actorSystemName, config)
-    val classicSystem = system.toClassic
-
-    // Start Akka HTTP Management extension
-    AkkaManagement(classicSystem).start()
+    val system = ActorSystem[NotUsed](Main(), "sudoku-solver-system")
 
     println(s"${GREEN}Hit RETURN to stop solver${RESET}")
     StdIn.readLine()

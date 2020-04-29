@@ -1,9 +1,8 @@
-package akkapi.cluster.sudoku
+package org.lunatechlabs.dotty.sudoku
 
 import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors, StashBuffer}
 import akka.actor.typed.{ActorRef, Behavior, SupervisorStrategy}
-import akkapi.cluster.CborSerializable
 
 import scala.concurrent.duration._
 
@@ -11,17 +10,15 @@ final case class SudokuField(sudoku: Sudoku)
 
 object SudokuSolver {
 
-  val Key: ServiceKey[Command] = ServiceKey("sudoku-processor")
-
   // SudokuSolver Protocol
   sealed trait Command
   final case class InitialRowUpdates(rowUpdates: Vector[SudokuDetailProcessor.RowUpdate],
-                                     replyTo: ActorRef[SudokuSolver.Response]) extends Command with CborSerializable
+                                     replyTo: ActorRef[SudokuSolver.Response]) extends Command
   // Wrapped responses
   private final case class SudokuDetailProcessorResponseWrapped(response: SudokuDetailProcessor.Response) extends Command
   private final case class SudokuProgressTrackerResponseWrapped(response: SudokuProgressTracker.Response) extends Command
   // My Responses
-  sealed trait Response extends CborSerializable
+  sealed trait Response
   final case class SudokuSolution(sudoku: Sudoku) extends Response
 
   import SudokuDetailProcessor.UpdateSender
@@ -53,8 +50,6 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
   import CellMappings._
   import SudokuSolver._
 
-  context.system.receptionist ! Receptionist.Register(Key, context.self)
-
   val detailProcessorResponseMapper: ActorRef[SudokuDetailProcessor.Response] =
     context.messageAdapter(response => SudokuDetailProcessorResponseWrapped(response))
   val progressTrackerResponseMapper: ActorRef[SudokuProgressTracker.Response] =
@@ -71,7 +66,6 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
   def idle(): Behavior[Command] = Behaviors.receiveMessagePartial {
 
     case InitialRowUpdates(rowUpdates, sender) =>
-      context.log.info(s"~~> SudokuSolver receiving initial row updates: $rowUpdates")
       rowUpdates.foreach {
         case SudokuDetailProcessor.RowUpdate(row, cellUpdates) =>
           rowDetailProcessors(row) ! SudokuDetailProcessor.Update(cellUpdates, detailProcessorResponseMapper)
