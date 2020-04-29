@@ -25,8 +25,9 @@ import akka.actor.typed.scaladsl.adapter.TypedActorSystemOps
 import akka.actor.typed.scaladsl.{Behaviors, Routers}
 import akka.actor.typed.{ActorSystem, Behavior, Terminated}
 import org.lunatechlabs.dotty.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
+
+import scala.Console.{GREEN, RESET}
 import scala.io.StdIn
-import Console.{GREEN, RESET}
 
 object Main {
   def apply(): Behavior[NotUsed] = Behaviors.setup { context =>

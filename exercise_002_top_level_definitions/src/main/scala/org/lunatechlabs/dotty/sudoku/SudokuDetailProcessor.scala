@@ -2,7 +2,7 @@ package org.lunatechlabs.dotty.sudoku
 
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
-import SudokuDetailProcessor.UpdateSender
+import org.lunatechlabs.dotty.sudoku.SudokuDetailProcessor.UpdateSender
 
 object SudokuDetailProcessor {
 
