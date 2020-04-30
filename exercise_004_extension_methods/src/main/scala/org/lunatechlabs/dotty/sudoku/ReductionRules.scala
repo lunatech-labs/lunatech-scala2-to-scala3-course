@@ -1,8 +1,9 @@
 package org.lunatechlabs.dotty.sudoku
 
-object ReductionRules {
+// Extension instance wraps extension methods for type ReductionSet
+extension reductionRules on (reductionSet: ReductionSet) {
 
-  def reductionRuleOne(reductionSet: ReductionSet): ReductionSet = {
+  def reductionRuleOne: ReductionSet = {
     val inputCellsGrouped = reductionSet filter {_.size <= 7} groupBy identity
     val completeInputCellGroups = inputCellsGrouped filter {
       case (set, setOccurrences) => set.size == setOccurrences.length
@@ -15,7 +16,7 @@ object ReductionRules {
     }
   }
 
-  def reductionRuleTwo(reductionSet: ReductionSet): ReductionSet = {
+  def reductionRuleTwo: ReductionSet = {
     val valueOccurrences = CELLPossibleValues map { value =>
       (cellIndexesVector zip reductionSet foldLeft Vector.empty[Int]) {
         case (acc, (index, cell)) =>

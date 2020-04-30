@@ -1,13 +1,13 @@
-# Top Level Definitions
+# Extension Methods
 
 ## Background
 
-Dotty now has Top Level Definitions. In short, these replace Scala 2's `package object`s
+Extension methods can be used to add methods to types after they are defined.
 
 ## Steps
 
 ```scala
-object A:
-  def x(a: Int): Int
-    a
+extension sudokuFieldOps on (sudokuField: SudokuField) {
+  def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
+}
 ```
