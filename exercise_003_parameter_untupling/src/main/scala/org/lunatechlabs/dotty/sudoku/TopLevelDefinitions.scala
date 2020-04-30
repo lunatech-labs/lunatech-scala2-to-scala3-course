@@ -14,24 +14,23 @@ val cellUpdatesEmpty = Vector.empty[(Int, Set[Int])]
 
 import SudokuDetailProcessor.RowUpdate
 
-def (update: Vector[SudokuDetailProcessor.RowUpdate]).toSudokuField: SudokuField = {
+implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate]) extends AnyVal {
   import scala.language.implicitConversions
-  val rows =
-        update
-          .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
+  def toSudokuField: SudokuField = {
+    val rows =
+      update
+        .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
         .to(Map).withDefaultValue(cellUpdatesEmpty)
-      val sudoku = for {
-        (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
-        x = cellUpdates.to(Map).withDefaultValue(Set(0))
-        y = Vector.range(0, 9).map(n => x(n))
-        } yield y
-      SudokuField(sudoku)
+    val sudoku = for {
+      (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
+      x = cellUpdates.to(Map).withDefaultValue(Set(0))
+      y = Vector.range(0, 9).map(n => x(n))
+    } yield y
+    SudokuField(sudoku)
+  }
 }
 
-// Collective Extensions:
-// define extension methods that share the same left-hand parameter type under a single extension instance.
-extension sudokuFieldOps on (sudokuField: SudokuField) {
-
+implicit class SudokuFieldOps(val sudokuField: SudokuField) extends AnyVal {
   def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 
   def rotateCW: SudokuField = SudokuField(sudokuField.sudoku.reverse.transpose)
@@ -44,12 +43,12 @@ extension sudokuFieldOps on (sudokuField: SudokuField) {
 
   def rowSwap(row1: Int, row2: Int): SudokuField = {
     SudokuField(
-          sudokuField.sudoku.zipWithIndex.map {
-          case (_, `row1`) => sudokuField.sudoku(row2)
-          case (_, `row2`) => sudokuField.sudoku(row1)
-          case (row, _) => row
-          }
-        )
+      sudokuField.sudoku.zipWithIndex.map {
+      case (_, `row1`) => sudokuField.sudoku(row2)
+      case (_, `row2`) => sudokuField.sudoku(row1)
+      case (row, _) => row
+      }
+    )
   }
 
   def columnSwap(col1: Int, col2: Int): SudokuField = {
@@ -70,14 +69,14 @@ extension sudokuFieldOps on (sudokuField: SudokuField) {
     })
   }
 
-  def toRowUpdates: Vector[SudokuDetailProcessor.RowUpdate] = {
+  def toRowUpdates: Vector[RowUpdate] = {
     sudokuField
       .sudoku
       .map(_.zipWithIndex)
       .map(row => row.filterNot(_._1 == Set(0)))
       .zipWithIndex.filter(_._1.nonEmpty)
       .map { (c, i) =>
-        SudokuDetailProcessor.RowUpdate(i, c.map(_.swap))
+        RowUpdate(i, c.map(_.swap))
       }
   }
 }
