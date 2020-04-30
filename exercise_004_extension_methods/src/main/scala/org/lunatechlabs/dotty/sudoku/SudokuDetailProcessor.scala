@@ -68,7 +68,7 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
         replyTo ! SudokuDetailUnchanged
         Behaviors.same
       } else {
-        val transformedUpdatedState = updatedState.reductionRuleOne.reductionRuleTwo
+        val transformedUpdatedState = updatedState.applyReductionRuleOne.applyReductionRuleTwo
         if (transformedUpdatedState == state) {
           replyTo ! SudokuDetailUnchanged
           Behaviors.same
