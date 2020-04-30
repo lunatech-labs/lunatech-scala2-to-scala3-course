@@ -8,6 +8,7 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
     common,
     `exercise_000_clustered_sudoku_solver_initial_state`,
     `exercise_002_top_level_definitions`,
+    `exercise_004_extension_methods`
   ).settings(
     scalaVersion := selectedScalaVersion,
     organization := "org.lunatech.scala",
@@ -25,6 +26,11 @@ lazy val `exercise_000_clustered_sudoku_solver_initial_state` = project
   .dependsOn(common % "test->test;compile->compile")
 
 lazy val `exercise_002_top_level_definitions` = project
+  .settings(scalaVersion := selectedScalaVersion)
+  .configure(CommonSettings.configure)
+  .dependsOn(common % "test->test;compile->compile")
+
+  lazy val `exercise_004_extension_methods` = project
   .settings(scalaVersion := selectedScalaVersion)
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
