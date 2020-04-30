@@ -1,5 +1,5 @@
 
-val dottyVersion = "0.23.0-RC1"
+val dottyVersion = "0.24.0-RC1"
 val selectedScalaVersion = dottyVersion
 //val selectedScalaVersion = dottyLatestNightlyBuild.get
 
