@@ -23,33 +23,33 @@ object SudokuDetailProcessor {
 
   def apply[DetailType <: SudokoDetailType](id: Int,
                                             state: ReductionSet = InitialDetailState)
-                                           (implicit updateSender: UpdateSender[DetailType]): Behavior[Command] = {
+                                           (using updateSender: UpdateSender[DetailType]): Behavior[Command] = {
     Behaviors.setup { context =>
       (new SudokuDetailProcessor[DetailType](context)).operational(id, state, fullyReduced = false)
     }
   }
 
   trait UpdateSender[A] {
-    def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit
+    def sendUpdate(id: Int, cellUpdates: CellUpdates)(sender: ActorRef[Response]): Unit
 
     def processorName(id: Int): String
   }
 
   implicit def rowUpdateSender: UpdateSender[Row] = new UpdateSender[Row] {
-    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit = {
+    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit = {
       sender ! RowUpdate(id, cellUpdates)
     }
     override def processorName(id: Int): String = s"row-processor-$id"
   }
 
   implicit val columnUpdateSender: UpdateSender[Column] = new UpdateSender[Column] {
-    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
+    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! ColumnUpdate(id, cellUpdates)
     override def processorName(id: Int): String = s"col-processor-$id"
   }
 
   implicit val blockUpdateSender: UpdateSender[Block] = new UpdateSender[Block] {
-    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
+    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! BlockUpdate(id, cellUpdates)
     override def processorName(id: Int): String = s"blk-processor-$id"
   }
@@ -73,7 +73,7 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
           replyTo ! SudokuDetailUnchanged
           Behaviors.same
         } else {
-          val updateSender = implicitly[UpdateSender[DetailType]]
+          val updateSender = summon[UpdateSender[DetailType]]
           updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))(replyTo)
           operational(id, transformedUpdatedState, isFullyReduced(transformedUpdatedState))
         }
