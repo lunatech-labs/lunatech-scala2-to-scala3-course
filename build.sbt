@@ -9,7 +9,8 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
     `exercise_002_top_level_definitions`,
     `exercise_003_parameter_untupling`,
     `exercise_004_extension_methods`,
-    `exercise_005_using_and_summon`
+    `exercise_005_using_and_summon`,
+    `exercise_006_givens`
  )
   .settings(scalaVersion := dottyVersion)
  .settings(CommonSettings.commonSettings: _*)
@@ -39,6 +40,11 @@ lazy val `exercise_004_extension_methods` = project
   .dependsOn(common % "test->test;compile->compile")
 
 lazy val `exercise_005_using_and_summon` = project
+  .settings(scalaVersion := dottyVersion)
+  .configure(CommonSettings.configure)
+  .dependsOn(common % "test->test;compile->compile")
+
+lazy val `exercise_006_givens` = project
   .settings(scalaVersion := dottyVersion)
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
