@@ -2,7 +2,6 @@
 
 ## Background
 
---------------------------------------------------------------------------------
 In this exercise, we will utilise Dotty's `given`s. The goal is to replace
 all occurrences of Scala 2's `implicit` in places where an *implicit value*
 is defined.
