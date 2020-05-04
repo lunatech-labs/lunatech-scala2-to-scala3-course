@@ -30,7 +30,7 @@ object SudokuDetailProcessor {
   }
 
   trait UpdateSender[A] {
-    def sendUpdate(id: Int, cellUpdates: CellUpdates)(sender: ActorRef[Response]): Unit
+    def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit
 
     def processorName(id: Int): String
   }
@@ -74,7 +74,10 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
           Behaviors.same
         } else {
           val updateSender = summon[UpdateSender[DetailType]]
-          updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))(replyTo)
+          // The following can also be written as:
+          // given ActorRef[Response] = replyTo
+          // updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))         
+          updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))(using replyTo)
           operational(id, transformedUpdatedState, isFullyReduced(transformedUpdatedState))
         }
       }
