@@ -66,7 +66,7 @@ in this exercise.
   - Note that some of the actors have so-called `ResponseWrappers`. Leave
     these unmodified: include them in the protocol for the time being: we
     will remove these in the next exercise. You may have to change the
-    `ResponseWrapper`a from `private` to a public members
+    `ResponseWrapper` from `private` to a public members
     
 - Use Dotty's `export` feature to avoid having to refactor the code to
   utilise qualified references to the messages
