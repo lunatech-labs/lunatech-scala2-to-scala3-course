@@ -1,6 +1,6 @@
 import sbt._
 
-val dottyVersion = "0.23.0-RC1"
+val dottyVersion = "0.24.0-RC1"
 
 lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
@@ -10,7 +10,8 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
     `exercise_003_parameter_untupling`,
     `exercise_004_extension_methods`,
     `exercise_005_using_and_summon`,
-    `exercise_006_givens`
+    `exercise_006_givens`,
+    `exercise_007_enum_and_export`
  )
   .settings(scalaVersion := dottyVersion)
  .settings(CommonSettings.commonSettings: _*)
@@ -45,6 +46,11 @@ lazy val `exercise_005_using_and_summon` = project
   .dependsOn(common % "test->test;compile->compile")
 
 lazy val `exercise_006_givens` = project
+  .settings(scalaVersion := dottyVersion)
+  .configure(CommonSettings.configure)
+  .dependsOn(common % "test->test;compile->compile")
+
+lazy val `exercise_007_enum_and_export` = project
   .settings(scalaVersion := dottyVersion)
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
