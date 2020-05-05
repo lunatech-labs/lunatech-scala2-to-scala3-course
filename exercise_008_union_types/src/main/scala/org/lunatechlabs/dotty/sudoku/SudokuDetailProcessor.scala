@@ -8,18 +8,18 @@ object SudokuDetailProcessor {
 
   // My protocol
   enum Command {
-  case ResetSudokuDetailState
-  case Update(cellUpdates: CellUpdates, replyTo: ActorRef[Response])
-  case GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
+    case ResetSudokuDetailState
+    case Update(cellUpdates: CellUpdates, replyTo: ActorRef[Response])
+    case GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
   }
   export Command._
 
   // My responses
   enum Response {
-  case RowUpdate(id: Int, cellUpdates: CellUpdates)
-  case ColumnUpdate(id: Int, cellUpdates: CellUpdates)
-  case BlockUpdate(id: Int, cellUpdates: CellUpdates)
-  case SudokuDetailUnchanged
+    case RowUpdate(id: Int, cellUpdates: CellUpdates)
+    case ColumnUpdate(id: Int, cellUpdates: CellUpdates)
+    case BlockUpdate(id: Int, cellUpdates: CellUpdates)
+    case SudokuDetailUnchanged
   }
   export Response._
 
