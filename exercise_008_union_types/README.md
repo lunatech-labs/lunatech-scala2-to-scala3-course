@@ -5,7 +5,7 @@
 In the previous exercise, we re-encoded the protocol of the different actors
 in our application from a `sealed trait` based one to one using Dotty
 enumerations. This however, is only a small first step towards a major
-simplification of the way code the exchange of messages between actors.
+simplification of the way encode the exchange of messages between actors.
 We will now explore using Dotty's `Union Types` to vastly simplify the Scala 2
 based implementation. We will succeed in eliminating the so-called message
 adapters and response wrappers from our code!
