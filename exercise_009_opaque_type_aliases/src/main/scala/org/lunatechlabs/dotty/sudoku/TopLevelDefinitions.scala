@@ -1,5 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
+import scala.collection.Factory
+
 private val N = 9
 val CELLPossibleValues: Vector[Int] = (1 to N).toVector
 val cellIndexesVector: Vector[Int] = Vector.range(0, N)
@@ -9,8 +11,28 @@ type CellContent = Set[Int]
 type ReductionSet = Vector[CellContent]
 type Sudoku = Vector[ReductionSet]
 
-type CellUpdates = Vector[(Int, Set[Int])]
-val cellUpdatesEmpty = Vector.empty[(Int, Set[Int])]
+opaque type CellUpdates = Vector[(Int, Set[Int])]
+object CellUpdates {
+  def apply(updates: (Int, Set[Int])*): CellUpdates = Vector(updates: _*)
+}
+val cellUpdatesEmpty: CellUpdates = Vector.empty[(Int, Set[Int])]
+
+extension on (updates: CellUpdates) {
+
+  /**
+   * Optionally, given that we only use `to(Map)`, we can create a non-generic extension method
+   * For ex.: def toMap: Map[Int, Set[Int]] = updates.to(Map).withDefaultValue(Set(0))
+   */
+  def to[C1](factory: Factory[(Int, Set[Int]), C1]): C1 = updates.to(factory)
+
+  def foldLeft[B](z: B)(op: (B, (Int, Set[Int])) => B): B = updates.foldLeft(z)(op)
+
+  def foreach[U](f: ((Int, Set[Int])) => U): Unit = updates.foreach(f)
+
+  def size: Int = updates.size
+}
+
+def (update: (Int, Set[Int])) +: (updates: CellUpdates): CellUpdates = update +: updates
 
 import SudokuDetailProcessor.RowUpdate
 
