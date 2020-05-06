@@ -1,62 +1,67 @@
-# Union Types
+# Opaque Type Aliases
 
 ## Background
 
-In the previous exercise, we re-encoded the protocol of the different actors
-in our application from a `sealed trait` based one to one using Dotty
-enumerations. This however, is only a small first step towards a major
-simplification of the way encode the exchange of messages between actors.
-We will now explore using Dotty's `Union Types` to vastly simplify the Scala 2
-based implementation. We will succeed in eliminating the so-called message
-adapters and response wrappers from our code!
+An Opaque Type Alias can be used to provide the functionality of a "wrapper
+type" (i.e. a type that wraps, and therefore hides, another type) but without
+any runtime overhead. The aim is to provide additional type-safety at
+compile-time but then be stripped away at runtime. It is a powerful new feature
+of Scala 3 for supporting Information Hiding.
 
-The general idea is that we have both an external protocol for an actor (which
-is exactly the same as in the original implementation) and an [extended] 
-internal protocol that also 'understands' the responses the actor can receive.
+Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the later
+just provide a new name for a type but wherever this new name is used, the
+call-site still knows the details of the original type being aliased. With
+Opaque Type Aliases, the original type being aliased is hidden (or is opaque) at
+the call-site.
 
 ## Steps
 
-Have close look at the 4 different actors in the application:
+- Open the `TopLevelDefinitions.scala` file that you created during the exercise
+  on Top-Level Definitions. Here you should see a few type aliases that were
+  created to help with the readability of the code.
 
-  - `SudokuProblemSender`
-  - `SudokuSolver`
-  - `SudokuProgressTracker`
-  - `SudokuDetailProcessor`
+```scala
+...
+type CellContent = Set[Int]
+type ReductionSet = Vector[CellContent]
+type Sudoku = Vector[ReductionSet]
 
-Which of these actors receive messages that are responses from other actors?
+type CellUpdates = Vector[(Int, Set[Int])]
+...
+```
 
+To keep things manageable we will only focus on one of these type aliases for
+this exercise. Specifically we will convert the last of these type aliases,
+`CellUpdates` into an Opaque Type Alias.
 
-`Hint:` In its present form, the application utilises message adapters. You
-      can easily spot these by doing a search on the factory method to
-      create them: `context.messageAdapter`.
+- To do that, simply add the keyword `opaque` in front of the type alias
+  declaration and recompile. Do you expect this to compile successfully? If not,
+  why?
 
-`Tip:`  Tackle the `SudokuProblemSender` first. After this, proceed with
-      the other actors.
+- Use your experience from the exercise on Extension Methods to fix the
+  compilation errors of the form `value {name} is not a member of
+  org.lunatechlabs.dotty.sudoku.CellUpdates`
+    - Tip: Fix all of the compilation errors of this form `value {name} is not a
+      member of ...` before tackling the other types of error like `Found: ...
+      Required: ...`
+    - Tip: Some of the mission members for our new opaque type are generic (i.e.
+      type-parameterised) methods. Do not be afraid to implement extension
+      methods that are non-generic (i.e. without type-parameters), which might
+      mean modifying existing call-sites.
 
-- Create a type alias named `CommandAndResponses` for the Union of the
-  actor's external protocol (`Command`) and the `Response` message types.
-  This new type will be the type of the internal protocol.
+- Now that we have added the necessary extension methods we still have to fix
+  the remaining errors where we have a value of type `Vector[(Int, Set[Int])]`
+  but the compiler is expecting the opaque type `CellUpates`
+    - Tip: This is the point where we have to think how do we _get_ values of
+      our opaque type
+    - Tip: In general, an opaque type goes well together with a companion
+      object.
 
-- Adapt the `apply` method that creates the actor's behaviour so that it
-  still is the original behaviour as seen from the outside, but which
-  has the extended behaviour (corresponding to `CommandAndResponses`).
-  You will need to make a few extra modifications to make everything
-  type check. Some hints that may put you on the right track:
+- Note: Fixing one type of error (e.g. `Found: ... Required: ...`) may reveal
+  new errors of type `value {name} is not a member of ...`. If that happens, it
+  is generally easier to first fix the error of type `value {name} is not a
+  member of ...` by adding an extension method, and then continue with the other
+  type of error.
 
-  - Note that `Behaviors.setup` has a type parameter
-  - `Behaviors.setup` returns a `Behavior` of some type. Look at the
-    API docs of `Behavior` and specifically at the `narrow` method.
-    You will need to apply this method in your code
-  - A typical pattern in Akka Typed code is the inclusion of a so-called
-    `ActorRef` conventionally called `replyTo`. In the existing code,
-    this is the message adaptor. With the latter being eliminated from
-    the code, you need to substitute it with another `ActorRef`. Which
-    one makes sense? In this context, have a look at the available
-    members on an actor's `context`
-
-- Eliminate any unused code such as:
-  - The message adapters
-  - The `Response` message wrappers
-
-- Verify that the application continues to work correctly 
-  
+- Once all the compilation errors are fixed, verify that the application
+  continues to work correctly
