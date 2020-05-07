@@ -1,67 +1,36 @@
-# Opaque Type Aliases
+# Multiversal Equality
 
 ## Background
 
-An Opaque Type Alias can be used to provide the functionality of a "wrapper
-type" (i.e. a type that wraps, and therefore hides, another type) but without
-any runtime overhead. The aim is to provide additional type-safety at
-compile-time but then be stripped away at runtime. It is a powerful new feature
-of Scala 3 for supporting Information Hiding.
+Scala 2.x uses _universal equality_, meaning that any two values of any two
+types can be compared with each other using `==` and `!=`. However, this can
+sometimes lead to buggy programs where we assume that we are comparing two
+values of the same type but in fact the types are different. In this case,
+because of universal equality, the compiler validates the buggy code but at
+runtime the comparison will _always_ return the same result regardless of the two
+values being compared -- it will always return `false` in the case of `==`,  and
+always `true` in the case of `!=`. This is almost certainly not the desired
+outcome!
 
-Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the later
-just provide a new name for a type but wherever this new name is used, the
-call-site still knows the details of the original type being aliased. With
-Opaque Type Aliases, the original type being aliased is hidden (or is opaque) at
-the call-site.
+This kind of bug often occurs after a refactoring that modifies the types in a
+program -- e.g. like the modification we have just finished to convert a plain
+type alias to an opaque type alias.
+
+Scala 3 introduces _multiversal equality_ to help deal with this problem. We can
+explicitly "opt in" to the new, safer multiversal equality, either with an
+`import` in the relevant source files or with the addition of a compiler option.
+Once enabled, multiversal equality checks for the presence of an `Eql`
+("equality") typeclass instance that allows the comparison of the types of the
+two values being compared with `==` or `!=`. If no valid `Eql` instance is
+found, then the comparison does not type-check and the compilation fails with an
+error.
 
 ## Steps
-
-- Open the `TopLevelDefinitions.scala` file that you created during the exercise
-  on Top-Level Definitions. Here you should see a few type aliases that were
-  created to help with the readability of the code.
-
-```scala
-...
-type CellContent = Set[Int]
-type ReductionSet = Vector[CellContent]
-type Sudoku = Vector[ReductionSet]
-
-type CellUpdates = Vector[(Int, Set[Int])]
-...
-```
-
-To keep things manageable we will only focus on one of these type aliases for
-this exercise. Specifically we will convert the last of these type aliases,
-`CellUpdates` into an Opaque Type Alias.
-
-- To do that, simply add the keyword `opaque` in front of the type alias
-  declaration and recompile. Do you expect this to compile successfully? If not,
-  why?
-
-- Use your experience from the exercise on Extension Methods to fix the
-  compilation errors of the form `value {name} is not a member of
-  org.lunatechlabs.dotty.sudoku.CellUpdates`
-    - Tip: Fix all of the compilation errors of this form `value {name} is not a
-      member of ...` before tackling the other types of error like `Found: ...
-      Required: ...`
-    - Tip: Some of the mission members for our new opaque type are generic (i.e.
-      type-parameterised) methods. Do not be afraid to implement extension
-      methods that are non-generic (i.e. without type-parameters), which might
-      mean modifying existing call-sites.
-
-- Now that we have added the necessary extension methods we still have to fix
-  the remaining errors where we have a value of type `Vector[(Int, Set[Int])]`
-  but the compiler is expecting the opaque type `CellUpates`
-    - Tip: This is the point where we have to think how do we _get_ values of
-      our opaque type
-    - Tip: In general, an opaque type goes well together with a companion
-      object.
-
-- Note: Fixing one type of error (e.g. `Found: ... Required: ...`) may reveal
-  new errors of type `value {name} is not a member of ...`. If that happens, it
-  is generally easier to first fix the error of type `value {name} is not a
-  member of ...` by adding an extension method, and then continue with the other
-  type of error.
-
-- Once all the compilation errors are fixed, verify that the application
-  continues to work correctly
+- Open the `project/CompilerOptions.scala` file. There you should see a sequence
+  of enabled compiler flags.
+- Add the flag `-language:strictEquality`, reload SBT and re-compile the current
+  project
+- Use the course notes on Multiversal Equality and your experience from the
+  exercise on `given`s to make the code compile with the flag
+  `-language:strictEquality` enabled
+    - Hint: The simplest solution will probably involve using `Eql.derived`
