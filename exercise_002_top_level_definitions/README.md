@@ -20,7 +20,7 @@ package object baz {
 }
 ```
 
-This an be written in a toplevel definition as follows
+This can be written in a toplevel definition as follows
 ```scala
 package foo.bar.baz
 
