@@ -8,7 +8,7 @@ sometimes lead to buggy programs where we assume that we are comparing two
 values of the same type but in fact the types are different. In this case,
 because of universal equality, the compiler validates the buggy code but at
 runtime the comparison will _always_ return the same result regardless of the two
-values being compared -- it will always return `false` in the case of `==`,  and
+values being compared — it will always return `false` in the case of `==`,  and
 always `true` in the case of `!=`. This is almost certainly not the desired
 outcome!
 
