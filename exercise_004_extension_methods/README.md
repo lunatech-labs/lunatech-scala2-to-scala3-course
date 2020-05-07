@@ -25,11 +25,13 @@ With dotty `extension methods`, we can rewrite the above as
 ```scala
 def (i: Int).square: Int = i * i
 
-3.square
-// val res0: Int = 9
+4.square
+// val res0: Int = 16
 ```
 
-More than one extension methods can be wrapped inside an `Extension Instance`.
+More than one extension methods can be wrapped inside an `Extension Instance`,
+in order to make them available as methods without needing to be imported explicitly.
+
 ```scala
 extension {
   def (x: Int).square : Int = x * x
@@ -37,8 +39,9 @@ extension {
 }
 ```
 
-`Collective Extensions` can be used if all your extension methods share the 
-same left-hand parameter type.
+When a series of extension methods need to be defined on the same type,
+encoding them one by one quickly becomes tedious. So-called
+`Collective Extensions` can group the definitions together.
 
 ```scala
 extension on (x: Int){
@@ -46,6 +49,11 @@ extension on (x: Int){
   def isEven: Boolean = x % 2 == 0
 }
 ```
+
+> At present, Collective extensions have a limitation: the individual extension 
+> methods cannot be generic (i.e. they cannot have additional type parameters).
+> This restriction is specific to Scala 3.0 and it will be lifted in a later 
+> Scala 3.x release.
 
 ## Steps
 

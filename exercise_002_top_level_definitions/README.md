@@ -3,7 +3,8 @@
 ## Background
 
 Dotty now has support for `Top Level Definitions`. In short, these replace Scala
-2's `package object`s. And all kinds of definitions can be written at the top level.
+2's `package object`s. Definitions such as methods, [given] values, type aliases
+can be written at the top level.
 
 The goal of this exercise is to remove package objects from our codebase and
 replace it with `Top Level Definitions`.
@@ -21,6 +22,7 @@ package object baz {
 ```
 
 This can be written in a toplevel definition as follows
+
 ```scala
 package foo.bar.baz
 
