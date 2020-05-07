@@ -17,6 +17,8 @@ object CellUpdates {
 }
 val cellUpdatesEmpty: CellUpdates = Vector.empty[(Int, Set[Int])]
 
+given Eql[CellUpdates, CellUpdates] = Eql.derived
+
 extension on (updates: CellUpdates) {
 
   /**
