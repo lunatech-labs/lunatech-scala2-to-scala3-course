@@ -40,11 +40,7 @@ pairs.map(_ + _)
 
 ## Steps
 
-- This new way of encoding (using parameter untupling) is optional and in some
-  cases, a matter of personal taste.
-- Perhaps formulate we have similar usage in the following files as something
-  along the lines we can apply the new way of encoding in several places in the
-  source code.
+- We can apply the new way of encoding in several places in the source code.
 - Have a look for them in the following files:
   - `ReductionRules.scala`
   - `SudokuProblemSender.scala`
