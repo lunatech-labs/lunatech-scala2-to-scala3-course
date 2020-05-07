@@ -13,7 +13,7 @@ always `true` in the case of `!=`. This is almost certainly not the desired
 outcome!
 
 This kind of bug often occurs after a refactoring that modifies the types in a
-program -- e.g. like the modification we have just finished to convert a plain
+program — e.g. like the modification we have just finished to convert a plain
 type alias to an opaque type alias.
 
 Scala 3 introduces _multiversal equality_ to help deal with this problem. We can
