@@ -26,10 +26,11 @@ found, then the comparison does not type-check and the compilation fails with an
 error.
 
 ## Steps
-- Open the `project/CompilerOptions.scala` file. There you should see a sequence
-  of enabled compiler flags.
-- Add the flag `-language:strictEquality`, reload SBT and re-compile the current
-  project
+- Create a new file `exercise_010_multiversal_equality/build.sbt`
+- Add the code `scalacOptions in Compile += "-language:strictEquality"` to opt
+  in to safer multiversal equality
+- Reload SBT, make sure you are in the `exercise_010_multiversal_equality`
+  project, and re-compile
 - Use the course notes on Multiversal Equality and your experience from the
   exercise on `given`s to make the code compile with the flag
   `-language:strictEquality` enabled
