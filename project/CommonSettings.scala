@@ -49,4 +49,6 @@ object CommonSettings {
   lazy val configure: Project => Project = (project: Project) => {
     project.settings(CommonSettings.commonSettings: _*)
   }
+
+  val dottyVersion = "0.24.0-RC1"
 }
