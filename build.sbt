@@ -1,6 +1,5 @@
 import sbt._
 
-
 lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
     common,
@@ -15,10 +14,11 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
     `exercise_009_opaque_type_aliases`,
     `exercise_010_multiversal_equality`
  )
-  .settings(scalaVersion in ThisBuild := Version.scalaVersion)
+ .settings(ThisBuild / scalaVersion := Version.scalaVersion)
  .settings(CommonSettings.commonSettings: _*)
 
 lazy val common = project
+ .settings(ThisBuild / scalaVersion := Version.scalaVersion)
   .settings(CommonSettings.commonSettings: _*)
 
 lazy val `exercise_000_clustered_sudoku_solver_initial_state` = project
@@ -60,3 +60,4 @@ lazy val `exercise_009_opaque_type_aliases` = project
 lazy val `exercise_010_multiversal_equality` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
+       
