@@ -26,10 +26,11 @@ object Version {
   val logbackVer        = "1.2.3"
   val akkaManagementVer = "1.0.6"
   val scalaTestVer      = "3.1.1"
+  val scalaVersion = "0.24.0-RC1"
 }
 
 object Dependencies {
-  
+
   private val akkaDeps = Seq(
     "com.typesafe.akka"             %% "akka-actor-typed",
     "com.typesafe.akka"             %% "akka-slf4j",
