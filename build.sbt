@@ -15,7 +15,7 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
     `exercise_009_opaque_type_aliases`,
     `exercise_010_multiversal_equality`
  )
-  .settings(scalaVersion in ThisBuild := CommonSettings.dottyVersion)
+  .settings(scalaVersion in ThisBuild := Version.dottyVersion)
  .settings(CommonSettings.commonSettings: _*)
 
 lazy val common = project

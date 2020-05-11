@@ -102,7 +102,7 @@ object MPSelection {
          |    common,
          |${exercises.mkString("    ", ",\n    ", "")}
          | )
-         |  .settings(scalaVersion in ThisBuild := CommonSettings.dottyVersion)
+         |  .settings(scalaVersion in ThisBuild := Version.dottyVersion)
          |  .settings(CommonSettings.commonSettings: _*)
          |${if (multiJVM)
            s"""  .settings(SbtMultiJvm.multiJvmSettings: _*)
