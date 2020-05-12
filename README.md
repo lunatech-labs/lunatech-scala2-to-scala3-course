@@ -49,7 +49,7 @@ _Studentification_, _linearization_, and _delinearization_ as well as some admin
 
 ### How to _"linearize"_/_"delinearize"_ a master repository
 
-In the context of the _"Moving from Scala 2 to Scala 3"_ course, _linearize_ allows one to view the changes between the different exercises. In other words, this feature allows one to see exactly what needs to be done to _"solve"_ the exercise — so; if you want to actually learn something, don't use this feature — instead, give the exercises a try first...
+In the context of the _"Moving from Scala 2 to Scala 3"_ course, _linearize_ allows one to view the changes between the different exercises. In other words, this feature allows one to see exactly what needs to be done to _"solve"_ the exercise. So, if you want to actually learn something, don't use this feature — instead, give the exercises a try first...
 
 In a broader context, _"linearize"_/_"delinearize"_ is an important tool to evolve/change the master repository of this course.
 
