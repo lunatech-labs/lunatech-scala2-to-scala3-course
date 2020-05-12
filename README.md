@@ -28,6 +28,7 @@ This repository is structured in such a way that it can be transformed into two 
     - `nextExercise`: move to the next exercise and pull in the tests (if any) for that exercise. This command preserves the current state of the application leaving any code added or changed by the student unmodified.
     - `prevExercise`: the opposite of the `nextExercise` command
     - `pullSolution`: pulls in the reference solution code for the current exercise. This command is handy in a class room setting where at some point in time, the instructor wants to move to the next exercise and the student hasn't completed the current exercise. Note that it will overwrite any code written by the student
+    - `gotoExercise <exerciseID>`: jump to an exercise specified by the exerciseID. Note that this command support TAB completion for the exerciseID. Also, remember that this will pull in tests for the exercise and probably you'll want to pull in the solution by running the `pullSolution` command.
     - `saveState`: can be executed prior to executing the `pullSolution` command: it will save the current state of an exercise so that it can be restored later.
     - `savedStates`: show the exercise ids of all exercises for which a state was saved
     - `restoreState <exerciseID>`: restore a previously save state
@@ -37,15 +38,28 @@ This repository is structured in such a way that it can be transformed into two 
 
 _Studentification_, _linearization_, and _delinearization_ as well as some administrative tasks (such as renumbering exercises), is done using the so-called [Course Management Tools](https://github.com/lightbend/course-management-tools).
 
+In the following sections, we'll explain `studentify`, `linearize` and `delinearize` commands.
+
 ### How to _"studentify"_ a master repository
 
-1. Choose a folder in which the _studentified_ version will be 
+1. Create a folder in which the _studentified_ version will be
 - Clone the [Course Management Tools (CMT)](https://github.com/lightbend/course-management-tools)
 - Start an `sbt` session in the cloned CMT repo
-- Run the _studentify_ command and provide two arguments:
+- From the `sbt` prompt, run the _studentify_ command with the `-dot` option and provide two arguments:
     - The first one is the _absolute_ path to the root folder of the master repository of the exercises
-    - The second one is the absolute path of the folder in which the studentified version will be created
+    - The second one is the _absolute_ path of the folder in which the studentified version will be created
 - Once the _studentify_ command is finished, you can _cd_ into the studentified versions root folder and start an _sbt_ session. You will now be able to use all the student commands listed in the previous section.
+
+Assuming that:
+
+- The root folder of the cloned course master repo is located at the following [absolute path]: `/home/userx/src/lunatech-scala-2-to-scala3-course`
+- The folder that will hold the _studentified_ version has the following [absolute] path: `/home/userx/stu`
+
+`studentify` should be invoked as follows:
+
+```
+studentify -dot /home/userx/src/lunatech-scala-2-to-scala3-course /home/userx/stu
+```
 
 ### How to _"linearize"_/_"delinearize"_ a master repository
 
@@ -70,6 +84,24 @@ Follow the following steps:
   - The first one is the _absolute_ path to the root folder of the master repository of the exercises
   - The second one is the absolute path of the `linearized` project folder
 - Repeat the _interactive rebasing_ / _delinearization_ sequence as many times as you want
+
+Assuming that:
+
+- The root folder of the cloned course master repo is located at the following [absolute path]: `/home/userx/src/lunatech-scala-2-to-scala3-course`
+- The folder that will hold the _linearized_ version has the following [absolute] path: `/home/userx/lin`
+
+`linearize` should be invoked as follows:
+
+```
+linearize -dot /home/userx/src/lunatech-scala-2-to-scala3-course /home/userx/stu
+```
+
+With the same assumptions, _delinearizing_ the linearized repo is done with the following command:
+
+```
+delinearize /home/userx/src/lunatech-scala-2-to-scala3-course /home/userx/stu/lunatech-scala-2-to-scala3-course
+```
+Note two changes on this command compared to the `linearize` one: the `-dot` option is not present and the second argument is changed.
 
 > NOTES
 > 
