@@ -19,7 +19,7 @@ Note that this is work in progress, so keep watching this space!
 
 ## Usage
 
-This repository is structured in such a way that it can be transformed to two different artefacts for specific use cases:
+This repository is structured in such a way that it can be transformed into two different artifacts for specific use cases:
 
 - A _studentified_ repository: this is a standalone sbt project which is typically used for teaching or learning purposes. A user of this repository will be working on one exercise at any one point in time and will be able to use a number of custom [sbt] commands:
     - `man`: print a manual page for the global project
