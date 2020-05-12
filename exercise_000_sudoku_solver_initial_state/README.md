@@ -18,7 +18,7 @@ We will first show you how to run the application.
 - Observe sudoku solver in action: you should see the following output:
 
 ```scala
-man [e] > Scala 2 to Scala 3 > clustered sudoku solver initial state > runSolver
+man [e] > Scala 2 to Scala 3 > sudoku solver initial state > runSolver
 [info] running org.lunatechlabs.dotty.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.remote.artery.canonical.port=2550
 08:55:17 INFO  [] - Slf4jLogger started
 SLF4J: A number (1) of logging calls during the initialization phase have been intercepted and are
