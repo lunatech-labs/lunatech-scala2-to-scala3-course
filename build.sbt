@@ -3,7 +3,7 @@ import sbt._
 lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
     common,
-    `exercise_000_clustered_sudoku_solver_initial_state`,
+    `exercise_000_sudoku_solver_initial_state`,
     `exercise_002_top_level_definitions`,
     `exercise_003_parameter_untupling`,
     `exercise_004_extension_methods`,
@@ -20,7 +20,7 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
 lazy val common = project
   .settings(CommonSettings.commonSettings: _*)
 
-lazy val `exercise_000_clustered_sudoku_solver_initial_state` = project
+lazy val `exercise_000_sudoku_solver_initial_state` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
