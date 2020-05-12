@@ -74,7 +74,7 @@ Follow the following steps:
 > NOTES
 > 
 > - During the process of interactive rebasing, make sure NOT to change the commit message (which in fact is the exercise's project name) or to squash commits as this will make it impossible to _delinearize_ the project.
-> - Editing code directly in the _master repo_ and editing code via _linearize_/_delinearize_ are mutually exclusive processes. In practice, this means that when you've been using `linearize`/`delinearize` and you decided to make a change directly to files in the exercises in the master repository, you should discard the `linearized` artifact.
+> - Editing code directly in the _master repo_ and editing code via _linearize_/_delinearize_ are mutually exclusive processes. In practice, this means that when you've been using `linearize`/`delinearize` and you decide to make a change directly to files in the exercises in the master repository, you should discard the `linearized` artifact.
 > - Project `common` is aggregated in all exercises. As such, it is the same across _all_ exercises. Also, the _Linearization_/_Delinearization_ process will not transfer changes made in the _linearized_ repository
 > - `studentify` and `linearize` mandate that your master repository has no files in your git _index_ or _workspace_, so, commit any work before using these commands. Don't worry about commiting stuff temporarily. Either stash any pending changes or commit them and possibly squash them later.
 > Finally: reflect carefully about the best editing approach. In many cases, direct edits in the master repository may be simpler to apply than going through an interactive rebasing session.
