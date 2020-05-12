@@ -52,7 +52,7 @@ In the following sections, we'll explain `studentify`, `linearize` and `delinear
 
 Assuming that:
 
-- The root folder of the cloned course master repo is located at the following [absolute path]: `/home/userx/src/lunatech-scala-2-to-scala3-course`
+- The root folder of the cloned course master repo is located at the following [absolute] path: `/home/userx/src/lunatech-scala-2-to-scala3-course`
 - The folder that will hold the _studentified_ version has the following [absolute] path: `/home/userx/stu`
 
 `studentify` should be invoked as follows:
@@ -87,7 +87,7 @@ Follow the following steps:
 
 Assuming that:
 
-- The root folder of the cloned course master repo is located at the following [absolute path]: `/home/userx/src/lunatech-scala-2-to-scala3-course`
+- The root folder of the cloned course master repo is located at the following [absolute] path: `/home/userx/src/lunatech-scala-2-to-scala3-course`
 - The folder that will hold the _linearized_ version has the following [absolute] path: `/home/userx/lin`
 
 `linearize` should be invoked as follows:
