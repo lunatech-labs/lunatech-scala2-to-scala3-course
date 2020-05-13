@@ -4,15 +4,17 @@ lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
     common,
     `exercise_000_sudoku_solver_initial_state`,
-    `exercise_002_top_level_definitions`,
-    `exercise_003_parameter_untupling`,
-    `exercise_004_extension_methods`,
-    `exercise_005_using_and_summon`,
-    `exercise_006_givens`,
-    `exercise_007_enum_and_export`,
-    `exercise_008_union_types`,
-    `exercise_009_opaque_type_aliases`,
-    `exercise_010_multiversal_equality`
+    `exercise_001_dotty_deprecated_syntax_rewriting`,
+    `exercise_002_dotty_new_syntax_and_indentation_based_syntax`,
+    `exercise_003_top_level_definitions`,
+    `exercise_004_parameter_untupling`,
+    `exercise_005_extension_methods`,
+    `exercise_006_using_and_summon`,
+    `exercise_007_givens`,
+    `exercise_008_enum_and_export`,
+    `exercise_009_union_types`,
+    `exercise_010_opaque_type_aliases`,
+    `exercise_011_multiversal_equality`
   )
   .settings(ThisBuild / scalaVersion := Version.scalaVersion)
   .settings(CommonSettings.commonSettings: _*)
@@ -24,39 +26,47 @@ lazy val `exercise_000_sudoku_solver_initial_state` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_002_top_level_definitions` = project
+lazy val `exercise_001_dotty_deprecated_syntax_rewriting` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_003_parameter_untupling` = project
+lazy val `exercise_002_dotty_new_syntax_and_indentation_based_syntax` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_004_extension_methods` = project
+lazy val `exercise_003_top_level_definitions` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_005_using_and_summon` = project
+lazy val `exercise_004_parameter_untupling` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_006_givens` = project
+lazy val `exercise_005_extension_methods` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_007_enum_and_export` = project
+lazy val `exercise_006_using_and_summon` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_008_union_types` = project
+lazy val `exercise_007_givens` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_009_opaque_type_aliases` = project
+lazy val `exercise_008_enum_and_export` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
 
-lazy val `exercise_010_multiversal_equality` = project
+lazy val `exercise_009_union_types` = project
+  .configure(CommonSettings.configure)
+  .dependsOn(common % "test->test;compile->compile")
+
+lazy val `exercise_010_opaque_type_aliases` = project
+  .configure(CommonSettings.configure)
+  .dependsOn(common % "test->test;compile->compile")
+
+lazy val `exercise_011_multiversal_equality` = project
   .configure(CommonSettings.configure)
   .dependsOn(common % "test->test;compile->compile")
        
