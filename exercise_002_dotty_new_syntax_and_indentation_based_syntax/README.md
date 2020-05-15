@@ -40,7 +40,7 @@ one came from, the formatting may be different, but semantically equivalent).
   of the files and each contains a specific set of compiler options.
 - Now go through the following sequence of actions:
   - Uncomment one `scalacOptions ++= ...` line at a time
-  - As a consequence of this, the build definition is changes, so don't forget
+  - As a consequence of this, the build definition is changed, so don't forget
     to run the `reload` command on the `sbt` prompt
   - From the sbt prompt, run the `clean` command followed by running `compile`.
     You will see that the compiler will _patch_ the source files
