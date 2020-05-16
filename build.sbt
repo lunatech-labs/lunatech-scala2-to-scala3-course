@@ -1,5 +1,7 @@
 import sbt._
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 lazy val `scala-2-to-scala-3-master` = (project in file("."))
   .aggregate(
     common,
