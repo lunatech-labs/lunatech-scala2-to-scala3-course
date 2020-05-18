@@ -44,7 +44,7 @@ object AdditionalSettings {
 
   // Note that if no command aliases need to be added, assign an empty Seq to cmdAliasesIn
   val cmdAliasesIn: Seq[Def.Setting[(State) => State]] = Seq(
-    addCommandAlias("runSolver", "runMain org.lunatechlabs.dotty.SudokuSolverMain -Dcluster-node-configuration.cluster-id=cluster-0 -Dcluster-node-configuration.node-hostname=localhost -Dakka.remote.artery.canonical.port=2550"),
+    addCommandAlias("runSolver", "runMain org.lunatechlabs.dotty.SudokuSolverMain"),
   ).flatten
 
   val cmdAliases: Seq[Def.Setting[(State) => State]] =
