@@ -35,10 +35,10 @@ class SudokuProgressTracker private (rowDetailProcessors: Map[Int, ActorRef[Sudo
 
   def collectEndState(remainingRows: Int = 9, endState: Vector[SudokuDetailState] = Vector.empty[SudokuDetailState]): Behavior[Command] =
     Behaviors.receiveMessagePartial {
-      case detail @ SudokuDetailState(index, state) if remainingRows == 1 =>
+      case detail: SudokuDetailState if remainingRows == 1 =>
         sudokuSolver ! Result((detail +: endState).sortBy { case SudokuDetailState(idx, _) => idx }.map { case SudokuDetailState(_, state) => state})
         trackProgress(updatesInFlight = 0)
-      case detail @ SudokuDetailState(index, state) =>
+      case detail: SudokuDetailState =>
         collectEndState(remainingRows = remainingRows - 1, detail +: endState)
     }
 }
