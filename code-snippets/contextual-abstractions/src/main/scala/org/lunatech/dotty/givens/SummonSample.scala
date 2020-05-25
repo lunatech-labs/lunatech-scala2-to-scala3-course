@@ -19,8 +19,8 @@ given Starter[TruckEngine] = new {
 }
 
 def startEngine[E <: Engine: Starter](engine: E): Unit = {
-    val starter = summon[Starter[E]] // summons Starter[CarEngine] or Starter[TruckEngine] based on context
-    starter.start(engine)
+  val starter = summon[Starter[E]] // summons Starter[CarEngine] or Starter[TruckEngine] based on context
+  starter.start(engine)
 }
 
 @main def testSummon(): Unit = {
