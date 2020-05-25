@@ -69,7 +69,7 @@ In a broader context, _"linearize"_/_"delinearize"_ is an important tool to evol
 
 The following picture shows the typical process to evolve code in a master repository with the utilisation of a _linearized_ repository:
 
-![Linearization/Delinearization](images/Lin-Delin.png)
+![Linearization/Delinearization](exercises/images/Lin-Delin.png)
 
 Follow the following steps:
 
