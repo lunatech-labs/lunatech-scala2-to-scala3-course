@@ -46,6 +46,7 @@ pairs.map(_ + _)
   - `SudokuProblemSender.scala`
   - `SudokuProgressTracker.scala`
   - `SudokuSolver.scala`
-  - `TopLevelDefinitions.scala`
+  - `TopLevelDefinitions.scala` (we chose to put the content of the package
+                               object in a file with this name.)
 - Identify them and replace the pattern-matching syntax with the new syntax.
 - Verify that the application compiles and run correctly.
