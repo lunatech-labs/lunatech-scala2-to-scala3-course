@@ -35,7 +35,7 @@ object SudokuDetailProcessor {
     def processorName(id: Int): String
   }
 
-  implicit def rowUpdateSender: UpdateSender[Row] = new UpdateSender[Row] {
+  implicit val rowUpdateSender: UpdateSender[Row] = new UpdateSender[Row] {
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit = {
       sender ! RowUpdate(id, cellUpdates)
     }
