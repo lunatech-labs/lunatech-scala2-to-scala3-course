@@ -25,8 +25,8 @@ object Version {
   val akkaHttpVer       = "10.1.11"
   val logbackVer        = "1.2.3"
   val akkaManagementVer = "1.0.6"
-  val scalaTestVer      = "3.1.1"
-  val scalaVersion = "0.24.0-RC1"
+  val scalaTestVer      = "3.1.2"
+  val scalaVersion      = "0.24.0-RC1"
 }
 
 object Dependencies {
@@ -38,7 +38,7 @@ object Dependencies {
   ).map (_ % Version.akkaVer)
 
   private val scalaTestDeps = Seq(
-    "org.scalatest"                 %% "scalatest" % Version.scalaTestVer % Test
+    "org.scalatest"                 % "scalatest_0.24" % Version.scalaTestVer % Test
   )
 
   private val akkaTestkitDeps = Seq(

@@ -1,6 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
 import SudokuDetailProcessor.{Update, SudokuDetailUnchanged, BlockUpdate}
+import scala.language.implicitConversions
 
 class SudokuDetailProcessorSpec extends BaseAkkaSpec with SudokuTestHelpers {
 
@@ -18,7 +19,7 @@ class SudokuDetailProcessorSpec extends BaseAkkaSpec with SudokuTestHelpers {
     "result in sending an update that reflects this update" in {
       val probe = testKit.createTestProbe[SudokuDetailProcessor.Response]()
       val detailProcessor = testKit.spawn(SudokuDetailProcessor[Row](id = 0))
-      detailProcessor ! Update(List((4, Set(7))), probe.ref)
+      detailProcessor ! Update(CellUpdates((4, Set(7))), probe.ref)
 
       val expectedState1 =
         SudokuDetailProcessor.RowUpdate(0, stringToIndexedUpdate(
@@ -44,35 +45,40 @@ class SudokuDetailProcessorSpec extends BaseAkkaSpec with SudokuTestHelpers {
       val detailParentProbe = testKit.createTestProbe[SudokuDetailProcessor.Response]()
       val detailProcessor = testKit.spawn(SudokuDetailProcessor[Block](id = 2))
 
-      val update1 =
-        Update(stringToReductionSet(Vector(
-          "12345678 ",
-          "1        ", // 1: Isolated & complete
-          "   4     ", // 4: Isolated & complete
-          "12 45678 ",
-          "      78 ", // (7,8): Isolated & complete
-          "       89",
-          "      78 ", // (7,8): Isolated & complete
-          "     6789",
-          " 23   78 "
-        )).zipWithIndex.map { _.swap},
-          detailParentProbe.ref
-        )
+      val update1 = {
+        val cellUpdates =
+          stringToReductionSet(Vector(
+            "12345678 ",
+            "1        ", // 1: Isolated & complete
+            "   4     ", // 4: Isolated & complete
+            "12 45678 ",
+            "      78 ", // (7,8): Isolated & complete
+            "       89",
+            "      78 ", // (7,8): Isolated & complete
+            "     6789",
+            " 23   78 "
+          )).zipWithIndex.map { _.swap}
+        Update(CellUpdates(cellUpdates:_ *), detailParentProbe.ref)
+      }
 
       detailProcessor ! update1
 
-      val reducedUpdate1 = BlockUpdate(2, stringToReductionSet(Vector(
-        " 23 56   ",
-        "1        ",
-        "   4     ",
-        " 2  56   ",
-        "      78 ",
-        "        9",
-        "      78 ",
-        "     6  9",
-        " 23      "
-      )).zipWithIndex.map(_.swap)
-      )
+      val reducedUpdate1 = {
+        val cellUpdates =
+          stringToReductionSet(Vector(
+            " 23 56   ",
+            "1        ",
+            "   4     ",
+            " 2  56   ",
+            "      78 ",
+            "        9",
+            "      78 ",
+            "     6  9",
+            " 23      "
+          )).zipWithIndex.map(_.swap)
+
+        BlockUpdate(2, CellUpdates(cellUpdates:_ *))
+      }
 
       detailParentProbe.expectMessage(reducedUpdate1)
 

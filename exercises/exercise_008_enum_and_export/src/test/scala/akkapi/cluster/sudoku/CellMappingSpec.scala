@@ -1,8 +1,9 @@
 package org.lunatechlabs.dotty.sudoku
 
-import akkapi.cluster.sudoku.CellMappings._
+import org.lunatechlabs.dotty.sudoku.CellMappings._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import scala.language.implicitConversions
 
 class CellMappingSpec extends AnyWordSpec with Matchers {
 

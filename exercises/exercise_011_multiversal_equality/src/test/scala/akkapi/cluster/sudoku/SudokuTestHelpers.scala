@@ -2,8 +2,6 @@ package org.lunatechlabs.dotty.sudoku
 
 trait SudokuTestHelpers {
 
-  import akkapi.cluster.sudoku.ReductionRules.{reductionRuleOne, reductionRuleTwo}
-
   def stringToReductionSet(stringDef: Vector[String]): ReductionSet = {
     for {
       cellString <- stringDef
@@ -11,11 +9,12 @@ trait SudokuTestHelpers {
   }
 
   def stringToIndexedUpdate(stringDef: Vector[String]): CellUpdates = {
-    for {
+    val updates = for {
       (cellString, index) <- stringDef.zipWithIndex if cellString != ""
     } yield (index, cellString.replaceAll(" ", "").map { _.toString.toInt }.toSet)
+    CellUpdates(updates:_ *)
   }
 
-  def applyReductionRules(reductionSet: ReductionSet): ReductionSet = reductionRuleTwo(reductionRuleOne(reductionSet))
+  def applyReductionRules(reductionSet: ReductionSet): ReductionSet = reductionSet.applyReductionRuleOne.applyReductionRuleTwo
 
 }

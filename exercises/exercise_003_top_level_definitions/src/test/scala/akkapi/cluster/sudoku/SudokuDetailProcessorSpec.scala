@@ -1,6 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
 import SudokuDetailProcessor.{Update, SudokuDetailUnchanged, BlockUpdate}
+import scala.language.implicitConversions
 
 class SudokuDetailProcessorSpec extends BaseAkkaSpec with SudokuTestHelpers {
 
@@ -18,7 +19,7 @@ class SudokuDetailProcessorSpec extends BaseAkkaSpec with SudokuTestHelpers {
     "result in sending an update that reflects this update" in {
       val probe = testKit.createTestProbe[SudokuDetailProcessor.Response]()
       val detailProcessor = testKit.spawn(SudokuDetailProcessor[Row](id = 0))
-      detailProcessor ! Update(List((4, Set(7))), probe.ref)
+      detailProcessor ! Update(Vector((4, Set(7))), probe.ref)
 
       val expectedState1 =
         SudokuDetailProcessor.RowUpdate(0, stringToIndexedUpdate(

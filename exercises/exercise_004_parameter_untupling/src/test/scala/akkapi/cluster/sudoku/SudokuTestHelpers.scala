@@ -2,7 +2,7 @@ package org.lunatechlabs.dotty.sudoku
 
 trait SudokuTestHelpers {
 
-  import akkapi.cluster.sudoku.ReductionRules.{reductionRuleOne, reductionRuleTwo}
+  import org.lunatechlabs.dotty.sudoku.ReductionRules.{reductionRuleOne, reductionRuleTwo}
 
   def stringToReductionSet(stringDef: Vector[String]): ReductionSet = {
     for {

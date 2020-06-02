@@ -2,6 +2,7 @@ package org.lunatechlabs.dotty.sudoku
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import scala.language.implicitConversions
 
 class ReductionRuleSpec extends AnyWordSpec with Matchers with SudokuTestHelpers {
   "Applying reduction rules" should {
