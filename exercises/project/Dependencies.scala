@@ -38,7 +38,7 @@ object Dependencies {
   ).map (_ % Version.akkaVer)
 
   private val scalaTestDeps = Seq(
-    "org.scalatest"                 % "scalatest_0.24" % Version.scalaTestVer % Test
+    "org.scalatest"                 %% "scalatest" % Version.scalaTestVer % Test
   )
 
   private val akkaTestkitDeps = Seq(
@@ -51,9 +51,9 @@ object Dependencies {
 
   val crossDependencies: Seq[ModuleID] =
     akkaDeps ++
-    scalaTestDeps ++
     akkaTestkitDeps
 
   val dependencies: Seq[ModuleID] =
-    logbackDeps
+    logbackDeps ++
+    scalaTestDeps
 }
