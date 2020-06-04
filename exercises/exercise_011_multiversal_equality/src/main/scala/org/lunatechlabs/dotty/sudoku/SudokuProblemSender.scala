@@ -65,7 +65,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
   private val problemSendInterval = sudokuSolverSettings.ProblemSender.SendInterval
   timers.startTimerAtFixedRate(SendNewSudoku, problemSendInterval) // on a 5 node RPi 4 based cluster in steady state, this can be lowered to about 6ms
 
-  def sending(): Behavior[CommandAndResponses] = Behaviors.receiveMessagePartial {
+  def sending(): Behavior[CommandAndResponses] = Behaviors.receiveMessage {
     case SendNewSudoku =>
       context.log.debug("sending new sudoku problem")
       val nextRowUpdates = rowUpdatesSeq.next
