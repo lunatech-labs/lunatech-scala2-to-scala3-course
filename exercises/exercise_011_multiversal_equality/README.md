@@ -35,3 +35,6 @@ error.
   exercise on `given`s to make the code compile with the flag
   `-language:strictEquality` enabled
     - Hint: The simplest solution will probably involve using `Eql.derived`
+
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass

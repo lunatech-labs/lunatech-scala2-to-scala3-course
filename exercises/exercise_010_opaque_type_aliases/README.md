@@ -63,8 +63,7 @@ this exercise. Specifically we will convert the last of these type aliases,
   member of ...` by adding an extension method, and then continue with the other
   type of error.
 
-- Once all the compilation errors are fixed continues to work correctly, run
-  the provided tests by executing the `test` command from the `sbt` prompt
-  and verify that all tests pass
+- Once all the compilation errors are fixed, run the provided tests by executing
+  the `test` command from the `sbt` prompt and verify that all tests pass
 
 - Verify that the application runs correctly
