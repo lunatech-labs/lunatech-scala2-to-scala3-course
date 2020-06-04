@@ -41,6 +41,7 @@ pairs.map(_ + _)
 ## Steps
 
 - We can apply the new way of encoding in several places in the source code.
+
 - Have a look for them in the following files:
   - `ReductionRules.scala`
   - `SudokuProblemSender.scala`
@@ -48,5 +49,10 @@ pairs.map(_ + _)
   - `SudokuSolver.scala`
   - `TopLevelDefinitions.scala` (we chose to put the content of the package
                                object in a file with this name.)
-- Identify them and replace the pattern-matching syntax with the new syntax.
-- Verify that the application compiles and run correctly.
+
+- Identify them and replace the pattern-matching syntax with the new syntax
+
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass
+
+- Verify that the application runs correctly

@@ -21,9 +21,15 @@ release of Scala 3.
 ## Steps
 
 - Find all remaining occurrences of the Scala 2 `implicit` keyword. These
-  should all be at the definition side.
+  should all be at the definition side
+
 - Change all definitions to utilise the new `given` keyword. Use the
   appropriate form of the definitions so that the `given`s don't have a name
-  defined by yourself.
-- Check that the modified code compiles without errors.
-- Run the application to verify that it still runs correctly.
+  defined by yourself
+
+- Check that the modified code compiles without errors
+
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass
+
+- Verify that the application runs correctly

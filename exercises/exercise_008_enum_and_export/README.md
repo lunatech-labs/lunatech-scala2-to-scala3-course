@@ -70,5 +70,8 @@ in this exercise.
     
 - Use Dotty's `export` feature to avoid having to refactor the code to
   utilise qualified references to the messages
+
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass
   
-- Verify that the application continues to work correctly
+- Verify that the application runs correctly
