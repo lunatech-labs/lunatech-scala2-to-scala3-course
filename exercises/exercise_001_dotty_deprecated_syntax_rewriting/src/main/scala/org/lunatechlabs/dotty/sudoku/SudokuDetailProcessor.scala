@@ -61,7 +61,7 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
   import SudokuDetailProcessor._
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
-    Behaviors.receiveMessagePartial {
+    Behaviors.receiveMessage {
     case Update(cellUpdates, replyTo) if ! fullyReduced =>
       val previousState = state
       val updatedState = mergeState(state, cellUpdates)

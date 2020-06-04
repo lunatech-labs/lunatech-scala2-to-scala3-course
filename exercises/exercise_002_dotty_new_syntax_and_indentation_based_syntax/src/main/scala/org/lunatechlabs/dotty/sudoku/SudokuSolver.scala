@@ -63,7 +63,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
   private val progressTracker =
     context.spawn(SudokuProgressTracker(rowDetailProcessors, progressTrackerResponseMapper), "sudoku-progress-tracker")
 
-  def idle(): Behavior[Command] = Behaviors.receiveMessagePartial {
+  def idle(): Behavior[Command] = Behaviors.receiveMessage {
 
     case InitialRowUpdates(rowUpdates, sender) =>
       rowUpdates.foreach {
@@ -72,10 +72,13 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
       }
       progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(rowUpdates.size)
       processRequest(Some(sender), System.currentTimeMillis())
+    case unexpectedMsg =>
+      context.log.error("Received an unexpected message in 'idle' state: {}", unexpectedMsg)
+      Behaviors.same
 
   }
 
-  def processRequest(requestor: Option[ActorRef[Response]], startTime: Long): Behavior[Command] = Behaviors.receiveMessagePartial {
+  def processRequest(requestor: Option[ActorRef[Response]], startTime: Long): Behavior[Command] = Behaviors.receiveMessage {
     case SudokuDetailProcessorResponseWrapped(response) => response match {
       case SudokuDetailProcessor.RowUpdate(rowNr, updates) =>
         updates.foreach {
