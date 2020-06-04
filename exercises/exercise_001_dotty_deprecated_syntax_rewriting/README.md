@@ -56,6 +56,7 @@ scalacOptions ++=
   definition in `sbt` (by issuing the `reload` command)
 
 - Compile and investigate what the compiler reports
+
 - Let the compiler correct the problem by adding the `-rewrite` compiler option
 
 ```scala

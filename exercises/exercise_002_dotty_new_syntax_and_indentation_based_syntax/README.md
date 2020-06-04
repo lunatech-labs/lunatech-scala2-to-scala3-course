@@ -25,6 +25,7 @@ one came from, the formatting may be different, but semantically equivalent).
 ## Steps
 
 - Run the `pullSolution` command from the `sbt` prompt
+
 - Inspect the `build.sbt` file in the `exercises` folder
   - At the end of this file, you will see the following 4 lines that have
     been commented out:
@@ -38,6 +39,7 @@ one came from, the formatting may be different, but semantically equivalent).
 
 - The values on the right side of the `++=` operator are defined in the beginning
   of the files and each contains a specific set of compiler options.
+
 - Now go through the following sequence of actions:
   - Uncomment one `scalacOptions ++= ...` line at a time
   - As a consequence of this, the build definition is changed, so don't forget

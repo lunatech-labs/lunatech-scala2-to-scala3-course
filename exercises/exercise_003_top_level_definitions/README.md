@@ -33,8 +33,15 @@ def x(a: Int): Int = {
 
 ## Steps
 
-- Find any package objects available in the existing project.
-- Create a new source file inside the same package using any meaningful name.
-- Copy the contents of the `package object` to the newly created source file.
-- Remove the package object.
-- Verify that the application compiles and runs correctly
+- Find any package objects available in the existing project
+
+- Create a new source file inside the same package using any meaningful name
+
+- Copy the contents of the `package object` to the newly created source file
+
+- Remove the package object
+
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass
+
+- Verify that the application runs correctly

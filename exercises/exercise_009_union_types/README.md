@@ -58,5 +58,8 @@ Which of these actors receive messages that are responses from other actors?
   - The message adapters
   - The `Response` message wrappers
 
-- Verify that the application continues to work correctly 
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass
+
+- Verify that the application runs correctly
   

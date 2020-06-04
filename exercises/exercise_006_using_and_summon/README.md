@@ -12,9 +12,16 @@ use of _scala 2_'s `implicit`s and `implicitly`.
 ## Steps
 
 - Find all occurance of scala 2 `implicit` keyword. These should all be at the 
-  parameter side.
-- Replace all `implicit` parameters with the new `using` keyword.
+  parameter side
+
+- Replace all `implicit` parameters with the new `using` keyword
+
 - Keep the `implicit`s at definition side for now, we can change them in  the 
-  next exercise.
-- Replace all occurances of `implicitly` with `summon`.
-- Verify that the application compiles and run correctly.
+  next exercise
+
+- Replace all occurances of `implicitly` with `summon`
+
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass
+
+- Verify that the application runs correctly
