@@ -2,6 +2,7 @@ name: Scala Course CI
 
 on:
   push:
+    tags: '*'
     branches: [ exercises-master ]
   pull_request:
     branches: [ exercises-master ]
