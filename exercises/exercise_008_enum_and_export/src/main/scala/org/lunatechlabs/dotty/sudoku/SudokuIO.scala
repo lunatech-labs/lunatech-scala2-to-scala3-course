@@ -6,10 +6,10 @@ object SudokuIO {
 
   def printRow( row: ReductionSet): String = {
     def printSubRow( subRowNo: Int): String = {
-      val printItems = List(1,2,3) map( x => x + subRowNo * 3)
+      val printItems = List(1,2,3).map( x => x + subRowNo * 3)
       (for  (elem <- row) 
         yield {
-          (printItems map (item => if ((elem & printItems.toSet).contains(item)) item.toString else " ")).mkString("")
+          (printItems.map (item => if ((elem & printItems.toSet).contains(item)) item.toString else " ")).mkString("")
         }).mkString("| ", " | ", " |")
     }
     (for  (subRow <- 0 until 3)  yield printSubRow(subRow)).mkString("\n")
@@ -102,7 +102,7 @@ object SudokuIO {
   def convertFromCellsToComplete(cellsIn: Vector[(String, Int)]): Vector[(Int, CellUpdates)] =
     for {
       (rowCells, row) <- cellsIn
-      updates = (rowCells.zipWithIndex foldLeft cellUpdatesEmpty) {
+      updates = rowCells.zipWithIndex.foldLeft(cellUpdatesEmpty) {
         case (cellUpdates, (c, index)) if c != ' ' =>
           (index, Set(c.toString.toInt)) +: cellUpdates
         case (cellUpdates, _) => cellUpdates
