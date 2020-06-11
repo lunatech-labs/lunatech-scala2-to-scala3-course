@@ -112,7 +112,8 @@ jobs:
           git config --global user.email "no-reply@lunatech.com"
           git config --global user.name "Lunatech Labs"
           (cd CMT/ && exec sbt "linearize -dot ../lunatech-scala-2-to-scala3-course ../linearized")
-          (cd linearized && exec zip -r lunatech-scala-2-to-scala3-course.lin.zip lunatech-scala-2-to-scala3-course)
+          mv linearized/lunatech-scala-2-to-scala3-course linearized/lunatech-scala-2-to-scala3-course-linearized
+          (cd linearized && exec zip -r lunatech-scala-2-to-scala3-course-linearized.zip lunatech-scala-2-to-scala3-course-linearized)
         
       - name: Create Github Release
         id: create_release
@@ -141,6 +142,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # release created from previous step
-          asset_path: ./linearized/lunatech-scala-2-to-scala3-course.lin.zip
-          asset_name: lunatech-scala-2-to-scala3-course.lin.zip
+          asset_path: ./linearized/lunatech-scala-2-to-scala3-course-linearized.zip
+          asset_name: lunatech-scala-2-to-scala3-course-linearized.zip
           asset_content_type: application/zip
