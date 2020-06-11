@@ -102,7 +102,7 @@ object SudokuIO {
   def convertFromCellsToComplete(cellsIn: Vector[(String, Int)]): Vector[(Int, CellUpdates)] =
     for {
       (rowCells, row) <- cellsIn
-      updates = (rowCells.zipWithIndex foldLeft cellUpdatesEmpty) {
+      updates = rowCells.zipWithIndex.foldLeft(cellUpdatesEmpty) {
         case (cellUpdates, (c, index)) if c != ' ' =>
           (index, Set(c.toString.toInt)) +: cellUpdates
         case (cellUpdates, _) => cellUpdates

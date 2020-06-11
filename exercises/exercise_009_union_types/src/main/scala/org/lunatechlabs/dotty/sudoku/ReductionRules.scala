@@ -9,7 +9,7 @@ extension reductionRules on (reductionSet: ReductionSet) {
       set.size == setOccurrences.length
     }
     val completeAndIsolatedValueSets = completeInputCellGroups.keys.toList
-    (completeAndIsolatedValueSets foldLeft reductionSet) { (cells, caivSet) =>
+    completeAndIsolatedValueSets.foldLeft(reductionSet) { (cells, caivSet) =>
       cells map {
         cell => if (cell != caivSet) cell &~ caivSet else cell
       }
@@ -18,7 +18,7 @@ extension reductionRules on (reductionSet: ReductionSet) {
 
   def applyReductionRuleTwo: ReductionSet = {
     val valueOccurrences = CELLPossibleValues map { value =>
-      (cellIndexesVector zip reductionSet foldLeft Vector.empty[Int]) {
+      (cellIndexesVector zip reductionSet).foldLeft(Vector.empty[Int]) {
         case (acc, (index, cell)) =>
           if (cell contains value) index +: acc else acc
       }
@@ -37,7 +37,7 @@ extension reductionRules on (reductionSet: ReductionSet) {
       cellIndexList map { cellIndex => cellIndex -> reducedValue }
     }
 
-    (reductionSet.zipWithIndex foldRight Vector.empty[CellContent]) {
+    reductionSet.zipWithIndex.foldRight(Vector.empty[CellContent]) {
       case ((cellValue, cellIndex), acc) =>
         cellIndexToReducedValue.getOrElse(cellIndex, cellValue) +: acc
     }
