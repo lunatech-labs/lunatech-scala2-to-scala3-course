@@ -17,14 +17,14 @@ object ReductionRules {
 
   def reductionRuleTwo(reductionSet: ReductionSet): ReductionSet = {
     val valueOccurrences = CELLPossibleValues map { value =>
-      (cellIndexesVector zip reductionSet).foldLeft(Vector.empty[Int]) {
+      cellIndexesVector.zip(reductionSet).foldLeft(Vector.empty[Int]) {
         case (acc, (index, cell)) =>
           if (cell contains value) index +: acc else acc
       }
     }
 
     val cellIndexesToValues =
-      (CELLPossibleValues zip valueOccurrences)
+      CELLPossibleValues.zip(valueOccurrences)
         .groupBy { case (value, occurrence) => occurrence}
         .filter  { case (loc, occ) => loc.length == occ.length && loc.length <= 6 }
 
