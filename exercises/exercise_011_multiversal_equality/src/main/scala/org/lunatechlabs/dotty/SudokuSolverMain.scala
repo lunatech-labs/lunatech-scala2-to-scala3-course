@@ -22,25 +22,28 @@ package org.lunatechlabs.dotty
 
 import akka.NotUsed
 import akka.actor.typed.scaladsl.adapter.TypedActorSystemOps
-import akka.actor.typed.scaladsl.{Behaviors, Routers}
-import akka.actor.typed.{ActorSystem, Behavior, Terminated}
-import org.lunatechlabs.dotty.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
+import akka.actor.typed.scaladsl.{ Behaviors, Routers }
+import akka.actor.typed.{ ActorSystem, Behavior, Terminated }
+import org.lunatechlabs.dotty.sudoku.{ SudokuProblemSender, SudokuSolver, SudokuSolverSettings }
 import scala.io.StdIn
-import Console.{GREEN, RESET}
+import scala.Console.{ GREEN, RESET }
 
 object Main {
-  def apply(): Behavior[NotUsed] = Behaviors.setup { context =>
-    val sudokuSolverSettings = SudokuSolverSettings("sudokusolver.conf")
-    // Start a SodukuSolver
-    val sudokuSolver = context.spawn(SudokuSolver(sudokuSolverSettings), s"sudoku-solver")
-    // Start a Sudoku problem sender
-    context.spawn(SudokuProblemSender(sudokuSolver, sudokuSolverSettings), "sudoku-problem-sender")
+  def apply(): Behavior[NotUsed] =
+    Behaviors.setup { context =>
+      val sudokuSolverSettings = SudokuSolverSettings("sudokusolver.conf")
+      // Start a SodukuSolver
+      val sudokuSolver = context.spawn(SudokuSolver(sudokuSolverSettings), s"sudoku-solver")
+      // Start a Sudoku problem sender
+      context.spawn(SudokuProblemSender(sudokuSolver, sudokuSolverSettings),
+                    "sudoku-problem-sender"
+      )
 
-    Behaviors.receiveSignal {
-      case (_, Terminated(_)) =>
-        Behaviors.stopped
+      Behaviors.receiveSignal {
+        case (_, Terminated(_)) =>
+          Behaviors.stopped
+      }
     }
-  }
 }
 
 object SudokuSolverMain {

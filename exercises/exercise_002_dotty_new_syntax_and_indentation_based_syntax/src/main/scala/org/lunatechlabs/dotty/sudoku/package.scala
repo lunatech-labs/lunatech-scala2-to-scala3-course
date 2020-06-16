@@ -16,13 +16,15 @@ package object sudoku {
 
   import SudokuDetailProcessor.RowUpdate
 
-  implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate]) extends AnyVal {
+  implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate])
+      extends AnyVal {
     import scala.language.implicitConversions
     def toSudokuField: SudokuField = {
       val rows =
         update
-          .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
-          .to(Map).withDefaultValue(cellUpdatesEmpty)
+          .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates) }
+          .to(Map)
+          .withDefaultValue(cellUpdatesEmpty)
       val sudoku = for {
         (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
         x = cellUpdates.to(Map).withDefaultValue(Set(0))
@@ -43,23 +45,21 @@ package object sudoku {
 
     def flipHorizontally: SudokuField = sudokuField.rotateCW.flipVertically.rotateCCW
 
-    def rowSwap(row1: Int, row2: Int): SudokuField = {
+    def rowSwap(row1: Int, row2: Int): SudokuField =
       SudokuField(
         sudokuField.sudoku.zipWithIndex.map {
-        case (_, `row1`) => sudokuField.sudoku(row2)
-        case (_, `row2`) => sudokuField.sudoku(row1)
-        case (row, _) => row
+          case (_, `row1`) => sudokuField.sudoku(row2)
+          case (_, `row2`) => sudokuField.sudoku(row1)
+          case (row, _) => row
         }
       )
-    }
 
-    def columnSwap(col1: Int, col2: Int): SudokuField = {
+    def columnSwap(col1: Int, col2: Int): SudokuField =
       sudokuField.rotateCW.rowSwap(col1, col2).rotateCCW
-    }
 
     def randomSwapAround: SudokuField = {
       import scala.language.implicitConversions
-      val possibleCellValues = Vector(1,2,3,4,5,6,7,8,9)
+      val possibleCellValues = Vector(1, 2, 3, 4, 5, 6, 7, 8, 9)
       // Generate a random swapping of cell values. A value 0 is used as a marker for a cell
       // with an unknown value (i.e. it can still hold all values 0 through 9). As such
       // a cell with value 0 should remain 0 which is why we add an entry to the generated
@@ -71,15 +71,15 @@ package object sudoku {
       })
     }
 
-    def toRowUpdates: Vector[RowUpdate] = {
-      sudokuField
-        .sudoku
+    def toRowUpdates: Vector[RowUpdate] =
+      sudokuField.sudoku
         .map(_.zipWithIndex)
         .map(row => row.filterNot(_._1 == Set(0)))
-        .zipWithIndex.filter(_._1.nonEmpty)
-        .map { case (c, i) =>
-          RowUpdate(i, c.map(_.swap))
+        .zipWithIndex
+        .filter(_._1.nonEmpty)
+        .map {
+          case (c, i) =>
+            RowUpdate(i, c.map(_.swap))
         }
-    }
   }
 }

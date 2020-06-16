@@ -31,27 +31,26 @@ object SudokuDetailProcessor {
 
   trait UpdateSender[A] {
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit
-
     def processorName(id: Int): String
   }
 
   implicit val rowUpdateSender: UpdateSender[Row] = new UpdateSender[Row] {
-    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit = {
+    def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit = {
       sender ! RowUpdate(id, cellUpdates)
     }
-    override def processorName(id: Int): String = s"row-processor-$id"
+    def processorName(id: Int): String = s"row-processor-$id"
   }
 
   implicit val columnUpdateSender: UpdateSender[Column] = new UpdateSender[Column] {
-    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
+    def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
       sender ! ColumnUpdate(id, cellUpdates)
-    override def processorName(id: Int): String = s"col-processor-$id"
+    def processorName(id: Int): String = s"col-processor-$id"
   }
 
   implicit val blockUpdateSender: UpdateSender[Block] = new UpdateSender[Block] {
-    override def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
+    def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
       sender ! BlockUpdate(id, cellUpdates)
-    override def processorName(id: Int): String = s"blk-processor-$id"
+    def processorName(id: Int): String = s"blk-processor-$id"
   }
 }
 
