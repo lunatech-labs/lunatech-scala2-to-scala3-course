@@ -15,8 +15,8 @@ object CellMappings {
     rowToBlockCoordinates(cellNr, columnNr)
 
   def blockToRowCoordinates(blockNr: Int, cellNr: Int): (Int, Int) =
-    ((blockNr / 3) * 3 + cellNr / 3 , (blockNr % 3) * 3 + cellNr % 3)
+    ((blockNr / 3) * 3 + cellNr / 3, (blockNr % 3) * 3 + cellNr % 3)
 
   def blockToColumnCoordinates(blockNr: Int, cellNr: Int): (Int, Int) =
-    ((blockNr % 3) * 3 + cellNr % 3 , (blockNr / 3) * 3 + cellNr / 3)
+    ((blockNr % 3) * 3 + cellNr % 3, (blockNr / 3) * 3 + cellNr / 3)
 }

@@ -4,14 +4,14 @@ package org.lunatechlabs.dotty.sudoku
 extension reductionRules on (reductionSet: ReductionSet) {
 
   def applyReductionRuleOne: ReductionSet = {
-    val inputCellsGrouped = reductionSet filter {_.size <= 7} groupBy identity
+    val inputCellsGrouped = reductionSet.filter {_.size <= 7}.groupBy(identity)
     val completeInputCellGroups = inputCellsGrouped filter { (set, setOccurrences) =>
       set.size == setOccurrences.length
     }
     val completeAndIsolatedValueSets = completeInputCellGroups.keys.toList
     completeAndIsolatedValueSets.foldLeft(reductionSet) { (cells, caivSet) =>
-      cells.map {
-        cell => if (cell != caivSet) cell &~ caivSet else cell
+      cells.map { cell =>
+        if (cell != caivSet) cell &~ caivSet else cell
       }
     }
   }
@@ -25,16 +25,17 @@ extension reductionRules on (reductionSet: ReductionSet) {
     }
 
     val cellIndexesToValues =
-      CELLPossibleValues.zip(valueOccurrences)
-        .groupBy ((value, occurrence) => occurrence)
-        .filter  ((loc, occ) => loc.length == occ.length && loc.length <= 6 )
+      CELLPossibleValues
+        .zip(valueOccurrences)
+        .groupBy ((value, occurrence) => occurrence )
+        .filter { case (loc, occ) => loc.length == occ.length && loc.length <= 6 }
 
     val cellIndexListToReducedValue = cellIndexesToValues.map { (index, seq) =>
       (index, (seq.map ((value, _) => value )).toSet)
     }
 
-    val cellIndexToReducedValue = cellIndexListToReducedValue flatMap { (cellIndexList, reducedValue) => 
-      cellIndexList map { cellIndex => cellIndex -> reducedValue }
+    val cellIndexToReducedValue = cellIndexListToReducedValue.flatMap { (cellIndexList, reducedValue) =>
+      cellIndexList.map(cellIndex => cellIndex -> reducedValue)
     }
 
     reductionSet.zipWithIndex.foldRight(Vector.empty[CellContent]) {
