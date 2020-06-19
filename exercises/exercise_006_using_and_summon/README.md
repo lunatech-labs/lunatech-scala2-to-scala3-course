@@ -15,6 +15,8 @@ use of _scala 2_'s `implicit`s and `implicitly`.
   parameter side
 
 - Replace all `implicit` parameters with the new `using` keyword
+  - `Tip`: When a context parameter is passed explicitly it must be preceded by
+  the `using` keyword
 
 - Keep the `implicit`s at definition side for now, we can change them in  the 
   next exercise
