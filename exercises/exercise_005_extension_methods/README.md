@@ -65,13 +65,13 @@ which we have created in one of the previous exercises.
 
 - Replace them with `Dotty` extension methods
 
-- Wrap one or more occurances of such methods in an `extension instance`
+- Wrap one or more occurrences of such method in an `extension instance`
 
-- If you find you need to add more than one extension methods to a same type,
+- If you find you need to add more than one extension method to a same type,
   wrap them inside a `collective extension`
 
 - Run the provided tests by executing the `test` command from the `sbt` prompt
   and verify that all tests pass
 
-- Verify that the application and runs correctly.
+- Verify that the application runs correctly.
 
