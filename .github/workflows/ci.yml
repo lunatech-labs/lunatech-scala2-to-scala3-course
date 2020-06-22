@@ -8,7 +8,7 @@ on:
     branches: [ exercises-master ]
 
 jobs:
-  test_course:
+  validate_course:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Course Repo
         uses: actions/checkout@v2
         with:
-          path: course-master
+          path: course-repo
           # fetch-depth: 0 indicates all history. (CMT requires them)
           fetch-depth: 0
         
@@ -51,7 +51,7 @@ jobs:
       
       - name: Generate Tests Script using CMT
         run: |
-          (cd CMT/ && exec sbt "masteradm -dot -t ../runTests $GITHUB_WORKSPACE/course-master")
+          (cd CMT/ && exec sbt "mainadm -dot -t ../runTests $GITHUB_WORKSPACE/course-repo")
      
       - name: Run Tests
         run: |
@@ -60,7 +60,7 @@ jobs:
           
   create_release:
     runs-on: ubuntu-latest
-    needs: [test_course]
+    needs: [validate_course]
     # Release gets triggered only on creating new tags
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/')
     
@@ -105,7 +105,7 @@ jobs:
         run: |
           mkdir -p studentified
           (cd CMT/ && exec sbt "studentify -dot ../lunatech-scala-2-to-scala3-course ../studentified")
-          (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course.zip lunatech-scala-2-to-scala3-course)  
+          (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
       - name: Linearize Repo
         run: |
@@ -133,7 +133,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # release created from previous step
-          asset_path: ./studentified/lunatech-scala-2-to-scala3-course.zip
+          asset_path: ./studentified/lunatech-scala-2-to-scala3-course-student.zip
           asset_name: lunatech-scala-2-to-scala3-course.zip
           asset_content_type: application/zip
      
