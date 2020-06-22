@@ -134,7 +134,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # release created from previous step
           asset_path: ./studentified/lunatech-scala-2-to-scala3-course-student.zip
-          asset_name: lunatech-scala-2-to-scala3-course.zip
+          asset_name: lunatech-scala-2-to-scala3-course-student.zip
           asset_content_type: application/zip
      
       - name: Upload Linearized repo to Github release
