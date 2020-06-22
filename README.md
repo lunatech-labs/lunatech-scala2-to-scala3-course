@@ -36,3 +36,5 @@ Various artifacts are generated for this course:
 If you want to have a concise overview on how to utilize the _studentified_ and the _linearized_ artifacts, there's a video on this topic what you can find [here](https://youtu.be/2zmXTGG7Nkg).
 
 You can find these artifacts in [the releases](https://github.com/lunatech-labs/lunatech-scala-2-to-scala3-course/releases) of this project.
+
+> Note: We recently renamed the default branch to `main`. If you already have a clone/fork of this repo, please follow the instructions in the [0.24.0-v2 release notes](https://github.com/lunatech-labs/lunatech-scala-2-to-scala3-course/releases/tag/0.24.0-v2)
