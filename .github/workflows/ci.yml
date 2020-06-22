@@ -105,7 +105,7 @@ jobs:
         run: |
           mkdir -p studentified
           (cd CMT/ && exec sbt "studentify -dot ../lunatech-scala-2-to-scala3-course ../studentified")
-          (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course.zip lunatech-scala-2-to-scala3-course)  
+          (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
       - name: Linearize Repo
         run: |
@@ -133,7 +133,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # release created from previous step
-          asset_path: ./studentified/lunatech-scala-2-to-scala3-course.zip
+          asset_path: ./studentified/lunatech-scala-2-to-scala3-course-student.zip
           asset_name: lunatech-scala-2-to-scala3-course.zip
           asset_content_type: application/zip
      
