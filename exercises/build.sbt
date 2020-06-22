@@ -1,8 +1,20 @@
+/***************************************************************
+  *      THIS IS A GENERATED FILE - EDIT AT YOUR OWN RISK      *
+  **************************************************************
+  *
+  * Use the mainadm command to generate a new version of
+  * this build file.
+  *
+  * See https://github.com/lightbend/course-management-tools
+  * for more details
+  *
+  */
+
 import sbt._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-lazy val `scala-2-to-scala-3-master` = (project in file("."))
+lazy val `scala-2-to-scala-3-main` = (project in file("."))
   .aggregate(
     common,
     `exercise_000_sudoku_solver_initial_state`,

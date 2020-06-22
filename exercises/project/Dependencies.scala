@@ -21,12 +21,10 @@
 import sbt._
 
 object Version {
-  val akkaVer           = "2.6.5"
-  val akkaHttpVer       = "10.1.11"
+  val akkaVer           = "2.6.6"
   val logbackVer        = "1.2.3"
-  val akkaManagementVer = "1.0.6"
   val scalaTestVer      = "3.1.2"
-  val scalaVersion      = "0.24.0-RC1"
+  val scalaVersion      = "0.24.0"
 }
 
 object Dependencies {
