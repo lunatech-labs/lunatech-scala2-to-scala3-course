@@ -1,5 +1,7 @@
 # Moving Forward from Scala 2 to Scala 3
 
+![Scala Course CI](https://github.com/lunatech-labs/lunatech-scala-2-to-scala3-course/workflows/Scala%20Course%20CI/badge.svg)
+
 ## Description
 
 The target audience for this course is the Scala _Application_ Developer Community.
