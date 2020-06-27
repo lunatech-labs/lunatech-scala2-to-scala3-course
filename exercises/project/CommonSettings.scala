@@ -40,7 +40,8 @@ object CommonSettings {
     publishArtifact in packageSrc := false,
     publishArtifact in packageDoc := false,
     libraryDependencies ++= Dependencies.dependencies,
-    libraryDependencies ++= Dependencies.crossDependencies.map(_.withDottyCompat(scalaVersion.value))
+    libraryDependencies ++= Dependencies.crossDependencies.map(_.withDottyCompat(scalaVersion.value)),
+    testFrameworks += new TestFramework("munit.Framework")
   ) ++
     AdditionalSettings.initialCmdsConsole ++
     AdditionalSettings.initialCmdsTestConsole ++

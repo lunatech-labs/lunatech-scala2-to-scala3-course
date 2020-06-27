@@ -47,13 +47,3 @@ one came from, the formatting may be different, but semantically equivalent).
   - From the sbt prompt, run the `clean` command followed by running `compile`.
     You will see that the compiler will _patch_ the source files
   - Explore the changes applied by the rewrites
-
-Note: we are using dotty release 0.24.0-RC1. At the time of writing, there
-      is an issue with the rewrite to an indentation based syntax. See:
-      [Dotty issue 8982](https://github.com/lampepfl/dotty/issues/8982) for more info.
-      As a consequence, the code will not compile after the rewrite in the
-      second step. From the compilation error, you should be able to figure
-      out the issue (consult the dotty reference documentation on this topic
-      and look at the examples). If you wish, you can correct all errors and
-      run the application. Returning to the curly braces based syntax and the
-      old control structure syntax should work as advertised.

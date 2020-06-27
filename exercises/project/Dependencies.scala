@@ -24,7 +24,7 @@ object Version {
   val akkaVer           = "2.6.6"
   val logbackVer        = "1.2.3"
   val scalaTestVer      = "3.1.2"
-  val scalaVersion      = "0.24.0"
+  val scalaVersion      = "0.25.0-RC2"
 }
 
 object Dependencies {
@@ -47,11 +47,16 @@ object Dependencies {
     "ch.qos.logback"                 %  "logback-classic",
   ).map (_ % Version.logbackVer)
 
+  private val munitDeps = Seq(
+    "org.scalameta" %% "munit" % "0.7.9" % Test
+  )
+
   val crossDependencies: Seq[ModuleID] =
     akkaDeps ++
     akkaTestkitDeps
 
   val dependencies: Seq[ModuleID] =
     logbackDeps ++
-    scalaTestDeps
+    munitDeps
+//    scalaTestDeps
 }

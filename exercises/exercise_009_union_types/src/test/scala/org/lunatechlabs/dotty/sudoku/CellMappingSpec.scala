@@ -1,48 +1,39 @@
 package org.lunatechlabs.dotty.sudoku
 
 import org.lunatechlabs.dotty.sudoku.CellMappings._
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import scala.language.implicitConversions
 
-class CellMappingSpec extends AnyWordSpec with Matchers {
+class CellMappingSpec extends munit.FunSuite {
 
-  "Mapping row coordinates" should {
-    "result in correct column & block coordinates" in {
-      rowToColumnCoordinates(0, 0) shouldBe ((0, 0))
-      rowToBlockCoordinates(0, 0)  shouldBe ((0, 0))
-      rowToColumnCoordinates(8, 8) shouldBe ((8, 8))
-      rowToBlockCoordinates(8, 8)  shouldBe ((8, 8))
-      rowToColumnCoordinates(3, 4) shouldBe ((4, 3))
-      rowToBlockCoordinates(3, 4)  shouldBe ((4, 1))
-      rowToBlockCoordinates(4, 3)  shouldBe ((4, 3))
-    }
+  test("Mapping row coordinates should result in correct column & block coordinates") {
+    assertEquals(rowToColumnCoordinates(0, 0), ((0, 0)))
+    assertEquals(rowToBlockCoordinates(0, 0), ((0, 0)))
+    assertEquals(rowToColumnCoordinates(8, 8), ((8, 8)))
+    assertEquals(rowToBlockCoordinates(8, 8), ((8, 8)))
+    assertEquals(rowToColumnCoordinates(3, 4), ((4, 3)))
+    assertEquals(rowToBlockCoordinates(3, 4), ((4, 1)))
+    assertEquals(rowToBlockCoordinates(4, 3), ((4, 3)))
   }
 
-  "Mapping column coordinates" should {
-    "result in correct row & block coordinates" in {
-      columnToRowCoordinates(0, 0)   shouldBe ((0, 0))
-      columnToBlockCoordinates(0, 0) shouldBe ((0, 0))
-      columnToRowCoordinates(8, 8)   shouldBe ((8, 8))
-      columnToBlockCoordinates(8, 8) shouldBe ((8, 8))
-      columnToRowCoordinates(3, 4)   shouldBe ((4, 3))
-      columnToBlockCoordinates(3, 4) shouldBe ((4, 3))
-      columnToBlockCoordinates(4, 3) shouldBe ((4, 1))
-    }
+  test("Mapping column coordinates should result in correct row & block coordinates") {
+    assertEquals(columnToRowCoordinates(0, 0), ((0, 0)))
+    assertEquals(columnToBlockCoordinates(0, 0), ((0, 0)))
+    assertEquals(columnToRowCoordinates(8, 8), ((8, 8)))
+    assertEquals(columnToBlockCoordinates(8, 8), ((8, 8)))
+    assertEquals(columnToRowCoordinates(3, 4), ((4, 3)))
+    assertEquals(columnToBlockCoordinates(3, 4), ((4, 3)))
+    assertEquals(columnToBlockCoordinates(4, 3), ((4, 1)))
   }
 
-  "Mapping block coordinates" should {
-    "result in correct row & column coordinates" in {
-      blockToRowCoordinates(0, 0)    shouldBe ((0, 0))
-      blockToColumnCoordinates(0, 0) shouldBe ((0, 0))
-      blockToRowCoordinates(8, 8)    shouldBe ((8, 8))
-      blockToColumnCoordinates(8, 8) shouldBe ((8, 8))
-      blockToRowCoordinates(4, 3)    shouldBe ((4, 3))
-      blockToColumnCoordinates(4, 3) shouldBe ((3, 4))
-      blockToRowCoordinates(3, 4)    shouldBe ((4, 1))
-      blockToColumnCoordinates(3, 4) shouldBe ((1, 4))
-      blockToRowCoordinates(5, 5)    shouldBe ((4, 8))
-      blockToColumnCoordinates(5, 5) shouldBe ((8, 4))
-    }
+  test("Mapping block coordinates should result in correct row & column coordinates") {
+    assertEquals(blockToRowCoordinates(0, 0), ((0, 0)))
+    assertEquals(blockToColumnCoordinates(0, 0), ((0, 0)))
+    assertEquals(blockToRowCoordinates(8, 8), ((8, 8)))
+    assertEquals(blockToColumnCoordinates(8, 8), ((8, 8)))
+    assertEquals(blockToRowCoordinates(4, 3), ((4, 3)))
+    assertEquals(blockToColumnCoordinates(4, 3), ((3, 4)))
+    assertEquals(blockToRowCoordinates(3, 4), ((4, 1)))
+    assertEquals(blockToColumnCoordinates(3, 4), ((1, 4)))
+    assertEquals(blockToRowCoordinates(5, 5), ((4, 8)))
+    assertEquals(blockToColumnCoordinates(5, 5), ((8, 4)))
   }
 }
