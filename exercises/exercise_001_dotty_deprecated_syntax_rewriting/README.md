@@ -41,6 +41,19 @@ that you can see the rewriting at work. Let's get started!
 pullTemplate scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala
 ```
 
+> NOTE: The course repository you're using at the moment is a git repository.
+>      This will be helpfull to see the changes that the compiler applies
+>      when re-writing source files
+
+- Let's start by taking a snapshot in git of the current state of the exercise
+  source code. Do this by executing the following commands in the exercises
+  root folder:
+
+```scala
+$ git add -A
+$ git commit -m "Snapshot before Dotty compiler rewrite"
+```
+
 - Create a new `build.sbt` file in this exercise's base folder
 - In that file, add the following lines:
 
@@ -68,6 +81,8 @@ scalacOptions ++=
 ```
 
 - Compile the code again and watch the magic...
+
+> NOTE:  The easiest way to see what the compiler changed is to run the `git diff` command
 
 We can repeat this process by changing the compiler `-source` compiler option
 to `-source:3.1-migration`

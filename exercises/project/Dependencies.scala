@@ -23,8 +23,8 @@ import sbt._
 object Version {
   val akkaVer           = "2.6.6"
   val logbackVer        = "1.2.3"
-  val scalaTestVer      = "3.1.2"
-  val scalaVersion      = "0.24.0"
+  val mUnitVer          = "0.7.9"
+  val scalaVersion      = "0.25.0-RC2"
 }
 
 object Dependencies {
@@ -35,10 +35,6 @@ object Dependencies {
     "com.typesafe.akka"             %% "akka-stream",
   ).map (_ % Version.akkaVer)
 
-  private val scalaTestDeps = Seq(
-    "org.scalatest"                 %% "scalatest" % Version.scalaTestVer % Test
-  )
-
   private val akkaTestkitDeps = Seq(
     "com.typesafe.akka"             %% "akka-actor-testkit-typed" % Version.akkaVer % Test
   )
@@ -47,11 +43,15 @@ object Dependencies {
     "ch.qos.logback"                 %  "logback-classic",
   ).map (_ % Version.logbackVer)
 
+  private val munitDeps = Seq(
+    "org.scalameta" %% "munit" % Version.mUnitVer % Test
+  )
+
   val crossDependencies: Seq[ModuleID] =
     akkaDeps ++
     akkaTestkitDeps
 
   val dependencies: Seq[ModuleID] =
     logbackDeps ++
-    scalaTestDeps
+    munitDeps
 }
