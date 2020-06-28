@@ -104,7 +104,7 @@ jobs:
       - name: Studentify Repo
         run: |
           mkdir -p studentified
-          (cd CMT/ && exec sbt "studentify -dot ../lunatech-scala-2-to-scala3-course ../studentified")
+          (cd CMT/ && exec sbt "studentify -dot -g ../lunatech-scala-2-to-scala3-course ../studentified")
           (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
       - name: Linearize Repo
