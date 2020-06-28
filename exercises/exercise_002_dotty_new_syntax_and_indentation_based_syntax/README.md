@@ -37,6 +37,14 @@ one came from, the formatting may be different, but semantically equivalent).
    // scalacOptions ++= rewriteToOldSyntax
 ```
 
+- Before proceeding, let's take a snapshot of the current state of the exercises
+  by executing the following commands:
+
+```scala
+$ git add -A
+$ git commit -m "Snapshot before Dotty compiler syntax rewrites"
+```
+
 - The values on the right side of the `++=` operator are defined in the beginning
   of the files and each contains a specific set of compiler options.
 
@@ -46,4 +54,5 @@ one came from, the formatting may be different, but semantically equivalent).
     to run the `reload` command on the `sbt` prompt
   - From the sbt prompt, run the `clean` command followed by running `compile`.
     You will see that the compiler will _patch_ the source files
-  - Explore the changes applied by the rewrites
+  - Explore the changes applied by the rewrites (you can use the `git diff` command
+    for this)
