@@ -104,14 +104,14 @@ jobs:
       - name: Studentify Repo
         run: |
           mkdir -p studentified
+          git config --global user.email "no-reply@lunatech.com"
+          git config --global user.name "Lunatech Labs"
           (cd CMT/ && exec sbt "studentify -dot -g ../lunatech-scala-2-to-scala3-course ../studentified")
           (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
       - name: Linearize Repo
         run: |
           mkdir -p linearized
-          git config --global user.email "no-reply@lunatech.com"
-          git config --global user.name "Lunatech Labs"
           (cd CMT/ && exec sbt "linearize -dot ../lunatech-scala-2-to-scala3-course ../linearized")
           mv linearized/lunatech-scala-2-to-scala3-course linearized/lunatech-scala-2-to-scala3-course-linearized
           (cd linearized && exec zip -r lunatech-scala-2-to-scala3-course-linearized.zip lunatech-scala-2-to-scala3-course-linearized)
