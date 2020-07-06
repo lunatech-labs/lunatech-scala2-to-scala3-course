@@ -22,7 +22,6 @@ package sbtstudent
 
 import sbt.Keys._
 import sbt.{Def, _}
-import stbstudent.MPSelection
 
 import scala.Console
 

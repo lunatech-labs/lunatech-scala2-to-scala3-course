@@ -1,4 +1,4 @@
-package stbstudent
+package sbtstudent
 
 /**
   * Copyright © 2016-2020 Lightbend, Inc.
