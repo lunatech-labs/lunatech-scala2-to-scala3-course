@@ -55,13 +55,15 @@ object StudentCommandsPlugin extends AutoPlugin {
     IO.readLines(new sbt.File(new sbt.File(Project.extract(state).structure.root), ".courseName")).head
   }
 
-  override lazy val projectSettings: Seq[Def.Setting[State => String]] =
+  def renderCMTPrompt(state: State) = {
+    val exercise = Console.GREEN + extractCurrentExerciseDesc(state) + Console.RESET
+    val manRmnd = Console.GREEN + "man [e]" + Console.RESET
+    val prjNbrNme = extractProjectName(state)
+    s"$manRmnd > $prjNbrNme > $exercise > "
+  }
+
+  override def projectSettings: Seq[Def.Setting[State => String]] =
     Seq(
-      shellPrompt := { state =>
-        val exercise = Console.GREEN + extractCurrentExerciseDesc(state) + Console.RESET
-        val manRmnd = Console.GREEN + "man [e]" + Console.RESET
-        val prjNbrNme = extractProjectName(state)
-        s"$manRmnd > $prjNbrNme > $exercise > "
-      }
+      shellPrompt := { state => renderCMTPrompt(state)}
     )
 }

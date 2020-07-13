@@ -51,6 +51,9 @@ jobs:
       
       - name: Generate Tests Script using CMT
         run: |
+          git config --global user.email "no-reply@lunatech.com"
+          git config --global user.name "Lunatech Labs"
+          export PATH=${PATH}:$GITHUB_WORKSPACE/CMT/bin
           (cd CMT/ && exec sbt "mainadm -dot -t ../runTests $GITHUB_WORKSPACE/course-repo")
      
       - name: Run Tests
@@ -106,6 +109,7 @@ jobs:
           mkdir -p studentified
           git config --global user.email "no-reply@lunatech.com"
           git config --global user.name "Lunatech Labs"
+          export PATH=${PATH}:$GITHUB_WORKSPACE/CMT/bin
           (cd CMT/ && exec sbt "studentify -dot -g ../lunatech-scala-2-to-scala3-course ../studentified")
           (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
