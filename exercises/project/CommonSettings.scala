@@ -22,6 +22,7 @@ import sbt.Keys._
 import sbt._
 import sbtstudent.AdditionalSettings
 import dotty.tools.sbtplugin.DottyPlugin.autoImport.DottyCompatModuleID
+import sbtstudent.StudentCommandsPlugin._
 
 
 object CommonSettings {
@@ -41,7 +42,8 @@ object CommonSettings {
     publishArtifact in packageDoc := false,
     libraryDependencies ++= Dependencies.dependencies,
     libraryDependencies ++= Dependencies.crossDependencies.map(_.withDottyCompat(scalaVersion.value)),
-    testFrameworks += new TestFramework("munit.Framework")
+    testFrameworks += new TestFramework("munit.Framework"),
+    shellPrompt := (state => renderCMTPrompt(state))
   ) ++
     AdditionalSettings.initialCmdsConsole ++
     AdditionalSettings.initialCmdsTestConsole ++
