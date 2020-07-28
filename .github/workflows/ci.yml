@@ -20,11 +20,16 @@ jobs:
           # fetch-depth: 0 indicates all history. (CMT requires them)
           fetch-depth: 0
         
-      - name: Checkout Course Management Tools
-        uses: actions/checkout@v2
+      - name: Setup Course Management Tools
+        uses: robinraju/release-downloader@v1
         with:
-          repository: lightbend/course-management-tools
-          path: CMT
+          repository: eloots/course-management-tools
+          tag: "1.0.0"
+          fileName: "course-management-tools.zip"
+          out-file-path: "."
+      - run: |
+          unzip course-management-tools.zip
+          echo "::add-path::$GITHUB_WORKSPACE/course-management-tools/bin"
       
       - name: Set up JDK 11
         uses: actions/setup-java@v1
@@ -53,13 +58,12 @@ jobs:
         run: |
           git config --global user.email "no-reply@lunatech.com"
           git config --global user.name "Lunatech Labs"
-          (cd CMT/ && exec sbt "mainadm -dot -t ../runTests $GITHUB_WORKSPACE/course-repo")
+          cmt-mainadm -dot -t runTests.sh $GITHUB_WORKSPACE/course-repo
      
       - name: Run Tests
         run: |
-          chmod +x runTests
-          export PATH=${PATH}:$GITHUB_WORKSPACE/CMT/bin
-          ./runTests
+          chmod +x runTests.sh          
+          ./runTests.sh
           
   create_release:
     runs-on: ubuntu-latest
@@ -68,12 +72,6 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/')
     
     steps:
-      
-      - name: Checkout Course Management Tools
-        uses: actions/checkout@v2
-        with:
-          repository: lightbend/course-management-tools
-          path: CMT
           
       - name: Checkout Course Repo
         uses: actions/checkout@v2
@@ -81,6 +79,17 @@ jobs:
           path: lunatech-scala-2-to-scala3-course
           fetch-depth: 0          
       
+      - name: Setup Course Management Tools
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: eloots/course-management-tools
+          tag: "1.0.0"
+          fileName: "course-management-tools.zip"
+          out-file-path: "."
+      - run: |
+          unzip course-management-tools.zip
+          echo "::add-path::$GITHUB_WORKSPACE/course-management-tools/bin"
+
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -110,13 +119,13 @@ jobs:
           export PATH=${PATH}:$GITHUB_WORKSPACE/CMT/bin
           git config --global user.email "no-reply@lunatech.com"
           git config --global user.name "Lunatech Labs"
-          (cd CMT/ && exec sbt "studentify -dot -g ../lunatech-scala-2-to-scala3-course ../studentified")
+          cmt-studentify -dot -g lunatech-scala-2-to-scala3-course studentified
           (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
       - name: Linearize Repo
         run: |
           mkdir -p linearized
-          (cd CMT/ && exec sbt "linearize -dot ../lunatech-scala-2-to-scala3-course ../linearized")
+          cmt-linearize -dot lunatech-scala-2-to-scala3-course linearized
           mv linearized/lunatech-scala-2-to-scala3-course linearized/lunatech-scala-2-to-scala3-course-linearized
           (cd linearized && exec zip -r lunatech-scala-2-to-scala3-course-linearized.zip lunatech-scala-2-to-scala3-course-linearized)
         
