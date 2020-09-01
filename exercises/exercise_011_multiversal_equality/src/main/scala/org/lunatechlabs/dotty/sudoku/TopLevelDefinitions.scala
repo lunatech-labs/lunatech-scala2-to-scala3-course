@@ -19,17 +19,17 @@ val cellUpdatesEmpty: CellUpdates = Vector.empty[(Int, Set[Int])]
 
 given Eql[CellUpdates, CellUpdates] = Eql.derived
 
-extension on (updates: CellUpdates) {
+extension[A] (updates: CellUpdates) {
 
   /**
    * Optionally, given that we only use `to(Map)`, we can create a non-generic extension method
    * For ex.: def toMap: Map[Int, Set[Int]] = updates.to(Map).withDefaultValue(Set(0))
    */
-  def to[C1](factory: Factory[(Int, Set[Int]), C1]): C1 = updates.to(factory)
+  def to(factory: Factory[(Int, Set[Int]), A]): A = updates.to(factory)
 
-  def foldLeft[B](z: B)(op: (B, (Int, Set[Int])) => B): B = updates.foldLeft(z)(op)
+  def foldLeft(z: A)(op: (A, (Int, Set[Int])) => A): A = updates.foldLeft(z)(op)
 
-  def foreach[U](f: ((Int, Set[Int])) => U): Unit = updates.foreach(f)
+  def foreach(f: ((Int, Set[Int])) => A): Unit = updates.foreach(f)
 
   def size: Int = updates.size
 }
@@ -54,7 +54,7 @@ def (update: Vector[SudokuDetailProcessor.RowUpdate]).toSudokuField: SudokuField
 
 // Collective Extensions:
 // define extension methods that share the same left-hand parameter type under a single extension instance.
-extension sudokuFieldOps on (sudokuField: SudokuField) {
+extension (sudokuField: SudokuField) {
 
   def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 

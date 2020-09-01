@@ -39,7 +39,8 @@ class SudokuProgressTracker private (
       case NewUpdatesInFlight(updateCount) =>
         trackProgress(updatesInFlight + updateCount)
       case msg: SudokuDetailState =>
-        context.log.error("Received unexpected message in state 'trackProgress': {}", msg)
+        // context.log.error("Received unexpected message in state 'trackProgress': {}", msg)
+        context.log.error(s"Received unexpected message in state 'trackProgress': ${msg}")
         Behaviors.same
     }
 
@@ -57,7 +58,8 @@ class SudokuProgressTracker private (
       case detail: SudokuDetailState =>
         collectEndState(remainingRows = remainingRows - 1, detail +: endState)
       case msg: NewUpdatesInFlight =>
-        context.log.error("Received unexpected message in state 'collectEndState': {}", msg)
+        // context.log.error("Received unexpected message in state 'collectEndState': {}", msg)
+        context.log.error(s"Received unexpected message in state 'collectEndState': ${msg}")
         Behaviors.same
     }
 }

@@ -30,7 +30,7 @@ def (update: Vector[SudokuDetailProcessor.RowUpdate]).toSudokuField: SudokuField
 
 // Collective Extensions:
 // define extension methods that share the same left-hand parameter type under a single extension instance.
-extension sudokuFieldOps on (sudokuField: SudokuField) {
+extension (sudokuField: SudokuField) {
 
   def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 

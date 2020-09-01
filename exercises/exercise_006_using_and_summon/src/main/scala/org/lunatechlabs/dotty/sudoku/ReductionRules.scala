@@ -1,7 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
 // Extension instance wraps extension methods for type ReductionSet
-extension reductionRules on (reductionSet: ReductionSet) {
+extension (reductionSet: ReductionSet) {
 
   def applyReductionRuleOne: ReductionSet = {
     val inputCellsGrouped = reductionSet.filter {_.size <= 7}.groupBy(identity)
