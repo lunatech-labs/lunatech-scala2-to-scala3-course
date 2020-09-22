@@ -8,29 +8,27 @@ import scala.concurrent.duration._
 
 final case class SudokuField(sudoku: Sudoku)
 
-object SudokuSolver {
+object SudokuSolver:
 
   // SudokuSolver Protocol
-  enum Command {
+  enum Command:
     case InitialRowUpdates(rowUpdates: Vector[SudokuDetailProcessor.RowUpdate],
                                      replyTo: ActorRef[SudokuSolver.Response])
   // Wrapped responses
     case SudokuDetailProcessorResponseWrapped(response: SudokuDetailProcessor.Response)
     case SudokuProgressTrackerResponseWrapped(response: SudokuProgressTracker.Response)
-  }
   export Command._
 
   // My Responses
-  enum Response {
+  enum Response:
     case SudokuSolution(sudoku: Sudoku)
-  }
   export Response._
   
   import SudokuDetailProcessor.UpdateSender
 
   def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
     context: ActorContext[Command]
-  ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] = {
+  ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
     import scala.language.implicitConversions
     cellIndexesVector
       .map { index =>
@@ -39,7 +37,6 @@ object SudokuSolver {
         (index, detailProcessor)
       }
       .to(Map)
-  }
 
   def apply(sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =
     Behaviors
@@ -55,11 +52,10 @@ object SudokuSolver {
         SupervisorStrategy
           .restartWithBackoff(minBackoff = 5.seconds, maxBackoff = 1.minute, randomFactor = 0.2)
       )
-}
 
 class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
                             buffer: StashBuffer[SudokuSolver.Command]
-) {
+):
   import CellMappings._
   import SudokuSolver._
 
@@ -90,7 +86,8 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(rowUpdates.size)
         processRequest(Some(sender), System.currentTimeMillis())
       case unexpectedMsg =>
-        context.log.error("Received an unexpected message in 'idle' state: {}", unexpectedMsg)
+        // context.log.error("Received an unexpected message in 'idle' state: {}", unexpectedMsg)
+        context.log.error(s"Received an unexpected message in 'idle' state: ${unexpectedMsg}")
         Behaviors.same
 
     }
@@ -98,7 +95,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
   def processRequest(requestor: Option[ActorRef[Response]], startTime: Long): Behavior[Command] =
     Behaviors.receiveMessage {
       case SudokuDetailProcessorResponseWrapped(response) =>
-        response match {
+        response match
           case SudokuDetailProcessor.RowUpdate(rowNr, updates) =>
             updates.foreach { (rowCellNr, newCellContent) =>
               val (columnNr, columnCellNr) = rowToColumnCoordinates(rowNr, rowCellNr)
@@ -138,9 +135,8 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
           case unchanged @ SudokuDetailProcessor.SudokuDetailUnchanged =>
             progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(-1)
             Behaviors.same
-        }
       case SudokuProgressTrackerResponseWrapped(result) =>
-        result match {
+        result match
           case SudokuProgressTracker.Result(sudoku) =>
             context.log.info(
               s"Sudoku processing time: ${System.currentTimeMillis() - startTime} milliseconds"
@@ -148,7 +144,6 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
             requestor.get ! SudokuSolution(sudoku)
             resetAllDetailProcessors()
             buffer.unstashAll(idle())
-        }
       case msg: InitialRowUpdates if buffer.isFull =>
         context.log.info(s"DROPPING REQUEST")
         Behaviors.same
@@ -158,8 +153,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
     }
 
   private def resetAllDetailProcessors(): Unit =
-    for {
+    for
       processors <- allDetailProcessors
       (_, processor) <- processors
-    } processor ! SudokuDetailProcessor.ResetSudokuDetailState
-}
+    do processor ! SudokuDetailProcessor.ResetSudokuDetailState

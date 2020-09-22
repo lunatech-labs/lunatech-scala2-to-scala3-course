@@ -3,7 +3,7 @@ package org.lunatechlabs.dotty.sudoku
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
 import akka.actor.typed.{ ActorRef, Behavior }
 
-object SudokuProgressTracker {
+object SudokuProgressTracker:
 
   sealed trait Command
   final case class NewUpdatesInFlight(count: Int) extends Command
@@ -19,13 +19,12 @@ object SudokuProgressTracker {
       new SudokuProgressTracker(rowDetailProcessors, context, sudokuSolver)
         .trackProgress(updatesInFlight = 0)
     }
-}
 
 class SudokuProgressTracker private (
   rowDetailProcessors: Map[Int, ActorRef[SudokuDetailProcessor.Command]],
   context: ActorContext[SudokuProgressTracker.Command],
   sudokuSolver: ActorRef[SudokuProgressTracker.Response]
-) {
+):
 
   import SudokuProgressTracker._
 
@@ -39,7 +38,8 @@ class SudokuProgressTracker private (
       case NewUpdatesInFlight(updateCount) =>
         trackProgress(updatesInFlight + updateCount)
       case msg: SudokuDetailState =>
-        context.log.error("Received unexpected message in state 'trackProgress': {}", msg)
+        // context.log.error("Received unexpected message in state 'trackProgress': {}", msg)
+        context.log.error(s"Received unexpected message in state 'trackProgress': ${msg}")
         Behaviors.same
     }
 
@@ -57,7 +57,7 @@ class SudokuProgressTracker private (
       case detail: SudokuDetailState =>
         collectEndState(remainingRows = remainingRows - 1, detail +: endState)
       case msg: NewUpdatesInFlight =>
-        context.log.error("Received unexpected message in state 'collectEndState': {}", msg)
+        // context.log.error("Received unexpected message in state 'collectEndState': {}", msg)
+        context.log.error(s"Received unexpected message in state 'collectEndState': ${msg}")
         Behaviors.same
     }
-}

@@ -2,7 +2,7 @@ package org.lunatechlabs.dotty.sudoku
 
 import org.lunatechlabs.dotty.sudoku.CellMappings._
 
-class CellMappingSuite extends munit.FunSuite {
+class CellMappingSuite extends munit.FunSuite:
 
   test("Mapping row coordinates should result in correct column & block coordinates") {
     assertEquals(rowToColumnCoordinates(0, 0), ((0, 0)))
@@ -36,4 +36,3 @@ class CellMappingSuite extends munit.FunSuite {
     assertEquals(blockToRowCoordinates(5, 5), ((4, 8)))
     assertEquals(blockToColumnCoordinates(5, 5), ((8, 4)))
   }
-}

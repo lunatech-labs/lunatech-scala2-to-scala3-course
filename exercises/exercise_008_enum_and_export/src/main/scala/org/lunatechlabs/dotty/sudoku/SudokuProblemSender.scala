@@ -5,13 +5,12 @@ import java.io.File
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, TimerScheduler }
 import akka.actor.typed.{ ActorRef, Behavior }
 
-object SudokuProblemSender {
+object SudokuProblemSender:
 
-  enum Command {
+  enum Command:
     case SendNewSudoku
     // Wrapped responses
     case SolutionWrapper(result: SudokuSolver.Response)
-  }
   export Command._
 
   private val rowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =
@@ -27,13 +26,12 @@ object SudokuProblemSender {
         new SudokuProblemSender(sudokuSolver, context, timers, sudokuSolverSettings).sending()
       }
     }
-}
 
 class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
                                    context: ActorContext[SudokuProblemSender.Command],
                                    timers: TimerScheduler[SudokuProblemSender.Command],
                                    sudokuSolverSettings: SudokuSolverSettings
-) {
+):
   import SudokuProblemSender._
 
   private val solutionWrapper: ActorRef[SudokuSolver.Response] =
@@ -88,4 +86,3 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
         context.log.info(s"${SudokuIO.sudokuPrinter(solution)}")
         Behaviors.same
     }
-}

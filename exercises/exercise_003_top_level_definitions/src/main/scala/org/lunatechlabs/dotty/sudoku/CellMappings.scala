@@ -1,6 +1,6 @@
 package org.lunatechlabs.dotty.sudoku
 
-object CellMappings {
+object CellMappings:
 
   def rowToColumnCoordinates(rowNr: Int, cellNr: Int): (Int, Int) =
     (cellNr, rowNr)
@@ -19,4 +19,3 @@ object CellMappings {
 
   def blockToColumnCoordinates(blockNr: Int, cellNr: Int): (Int, Int) =
     ((blockNr % 3) * 3 + cellNr % 3, (blockNr / 3) * 3 + cellNr / 3)
-}

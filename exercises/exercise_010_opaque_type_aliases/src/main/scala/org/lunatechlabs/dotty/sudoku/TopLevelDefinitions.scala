@@ -12,47 +12,44 @@ type ReductionSet = Vector[CellContent]
 type Sudoku = Vector[ReductionSet]
 
 opaque type CellUpdates = Vector[(Int, Set[Int])]
-object CellUpdates {
+object CellUpdates:
   def apply(updates: (Int, Set[Int])*): CellUpdates = Vector(updates: _*)
-}
 val cellUpdatesEmpty: CellUpdates = Vector.empty[(Int, Set[Int])]
 
-extension on (updates: CellUpdates) {
+extension[A] (updates: CellUpdates)
 
   /**
    * Optionally, given that we only use `to(Map)`, we can create a non-generic extension method
    * For ex.: def toMap: Map[Int, Set[Int]] = updates.to(Map).withDefaultValue(Set(0))
    */
-  def to[C1](factory: Factory[(Int, Set[Int]), C1]): C1 = updates.to(factory)
+  def to(factory: Factory[(Int, Set[Int]), A]): A = updates.to(factory)
 
-  def foldLeft[B](z: B)(op: (B, (Int, Set[Int])) => B): B = updates.foldLeft(z)(op)
+  def foldLeft(z: A)(op: (A, (Int, Set[Int])) => A): A = updates.foldLeft(z)(op)
 
-  def foreach[U](f: ((Int, Set[Int])) => U): Unit = updates.foreach(f)
+  def foreach(f: ((Int, Set[Int])) => A): Unit = updates.foreach(f)
 
   def size: Int = updates.size
-}
 
 def (update: (Int, Set[Int])) +: (updates: CellUpdates): CellUpdates = update +: updates
 
 import SudokuDetailProcessor.RowUpdate
 
-def (update: Vector[SudokuDetailProcessor.RowUpdate]).toSudokuField: SudokuField = {
+extension (update: Vector[SudokuDetailProcessor.RowUpdate]) def toSudokuField: SudokuField =
   import scala.language.implicitConversions
   val rows =
         update
           .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
-        .to(Map).withDefaultValue(cellUpdatesEmpty)
-      val sudoku = for {
-        (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
-        x = cellUpdates.to(Map).withDefaultValue(Set(0))
-        y = Vector.range(0, 9).map(n => x(n))
-        } yield y
-      SudokuField(sudoku)
-}
+          .to(Map).withDefaultValue(cellUpdatesEmpty)
+  val sudoku = for
+    (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
+    x = cellUpdates.to(Map).withDefaultValue(Set(0))
+    y = Vector.range(0, 9).map(n => x(n))
+  yield y
+  SudokuField(sudoku)
 
 // Collective Extensions:
 // define extension methods that share the same left-hand parameter type under a single extension instance.
-extension sudokuFieldOps on (sudokuField: SudokuField) {
+extension (sudokuField: SudokuField)
 
   def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 
@@ -64,7 +61,7 @@ extension sudokuFieldOps on (sudokuField: SudokuField) {
 
   def flipHorizontally: SudokuField = sudokuField.rotateCW.flipVertically.rotateCCW
 
-  def rowSwap(row1: Int, row2: Int): SudokuField = {
+  def rowSwap(row1: Int, row2: Int): SudokuField =
     SudokuField(
           sudokuField.sudoku.zipWithIndex.map {
           case (_, `row1`) => sudokuField.sudoku(row2)
@@ -72,13 +69,11 @@ extension sudokuFieldOps on (sudokuField: SudokuField) {
           case (row, _) => row
           }
         )
-  }
 
-  def columnSwap(col1: Int, col2: Int): SudokuField = {
+  def columnSwap(col1: Int, col2: Int): SudokuField =
     sudokuField.rotateCW.rowSwap(col1, col2).rotateCCW
-  }
 
-  def randomSwapAround: SudokuField = {
+  def randomSwapAround: SudokuField =
     import scala.language.implicitConversions
     val possibleCellValues = Vector(1,2,3,4,5,6,7,8,9)
     // Generate a random swapping of cell values. A value 0 is used as a marker for a cell
@@ -90,9 +85,8 @@ extension sudokuFieldOps on (sudokuField: SudokuField) {
     SudokuField(sudokuField.sudoku.map { row =>
       row.map(cell => Set(shuffledValuesMap(cell.head)))
     })
-  }
 
-  def toRowUpdates: Vector[SudokuDetailProcessor.RowUpdate] = {
+  def toRowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =
     sudokuField
       .sudoku
       .map(_.zipWithIndex)
@@ -101,5 +95,3 @@ extension sudokuFieldOps on (sudokuField: SudokuField) {
       .map { (c, i) =>
         SudokuDetailProcessor.RowUpdate(i, c.map(_.swap))
       }
-  }
-}

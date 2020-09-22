@@ -5,11 +5,10 @@ import java.io.File
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, TimerScheduler }
 import akka.actor.typed.{ ActorRef, Behavior }
 
-object SudokuProblemSender {
+object SudokuProblemSender:
 
-  enum Command {
+  enum Command:
     case SendNewSudoku
-  }
   export Command._
 
   type CommandAndResponses = Command | SudokuSolver.Response
@@ -26,12 +25,11 @@ object SudokuProblemSender {
         new SudokuProblemSender(sudokuSolver, context, timers, sudokuSolverSettings).sending()
       }
     }.narrow // Restrict the actor's [external] protocol to its set of commands
-}
 
 class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
                                    context: ActorContext[SudokuProblemSender.CommandAndResponses],
                                    timers: TimerScheduler[SudokuProblemSender.CommandAndResponses],
-                                   sudokuSolverSettings: SudokuSolverSettings) {
+                                   sudokuSolverSettings: SudokuSolverSettings):
   import SudokuProblemSender._
 
   private val initialSudokuField = rowUpdates.toSudokuField
@@ -83,4 +81,3 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
         context.log.info(s"${SudokuIO.sudokuPrinter(solution)}")
         Behaviors.same
     }
-}

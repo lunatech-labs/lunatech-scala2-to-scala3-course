@@ -5,13 +5,12 @@ import scala.language.implicitConversions
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
 import java.nio.file._
 
-class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers {
+class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers:
 
   val testKit: ActorTestKit = ActorTestKit()
 
-  override def afterAll(): Unit = {
+  override def afterAll(): Unit =
     testKit.shutdownTestKit()
-  }
 
   test("Sending no updates to a sudoku detail processor should result in sending a SudokuDetailUnchanged messsage") {
 
@@ -48,7 +47,7 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers {
     val detailParentProbe = testKit.createTestProbe[SudokuDetailProcessor.Response]()
     val detailProcessor = testKit.spawn(SudokuDetailProcessor[Block](id = 2))
 
-    val update1 = {
+    val update1 =
       val cellUpdates =
         stringToReductionSet(Vector(
           "12345678 ",
@@ -62,11 +61,10 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers {
           " 23   78 "
         )).zipWithIndex.map { _.swap}
       Update(CellUpdates(cellUpdates:_ *), detailParentProbe.ref)
-    }
 
     detailProcessor ! update1
 
-    val reducedUpdate1 = {
+    val reducedUpdate1 =
       val cellUpdates =
         stringToReductionSet(Vector(
         " 23 56   ",
@@ -81,7 +79,6 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers {
       )).zipWithIndex.map(_.swap)
 
       BlockUpdate(2, CellUpdates(cellUpdates:_ *))
-    }
 
     detailParentProbe.expectMessage(reducedUpdate1)
 
@@ -128,4 +125,3 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers {
     detailParentProbe.expectMessage(SudokuDetailUnchanged)
 
   } 
-}

@@ -28,7 +28,7 @@ import org.lunatechlabs.dotty.sudoku.{ SudokuProblemSender, SudokuSolver, Sudoku
 import scala.io.StdIn
 import scala.Console.{ GREEN, RESET }
 
-object Main {
+object Main:
   def apply(): Behavior[NotUsed] =
     Behaviors.setup { context =>
       val sudokuSolverSettings = SudokuSolverSettings("sudokusolver.conf")
@@ -44,16 +44,13 @@ object Main {
           Behaviors.stopped
       }
     }
-}
 
-object SudokuSolverMain {
+object SudokuSolverMain:
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit =
 
     val system = ActorSystem[NotUsed](Main(), "sudoku-solver-system")
 
     println(s"${GREEN}Hit RETURN to stop solver${RESET}")
     StdIn.readLine()
     system.terminate()
-  }
-}
