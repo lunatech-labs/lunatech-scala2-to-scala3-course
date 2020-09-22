@@ -138,15 +138,15 @@ object Scala3OpaqueTypeAliasesDefinitions {
     def apply(d: Double): Miles = d
   }
 
-  extension {
-    def (a: Kilometres) + (b: Kilometres): Kilometres = a + b
-    def (km: Kilometres).toMiles: Miles = km / 1.6
-  }
+  extension (a: Kilometres):
+    def +(b: Kilometres): Kilometres = a + b
+    def toMiles: Miles = a / 1.6
 
-  extension {
-    def (a: Miles) + (b: Miles): Miles = a + b
-    def (miles: Miles).toKm: Kilometres = miles * 1.6
-  }
+
+  extension (a: Miles):
+    // def +(b: Miles): Miles = a + b
+    def toKm: Kilometres = a * 1.6
+  
 
 }
 
