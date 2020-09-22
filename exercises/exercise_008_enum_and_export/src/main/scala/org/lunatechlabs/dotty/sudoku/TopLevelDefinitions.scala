@@ -14,12 +14,12 @@ val cellUpdatesEmpty = Vector.empty[(Int, Set[Int])]
 
 import SudokuDetailProcessor.RowUpdate
 
-def (update: Vector[SudokuDetailProcessor.RowUpdate]).toSudokuField: SudokuField = {
+extension (update: Vector[SudokuDetailProcessor.RowUpdate]) def toSudokuField: SudokuField = {
   import scala.language.implicitConversions
   val rows =
         update
           .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
-        .to(Map).withDefaultValue(cellUpdatesEmpty)
+          .to(Map).withDefaultValue(cellUpdatesEmpty)
       val sudoku = for {
         (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
         x = cellUpdates.to(Map).withDefaultValue(Set(0))
