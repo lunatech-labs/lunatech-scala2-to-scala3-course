@@ -3,18 +3,16 @@ package org.lunatechlabs.dotty.sudoku
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
 import akka.actor.typed.{ ActorRef, Behavior }
 
-object SudokuProgressTracker {
+object SudokuProgressTracker:
 
-  enum Command {
+  enum Command:
     case NewUpdatesInFlight(count: Int)
     case SudokuDetailState(index: Int, state: ReductionSet)
-  }
   export Command._
 
   // My responses
-  enum Response {
+  enum Response:
     case Result(sudoku: Sudoku)
-  }
   export Response._
 
   def apply(rowDetailProcessors: Map[Int, ActorRef[SudokuDetailProcessor.Command]],
@@ -24,13 +22,12 @@ object SudokuProgressTracker {
       new SudokuProgressTracker(rowDetailProcessors, context, sudokuSolver)
         .trackProgress(updatesInFlight = 0)
     }
-}
 
 class SudokuProgressTracker private (
   rowDetailProcessors: Map[Int, ActorRef[SudokuDetailProcessor.Command]],
   context: ActorContext[SudokuProgressTracker.Command],
   sudokuSolver: ActorRef[SudokuProgressTracker.Response]
-) {
+):
 
   import SudokuProgressTracker._
 
@@ -67,4 +64,3 @@ class SudokuProgressTracker private (
         context.log.error(s"Received unexpected message in state 'collectEndState': ${msg}")
         Behaviors.same
     }
-}

@@ -8,19 +8,17 @@ import scala.concurrent.duration._
 
 final case class SudokuField(sudoku: Sudoku)
 
-object SudokuSolver {
+object SudokuSolver:
 
   // SudokuSolver Protocol
-  enum Command {
+  enum Command:
     case InitialRowUpdates(rowUpdates: Vector[SudokuDetailProcessor.RowUpdate],
                                      replyTo: ActorRef[SudokuSolver.Response])
-  }
   export Command._
 
   // My Responses
-  enum Response {
+  enum Response:
     case SudokuSolution(sudoku: Sudoku)
-  }
   export Response._
 
   type CommandAndResponses = Command | SudokuDetailProcessor.Response | SudokuProgressTracker.Response
@@ -29,7 +27,7 @@ object SudokuSolver {
 
   def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
     context: ActorContext[CommandAndResponses]
-  ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] = {
+  ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
     import scala.language.implicitConversions
     cellIndexesVector
       .map { index =>
@@ -38,7 +36,6 @@ object SudokuSolver {
         (index, detailProcessor)
       }
       .to(Map)
-  }
 
   def apply(sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =
     Behaviors
@@ -54,11 +51,10 @@ object SudokuSolver {
         SupervisorStrategy
           .restartWithBackoff(minBackoff = 5.seconds, maxBackoff = 1.minute, randomFactor = 0.2)
       ).narrow
-}
 
 class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndResponses],
                             buffer: StashBuffer[SudokuSolver.CommandAndResponses]
-) {
+):
   import CellMappings._
   import SudokuSolver._
 
@@ -149,8 +145,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
     }
 
   private def resetAllDetailProcessors(): Unit =
-    for {
+    for
       processors <- allDetailProcessors
       (_, processor) <- processors
-    } processor ! SudokuDetailProcessor.ResetSudokuDetailState
-}
+    do processor ! SudokuDetailProcessor.ResetSudokuDetailState
