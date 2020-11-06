@@ -9,7 +9,7 @@ collectedLogs.zip
 .vscode
 *.code-workspace
 
-# Metals/Bloop specific
+# Metals/Bloop/sbt BSP specific
 .bloop/
 .metals/
 .swp

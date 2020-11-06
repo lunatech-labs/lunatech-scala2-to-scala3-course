@@ -30,7 +30,8 @@ extension[A] (updates: CellUpdates)
 
   def size: Int = updates.size
 
-def (update: (Int, Set[Int])) +: (updates: CellUpdates): CellUpdates = update +: updates
+extension (update: (Int, Set[Int]))
+  def +: (updates: CellUpdates): CellUpdates = update +: updates
 
 import SudokuDetailProcessor.RowUpdate
 
