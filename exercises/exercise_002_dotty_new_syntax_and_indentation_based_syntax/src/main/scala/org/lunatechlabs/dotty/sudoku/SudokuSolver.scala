@@ -90,8 +90,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(rowUpdates.size)
         processRequest(Some(sender), System.currentTimeMillis())
       case unexpectedMsg =>
-        // context.log.error("Received an unexpected message in 'idle' state: {}", unexpectedMsg)
-        context.log.error(s"Received an unexpected message in 'idle' state: ${unexpectedMsg}")
+        context.log.error("Received an unexpected message in 'idle' state: {}", unexpectedMsg)
         Behaviors.same
 
     }

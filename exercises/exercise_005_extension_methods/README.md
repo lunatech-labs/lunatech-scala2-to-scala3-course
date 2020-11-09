@@ -23,31 +23,19 @@ Now you can use it as follows
 With dotty `extension methods`, we can rewrite the above as
 
 ```scala
-def (i: Int).square: Int = i * i
+extension (i: Int)
+  def square: Int = i * i
 
 4.square
 // val res0: Int = 16
 ```
 
-More than one extension methods can be wrapped inside an `Extension Instance`,
-in order to make them available as methods without needing to be imported explicitly.
+Multiple extension methods on the same type can be defined just as easily. For example:
 
 ```scala
-extension {
-  def (x: Int).square : Int = x * x
-  def (x: Int).isEven: Boolean = x % 2 == 0
-}
-```
-
-When a series of extension methods need to be defined on the same type,
-encoding them one by one quickly becomes tedious. So-called
-`Collective Extensions` can group the definitions together.
-
-```scala
-extension on (x: Int){
-  def square : Int = x * x
-  def isEven: Boolean = x % 2 == 0
-}
+extension (i: Int):
+  def square: Int = i * i
+  def isEven: Boolean = i % 2 == 0
 ```
 
 > At present, Collective extensions have a limitation: the individual extension 

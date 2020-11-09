@@ -26,16 +26,14 @@ In Dotty, we can use enumerations to encode the protocol in a more succinct way.
 The example protocol listed above can be encoded in the following fashion:
 
 ```scala
-  enum Command {
+  enum Command:
     case CommandA(n: Int)
     case CommandB
     case CommandC(n1: Double)
-  }
 
-  enum Response {
+  enum Response:
     case ResponseA(sum: Double)
     case ResponseB
-  }
 ```
 
 The compiler will desugar this encoding in `case class`es and `case object`s that
