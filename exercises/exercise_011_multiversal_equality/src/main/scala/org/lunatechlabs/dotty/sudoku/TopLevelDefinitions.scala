@@ -16,7 +16,7 @@ object CellUpdates:
   def apply(updates: (Int, Set[Int])*): CellUpdates = Vector(updates: _*)
 val cellUpdatesEmpty: CellUpdates = Vector.empty[(Int, Set[Int])]
 
-given Eql[CellUpdates, CellUpdates] = Eql.derived
+given CanEqual[CellUpdates, CellUpdates] = CanEqual.derived
 
 extension[A] (updates: CellUpdates)
 
