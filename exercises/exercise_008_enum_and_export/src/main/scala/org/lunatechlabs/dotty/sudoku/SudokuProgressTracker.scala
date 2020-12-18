@@ -8,12 +8,12 @@ object SudokuProgressTracker:
   enum Command:
     case NewUpdatesInFlight(count: Int)
     case SudokuDetailState(index: Int, state: ReductionSet)
-  export Command._
+  export Command.{NewUpdatesInFlight, SudokuDetailState}
 
   // My responses
   enum Response:
     case Result(sudoku: Sudoku)
-  export Response._
+  export Response.Result
 
   def apply(rowDetailProcessors: Map[Int, ActorRef[SudokuDetailProcessor.Command]],
             sudokuSolver: ActorRef[Response]

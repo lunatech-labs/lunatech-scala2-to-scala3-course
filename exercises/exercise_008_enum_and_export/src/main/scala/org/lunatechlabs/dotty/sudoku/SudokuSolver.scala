@@ -17,12 +17,12 @@ object SudokuSolver:
   // Wrapped responses
     case SudokuDetailProcessorResponseWrapped(response: SudokuDetailProcessor.Response)
     case SudokuProgressTrackerResponseWrapped(response: SudokuProgressTracker.Response)
-  export Command._
+  export Command.{InitialRowUpdates, SudokuDetailProcessorResponseWrapped, SudokuProgressTrackerResponseWrapped}
 
   // My Responses
   enum Response:
     case SudokuSolution(sudoku: Sudoku)
-  export Response._
+  export Response.SudokuSolution
   
   import SudokuDetailProcessor.UpdateSender
 

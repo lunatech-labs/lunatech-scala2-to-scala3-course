@@ -23,8 +23,8 @@ import sbt._
 object Version {
   val akkaVer           = "2.6.10"
   val logbackVer        = "1.2.3"
-  val mUnitVer          = "0.7.19"
-  val scalaVersion      = "3.0.0-M2"
+  val mUnitVer          = "0.7.20"
+  val scalaVersion      = "3.0.0-M3"
 }
 
 object Dependencies {

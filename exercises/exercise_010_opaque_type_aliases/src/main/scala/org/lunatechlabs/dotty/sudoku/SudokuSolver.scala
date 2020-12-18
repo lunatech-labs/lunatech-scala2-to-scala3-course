@@ -14,12 +14,12 @@ object SudokuSolver:
   enum Command:
     case InitialRowUpdates(rowUpdates: Vector[SudokuDetailProcessor.RowUpdate],
                                      replyTo: ActorRef[SudokuSolver.Response])
-  export Command._
+  export Command.InitialRowUpdates
 
   // My Responses
   enum Response:
     case SudokuSolution(sudoku: Sudoku)
-  export Response._
+  export Response.SudokuSolution
 
   type CommandAndResponses = Command | SudokuDetailProcessor.Response | SudokuProgressTracker.Response
 
