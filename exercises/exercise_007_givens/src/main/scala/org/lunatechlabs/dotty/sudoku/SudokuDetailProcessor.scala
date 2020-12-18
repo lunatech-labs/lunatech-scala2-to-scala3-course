@@ -32,17 +32,17 @@ object SudokuDetailProcessor:
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit
     def processorName(id: Int): String
 
-  given UpdateSender[Row]:
+  given UpdateSender[Row] with
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! RowUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"row-processor-$id"
 
-  given UpdateSender[Column]:
+  given UpdateSender[Column] with
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! ColumnUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"col-processor-$id"
 
-  given UpdateSender[Block]:
+  given UpdateSender[Block] with
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! BlockUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"blk-processor-$id"

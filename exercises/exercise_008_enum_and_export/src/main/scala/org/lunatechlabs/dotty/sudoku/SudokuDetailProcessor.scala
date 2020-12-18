@@ -11,7 +11,7 @@ object SudokuDetailProcessor:
     case ResetSudokuDetailState
     case Update(cellUpdates: CellUpdates, replyTo: ActorRef[Response])
     case GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
-  export Command._
+  export Command.{ResetSudokuDetailState, Update, GetSudokuDetailState}
 
   // My responses
   enum Response:
@@ -19,7 +19,7 @@ object SudokuDetailProcessor:
     case ColumnUpdate(id: Int, cellUpdates: CellUpdates)
     case BlockUpdate(id: Int, cellUpdates: CellUpdates)
     case SudokuDetailUnchanged
-  export Response._
+  export Response.{RowUpdate, ColumnUpdate, BlockUpdate, SudokuDetailUnchanged}
 
   val InitialDetailState: ReductionSet = cellIndexesVector.map(_ => initialCell)
 
@@ -34,17 +34,17 @@ object SudokuDetailProcessor:
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit
     def processorName(id: Int): String
 
-  given UpdateSender[Row]:
+  given UpdateSender[Row] with
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! RowUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"row-processor-$id"
 
-  given UpdateSender[Column]:
+  given UpdateSender[Column] with
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! ColumnUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"col-processor-$id"
 
-  given UpdateSender[Block]:
+  given UpdateSender[Block] with
     override def sendUpdate(id: Int, cellUpdates: CellUpdates)(using sender: ActorRef[Response]): Unit =
       sender ! BlockUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"blk-processor-$id"
