@@ -11,7 +11,7 @@ object SudokuProblemSender:
     case SendNewSudoku
     // Wrapped responses
     case SolutionWrapper(result: SudokuSolver.Response)
-  export Command.{SendNewSudoku, SolutionWrapper}
+  export Command.*
 
   private val rowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =
     SudokuIO
