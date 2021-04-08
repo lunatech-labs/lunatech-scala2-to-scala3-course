@@ -31,7 +31,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
                                    timers: TimerScheduler[SudokuProblemSender.Command],
                                    sudokuSolverSettings: SudokuSolverSettings
 ):
-  import SudokuProblemSender._
+  import SudokuProblemSender.*
 
   private val solutionWrapper: ActorRef[SudokuSolver.Response] =
     context.messageAdapter(response => SolutionWrapper(response))

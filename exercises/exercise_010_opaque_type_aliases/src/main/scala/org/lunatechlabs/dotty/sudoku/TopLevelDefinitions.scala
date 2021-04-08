@@ -13,7 +13,7 @@ type Sudoku = Vector[ReductionSet]
 
 opaque type CellUpdates = Vector[(Int, Set[Int])]
 object CellUpdates:
-  def apply(updates: (Int, Set[Int])*): CellUpdates = Vector(updates: _*)
+  def apply(updates: (Int, Set[Int])*): CellUpdates = Vector(updates *)
 val cellUpdatesEmpty: CellUpdates = Vector.empty[(Int, Set[Int])]
 
 extension[A] (updates: CellUpdates)

@@ -1,4 +1,4 @@
-# Automatic rewriting  by the Dotty compiler of deprecated Scala 2 syntax 
+# Automatic rewriting  by the Scala 3 compiler of deprecated Scala 2 syntax 
 
 ## Background
 
@@ -51,7 +51,7 @@ pullTemplate scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala
 
 ```scala
 $ git add -A
-$ git commit -m "Snapshot before Dotty compiler rewrite"
+$ git commit -m "Snapshot before Scala 3 compiler rewrite"
 ```
 
 - Create a new `build.sbt` file in this exercise's base folder.

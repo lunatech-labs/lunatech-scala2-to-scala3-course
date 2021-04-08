@@ -2,7 +2,7 @@
 
 ## Background
 
-Dotty now has support for `Top Level Definitions`. In short, these replace Scala
+Scala 3 now has support for `Top Level Definitions`. In short, these replace Scala
 2's `package object`s. Definitions such as methods, [given] values, type aliases
 can be written at the top level.
 
@@ -32,6 +32,15 @@ def x(a: Int): Int = {
 ```
 
 ## Steps
+
+It's probably a good idea to have the Scala 3 `-source:future-migration`
+compiler option enabled permanently in the build definition of our project.
+Let's do this first:
+
+- Change the compiler options in `project/CompileOptions.scala` to include
+  `-source:future-migration`.
+
+Let's continue with the core topic of this exercise:
 
 - Find any package objects available in the existing project
 
