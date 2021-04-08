@@ -22,7 +22,7 @@ Following is a typical protocol definition:
   case      object ResponseB              extends Response
 ```
 
-In Dotty, we can use enumerations to encode the protocol in a more succinct way.
+In Scala 3, we can use enumerations to encode the protocol in a more succinct way.
 The example protocol listed above can be encoded in the following fashion:
 
 ```scala
@@ -46,7 +46,7 @@ For example, `CommandA`, qualified at the package level is at `Command.CommandA`
 It would be inconvenient that, because of the switch to the elegant enum
 based encoding of the protocol, we would have to change all occurrences
 of `Command` or `Response` references to qualified ones. There's an easy way
-to avoid this by using Dotty's `export` feature and we will apply this feature
+to avoid this by using Scala 3's `export` feature and we will apply this feature
 in this exercise.
 
 
@@ -60,13 +60,13 @@ in this exercise.
   - `SudokuProgressTracker`
   - `SudokuDetailProcessor`
 
-- Change the current encoding to a Dotty enum based one
+- Change the current encoding to a Scala 3 enum based one
   - Note that some of the actors have so-called `ResponseWrappers`. Leave
     these unmodified: include them in the protocol for the time being: we
     will remove these in the next exercise. You may have to change the
     `ResponseWrapper` from `private` to a public members
     
-- Use Dotty's `export` feature to avoid having to refactor the code to
+- Use Scala 3's `export` feature to avoid having to refactor the code to
   utilise qualified references to the messages
 
 - Run the provided tests by executing the `test` command from the `sbt` prompt

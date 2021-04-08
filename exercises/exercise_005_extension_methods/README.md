@@ -4,7 +4,7 @@
 
 Extension methods can be used to add methods to types after they are defined.
 
-Lets say we need to add a method `square` to type `Int`. We used to achieve it 
+Let's say we need to add a method `square` to type `Int`. We used to achieve it 
 with the help of `implicit class`es in _Scala 2_
 
 ```scala
@@ -20,7 +20,7 @@ Now you can use it as follows
 // res1: Int = 16
 ```
 
-With dotty `extension methods`, we can rewrite the above as
+With Scala 3's `extension methods`, we can rewrite the above as
 
 ```scala
 extension (i: Int)
@@ -51,7 +51,7 @@ which we have created in one of the previous exercises.
 
 - Identify all extension methods defined using the _Scala 2 way_
 
-- Replace them with `Dotty` extension methods
+- Replace them with Scala 3 extension methods
 
 - Wrap one or more occurrences of such method in an `extension instance`
 

@@ -49,7 +49,7 @@ object SudokuDetailProcessor:
 
 class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] private (context: ActorContext[SudokuDetailProcessor.Command]):
 
-  import SudokuDetailProcessor._
+  import SudokuDetailProcessor.*
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
     Behaviors.receiveMessage {

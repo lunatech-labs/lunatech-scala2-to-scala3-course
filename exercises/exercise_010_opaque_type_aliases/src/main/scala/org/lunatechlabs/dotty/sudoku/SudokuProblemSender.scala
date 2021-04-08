@@ -9,7 +9,7 @@ object SudokuProblemSender:
 
   enum Command:
     case SendNewSudoku
-  export Command._
+  export Command.*
 
   type CommandAndResponses = Command | SudokuSolver.Response
 
@@ -30,7 +30,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
                                    context: ActorContext[SudokuProblemSender.CommandAndResponses],
                                    timers: TimerScheduler[SudokuProblemSender.CommandAndResponses],
                                    sudokuSolverSettings: SudokuSolverSettings):
-  import SudokuProblemSender._
+  import SudokuProblemSender.*
 
   private val initialSudokuField = rowUpdates.toSudokuField
 

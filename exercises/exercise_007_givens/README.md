@@ -2,11 +2,11 @@
 
 ## Background
 
-In this exercise, we will utilise Dotty's `given`s. The goal is to replace
+In this exercise, we will utilise Scala 3's `given`s. The goal is to replace
 all occurrences of Scala 2's `implicit` in places where an *implicit value*
 is defined.
 
-Important to note is that Dotty allows us to define a `given` instance without
+Important to note is that Scala 3 allows us to define a `given` instance without
 having to name it. This is pretty cool as it allows us to not have to come up
 with a name for a `given`, first of all because naming stuff can be hard and
 secondly because these names don't really have a useful application.

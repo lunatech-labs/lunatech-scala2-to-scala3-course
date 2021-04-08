@@ -2,11 +2,11 @@
 
 ## Background
 
-In this exercise, we will utilize Dotty's `using` and `summon` to replace the
+In this exercise, we will utilize Scala 3's `using` and `summon` to replace the
 use of _scala 2_'s `implicit`s and `implicitly`.
 
 > In _scala 2_,`implicitly` is used to check if an implicit value of type `T` 
-> is available and return it. A more precise variant of it is available in Dotty 
+> is available and return it. A more precise variant of it is available in Scala 3 
 > named `summon`.
 
 ## Steps

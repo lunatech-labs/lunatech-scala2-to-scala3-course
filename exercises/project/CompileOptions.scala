@@ -29,6 +29,7 @@ object CompileOptions {
   val compileOptions = Seq(
     "-unchecked",
     "-deprecation",
-    "-encoding", "UTF-8"
+    "-encoding", "UTF-8",
+    //"-source:future-migration",
   )
 }

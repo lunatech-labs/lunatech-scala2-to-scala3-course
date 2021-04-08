@@ -14,8 +14,7 @@ object SudokuIO:
     (for  subRow <- 0 until 3  yield printSubRow(subRow)).mkString("\n")
 
   def printRowShort( row: ReductionSet): String =
-    (for
-      elem <- row
+    (for (elem <- row)
     yield {
       if elem.size == 1 then elem.head.toString else " "
     }).mkString("|","|","|")

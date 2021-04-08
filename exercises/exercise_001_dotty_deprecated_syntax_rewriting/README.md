@@ -1,21 +1,21 @@
-# Automatic rewriting  by the Dotty compiler of deprecated Scala 2 syntax 
+# Automatic rewriting  by the Scala 3 compiler of deprecated Scala 2 syntax 
 
 ## Background
 
-In this exercise, we will play with `dotc`'s capability to report and rewrite
+In this exercise, we will play with `scalac`'s capability to report and rewrite
 occurrences of some of the Scala 2 language features that are deprecated in
-Scala 2.13
+Scala 2.13.
 
 ## Steps
 
 Let's first explore what the compiler can help us with when migrating our
-Scala 2.13 based application to Dotty. The compiler has a compile option `-source`
+Scala 2.13 based application to Scala 3. The compiler has an option `-source`
 for which we can specify an additional argument. Here's the abbreviated output
-from `dotc -help`
+from `scalac -help`.
 
 ```bash
 $ dotc -help
-Usage: dotc <options> <source files>
+Usage: scalac <options> <source files>
 where possible standard options include:
 -P                 Pass an option to a plugin, e.g. -P:<plugin>:<opt>
 -X                 Print a synopsis of advanced options.
@@ -29,7 +29,7 @@ where possible standard options include:
 ...
 -source            source version
                    Default: 3.0.
-                   Choices: 3.0, 3.1, 3.0-migration, 3.1-migration.
+                   Choices: 3.0, future, 3.0-migration, future-migration.
 ```
 
 We have introduced some deprecated Scala 2 syntactic constructions on purpose so
@@ -42,7 +42,7 @@ pullTemplate scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala
 ```
 
 > NOTE: The course repository you're using at the moment is a git repository.
->      This will be helpfull to see the changes that the compiler applies
+>      This will be helpful to see the changes that the compiler applies
 >      when re-writing source files
 
 - Let's start by taking a snapshot in git of the current state of the exercise
@@ -51,10 +51,10 @@ pullTemplate scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala
 
 ```scala
 $ git add -A
-$ git commit -m "Snapshot before Dotty compiler rewrite"
+$ git commit -m "Snapshot before Scala 3 compiler rewrite"
 ```
 
-- Create a new `build.sbt` file in this exercise's base folder
+- Create a new `build.sbt` file in this exercise's base folder.
 - In that file, add the following lines:
 
 ```scala
@@ -66,7 +66,7 @@ scalacOptions ++=
 
 > Note: When changing the build definition by adding the `build.sbt` and
   subsequently editing its content, don't forget to reload the build
-  definition in `sbt` (by issuing the `reload` command)
+  definition in `sbt` (by issuing the `reload` command).
 
 - Compile and investigate what the compiler reports
 
@@ -84,7 +84,12 @@ scalacOptions ++=
 
 > NOTE:  The easiest way to see what the compiler changed is to run the `git diff` command
 
-We can repeat this process by changing the compiler `-source` compiler option
-to `-source:3.1-migration`
+We can take this process a step further by changing the compiler
+`-source` compiler option to `-source:future-migration`.
+This will apply some syntax changes that are already scheduled for a
+post-3.0.0 Scala release. One example is the change of wildcard import
+syntax from using an asterix (`*`) instead of an underscore (`_`).
 
-- Try this out for your self and check what is reported and what changes
+- Try this out for yourself and check what is reported and what changes.
+- Add the "-rewrite" option to have the compiler apply all the reported
+  changes.

@@ -1,23 +1,18 @@
-# Exploring Dotty's new control structure and indentation based syntax
+# Exploring Scala 3's new control structure and significant indentation based syntax
 
 
 ## Background
 
-Dotty introduces some new syntax which can be divided in two categories:
+Scala 3 introduces some new syntax which can be divided in two categories:
 
 - A new control structure syntax
-- The possibility to use an indentation based syntax as opposed to the traditional
-  syntax using curly braces
+- The possibility to use a significant indentation based syntax as opposed
+  to the traditional syntax using curly braces
 
-The Dotty compiler includes a rewrite functionality to rewrite existing source code
-to a different syntax.
-
-It should be noted that the indentation based syntax only works with the new control
-structure syntax. As a consequence, changes to the syntax goes to a specific sequence:
-
-- Curly braces syntax + old control structure syntax
-- Curly braces syntax + new control structure syntax
-- Indentation based syntax + new control structure syntax
+The Scala 3 compiler is able to rewrite existing source code to a different syntax.
+Note that this rewriting is done one step at a time. In other words, rewriting to 
+the new significant indentation based syntax -and- to the new control structure syntax
+cannot be done in a single step.
 
 Changing the syntax is a reversible process (except that after going back to where
 one came from, the formatting may be different, but semantically equivalent).
@@ -42,7 +37,7 @@ one came from, the formatting may be different, but semantically equivalent).
 
 ```scala
 $ git add -A
-$ git commit -m "Snapshot before Dotty compiler syntax rewrites"
+$ git commit -m "Snapshot before Scala 3 compiler syntax rewrites"
 ```
 
 - The values on the right side of the `++=` operator are defined in the beginning

@@ -27,7 +27,7 @@ class SudokuProgressTracker private (
   sudokuSolver: ActorRef[SudokuProgressTracker.Response]
 ) {
 
-  import SudokuProgressTracker._
+  import SudokuProgressTracker.*
 
   def trackProgress(updatesInFlight: Int): Behavior[Command] =
     Behaviors.receiveMessage {

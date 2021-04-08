@@ -11,7 +11,7 @@ object SudokuDetailProcessor:
     case ResetSudokuDetailState
     case Update(cellUpdates: CellUpdates, replyTo: ActorRef[Response])
     case GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
-  export Command.{ResetSudokuDetailState, Update, GetSudokuDetailState}
+  export Command.*
 
   // My responses
   enum Response:
@@ -19,7 +19,7 @@ object SudokuDetailProcessor:
     case ColumnUpdate(id: Int, cellUpdates: CellUpdates)
     case BlockUpdate(id: Int, cellUpdates: CellUpdates)
     case SudokuDetailUnchanged
-  export Response.{RowUpdate, ColumnUpdate, BlockUpdate, SudokuDetailUnchanged}
+  export Response.*
 
   val InitialDetailState: ReductionSet = cellIndexesVector.map(_ => initialCell)
 

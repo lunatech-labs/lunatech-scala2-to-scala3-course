@@ -4,7 +4,7 @@ import akka.actor.typed.receptionist.{ Receptionist, ServiceKey }
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, StashBuffer }
 import akka.actor.typed.{ ActorRef, Behavior, SupervisorStrategy }
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 final case class SudokuField(sudoku: Sudoku)
 
@@ -55,8 +55,8 @@ object SudokuSolver:
 class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndResponses],
                             buffer: StashBuffer[SudokuSolver.CommandAndResponses]
 ):
-  import CellMappings._
-  import SudokuSolver._
+  import CellMappings.*
+  import SudokuSolver.*
 
   private val rowDetailProcessors = genDetailProcessors[Row](context)
   private val columnDetailProcessors = genDetailProcessors[Column](context)

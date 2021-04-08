@@ -23,7 +23,7 @@ pairs map {
 }
 // res1: List[Int] = List(1, 3, 5)
 ```
-Dotty now allows us to write
+Scala 3 now allows us to write
 
 ```scala
 pairs map {
