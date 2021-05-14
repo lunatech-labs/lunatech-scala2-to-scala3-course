@@ -1,16 +1,12 @@
-val dottyVersion = "0.27.0-RC1"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val `dotty-snippets` = project
   .in(file("."))
-  .settings(ThisBuild / scalaVersion := dottyVersion)
+  .settings(ThisBuild / scalaVersion := "3.0.0-RC3")
   .settings(
     name := "dotty-simple",
     version := "0.1.0",
-
-    //ThisBuild / scalaVersion := dottyVersion,
-    ThisBuild / scalaVersion := dottyLatestNightlyBuild.get,
 
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
   )
