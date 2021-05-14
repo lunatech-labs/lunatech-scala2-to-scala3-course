@@ -3,7 +3,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val `dotty-snippets` = project
   .in(file("."))
-  .settings(ThisBuild / scalaVersion := "3.0.0-RC3")
+  .settings(ThisBuild / scalaVersion := "3.0.0")
   .settings(
     name := "dotty-simple",
     version := "0.1.0",
