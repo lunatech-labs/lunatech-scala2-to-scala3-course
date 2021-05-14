@@ -1,4 +1,4 @@
-package org.lunatech.dotty.opaquetypes
+// Metals Scala worksheet
 
 object Scala2TypeAliases:
   type Kilometres = Double
@@ -123,12 +123,14 @@ import scala.annotation.targetName
 
 object Scala3OpaqueTypeAliasesDefinitions:
   opaque type Kilometres = Double
-  object Kilometres:
+  object Kilometres {
     def apply(d: Double): Kilometres = d
+  }
 
   opaque type Miles = Double
-  object Miles:
+  object Miles {
     def apply(d: Double): Miles = d
+  }
 
   extension (a: Kilometres)
     @targetName("plusKm")
@@ -194,11 +196,10 @@ object Scala3OpaqueTypeAliasesNoAllocations1:
 
 end Scala3OpaqueTypeAliasesNoAllocations1
 
-@main def Scala3OpaqueTypeAliasesNoAllocations1Main(): Unit =
-  Scala3OpaqueTypeAliasesNoAllocations1.result1.distanceTravelled
-  Scala3OpaqueTypeAliasesNoAllocations1.result2.distanceTravelled
+Scala3OpaqueTypeAliasesNoAllocations1.result1.distanceTravelled
+Scala3OpaqueTypeAliasesNoAllocations1.result2.distanceTravelled
 
-object Scala3OpaqueTypeAliasesNoAllocations2:
+object Scala3OpaqueTypeAliasesNoAllocations2 {
   import Scala3OpaqueTypeAliasesDefinitions._
 
   class Rocket(val distanceTravelled: Kilometres) {
@@ -225,20 +226,14 @@ object Scala3OpaqueTypeAliasesNoAllocations2:
   val result1 = booster.advanceRocket[Kilometres](rocket1, Kilometres(100)) // No allocation of Kilometres object
   val result2 = booster.advanceRocket(rocket2, Miles(200)) // No allocation of Miles object
 
-end Scala3OpaqueTypeAliasesNoAllocations2
+}
 
-@main def scala3OpaqueTypeAliasesNoAllocations2Main(): Unit =
-  Scala3OpaqueTypeAliasesNoAllocations2.result1.distanceTravelled
-  Scala3OpaqueTypeAliasesNoAllocations2.result2.distanceTravelled
+Scala3OpaqueTypeAliasesNoAllocations2.result1.distanceTravelled
+Scala3OpaqueTypeAliasesNoAllocations2.result2.distanceTravelled
 
-object Scala3OpaqueTypeAliasesNoAllocations3:
+object Scala3OpaqueTypeAliasesNoAllocations3 {
   export Scala3OpaqueTypeAliasesDefinitions._
 
-  /* The line below results in the following Java code being generated:
-   *
-   *    public static double[] distances() {
-   *        return Scala3OpaqueTypeAliasesNoAllocations3$.MODULE$.distances();
-   *    }
-   * 
-   */
   val distances: Array[Kilometres] = Array(Kilometres(10)) // No allocation of Kilometres object
+
+}

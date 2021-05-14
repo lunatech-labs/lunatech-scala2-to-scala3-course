@@ -8,36 +8,29 @@ import java.util.UUID
  * But in the refactor we forgot to change the Repository.findById.
  * This will type-check but we will not find the repository
  */
-object Bad1 {
+object Bad1:
   final case class Id(value: Long) extends AnyVal
   final case class Item(id: UUID)
 
-  class Repository(items: Seq[Item]) {
+  class Repository(items: Seq[Item]):
     def findById(id: Id): Option[Item] = {
       items.find(_.id == id)
     }
-  }
-}
 
 /**
  * Same as above but now we import strictEquality in the scope. This will now
  * fail to compile because we don't have any Eql typeclass instances for
  * comparing 'Id' with UUID
  */
-object Bad2 {
-  import scala.language.strictEquality
+object Bad2:
 
   final case class Id(value: Long) extends AnyVal
   final case class Item(id: UUID)
 
-  class Repository(items: Seq[Item]) {
-
-    /** COMMENTED OUT. DOES NOT COMPILE.
-
-    def findById(id: Id): Option[Item] = {
-      items.find(_.id == id)
-    }
-
-    */
-  }
-}
+  import scala.language.strictEquality
+  /** COMMENTED OUT. DOES NOT COMPILE. 
+   *  For illustration purposes
+   */
+  // class Repository(items: Seq[Item]):    
+  //   def findById(id: Id): Option[Item] =
+  //     items.find(_.id == id)      // Thus futile comparison is flagged as an error

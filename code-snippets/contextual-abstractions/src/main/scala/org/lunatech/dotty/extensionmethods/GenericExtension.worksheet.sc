@@ -1,4 +1,6 @@
-package org.lunatech.dotty.extensionmethods
+// Metals Scala worksheet
+
+import scala.annotation.targetName
 
 extension [T](xs: List[T])
   def second =
@@ -9,13 +11,17 @@ extension [T](xs: List[List[T]])
     xs.foldLeft[List[T]](Nil)(_ ++ _)
 
 extension [T: Numeric](x: T)
-  def  + (y: T): T =
+  def +++ (y: T): T =
     summon[Numeric[T]].plus(x, y)
+  def --- (y: T): T = 
+    summon[Numeric[T]].minus(x, y)
 
-def [T: Numeric](x: T) - (y: T) = summon[Numeric[T]].plus(x, y)
+1 --- 2
+2 +++ 1
 
 case class Circle(x: Double, y: Double, radius: Double)
-def (c: Circle).circumference: Double = c.radius * math.Pi * 2
 
-@main def circles() =
-  println(s"Circle: ${Circle(1.0, 2.0, 4).circumference}")
+extension (c: Circle) 
+  def circumference: Double = c.radius * math.Pi * 2
+
+Circle(1.0, 2.0, 4).circumference

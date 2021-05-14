@@ -1,4 +1,3 @@
-package org.lunatech.dotty.givens
 
 import scala.language.implicitConversions
 
@@ -11,43 +10,39 @@ case class Farenheit(value: Double) extends TemperatureScale
 // implicit conversions
 // see: https://dotty.epfl.ch/docs/reference/contextual/conversions.html
 
-given Conversion[Celcius, Farenheit] {
+given Conversion[Celcius, Farenheit] with {
   def apply(temperature: Celcius): Farenheit = Farenheit((temperature.value * 9/5) + 32)
 }
 
-given Conversion[Farenheit, Celcius] {
+given Conversion[Farenheit, Celcius] with {
   def apply(temperature: Farenheit): Celcius = Celcius((temperature.value - 32) * 5/9)
 }
 
-trait TemperatureConverter[T, U] {
+trait TemperatureConverter[T, U]:
   def convert[U](value: T)(using conversion: Conversion[T, U]): U
-}
 
-given TemperatureConverter[Farenheit, Celcius]{
+given TemperatureConverter[Farenheit, Celcius] with {
   override def convert[Celcius](temperature: Farenheit)(using conversion: Conversion[Farenheit, Celcius]): Celcius = {
     conversion(temperature)
   }
 }
 
-given TemperatureConverter[Celcius, Farenheit] {
+given TemperatureConverter[Celcius, Farenheit] with {
   override def convert[Farenheit](temperature: Celcius)(using conversion: Conversion[Celcius, Farenheit]): Farenheit = {
     conversion(temperature)
   }
 }
 
-@main def test():Unit = {
+val celciusConverter = summon[TemperatureConverter[Celcius, Farenheit]]
+val temperatureCelcius = Celcius(37.0)
+val converted = celciusConverter.convert(Celcius(37.0))
 
-  val celciusConverter = summon[TemperatureConverter[Celcius, Farenheit]]
-  val temperatureCelcius = Celcius(37.0)
-  val converted = celciusConverter.convert(Celcius(37.0))
+println(s"Temperature in Celcius: ${temperatureCelcius.value}")
+println(s"Converted temperature in Farenheit: ${converted.value}")
 
-  println(s"Temperature in Celcius: ${temperatureCelcius.value}")
-  println(s"Converted temperature in Farenheit: ${converted.value}")
+val farenheitConverter = summon[TemperatureConverter[Farenheit, Celcius]]
+val temperatureFaren = Farenheit(102.0)
+val convertedTemp = farenheitConverter.convert(temperatureFaren)
 
-  val farenheitConverter = summon[TemperatureConverter[Farenheit, Celcius]]
-  val temperatureFaren = Farenheit(102.0)
-  val convertedTemp = farenheitConverter.convert(temperatureFaren)
-
-  println(s"Temperature in Farenheit: ${temperatureFaren.value}")
-  println(s"Converted temperature in Celcius: ${convertedTemp.value}")
-}
+println(s"Temperature in Farenheit: ${temperatureFaren.value}")
+println(s"Converted temperature in Celcius: ${convertedTemp.value}")

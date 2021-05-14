@@ -30,8 +30,15 @@ object MultipleUsingClauses2 {
   object Mul { def apply(n: Int): Mul = n}
   object Add { def apply(n: Int): Add = n}
 
-  def (m: Mul).asInt: Int = m
-  //def (m: Add).asInt: Int = m
+  import scala.annotation.targetName
+
+  extension (m: Mul)
+    @targetName("mullAsInt")
+    def asInt: Int = m
+
+  extension (a: Add)
+    @targetName("addAsInt")
+    def asInt: Int = a
  
   @main def MUC_1: Unit = {
     val r = 5
@@ -47,7 +54,7 @@ object Use {
   given Add = Add(20)
 
   @main def useIt = {
-    //val r = 10 * summon[Mul].asInt + summon[Add].asInt
-    //println(r)
+    val r = 10 * summon[Mul].asInt + summon[Add].asInt
+    println(r)
   }
 }

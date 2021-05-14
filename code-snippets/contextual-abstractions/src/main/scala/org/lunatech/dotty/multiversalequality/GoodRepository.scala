@@ -8,7 +8,7 @@ object Good {
   final case class Id(value: Long) extends AnyVal
   final case class Item(id: UUID)
 
-  given Eql[UUID, UUID] = Eql.derived
+  given CanEqual[UUID, UUID] = CanEqual.derived
 
   class Repository(items: Seq[Item]) {
     def findById(id: UUID): Option[Item] = {
