@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
         
       - name: Setup Course Management Tools
-        uses: robinraju/release-downloader@v1
+        uses: robinraju/release-downloader@v1.1
         with:
           repository: eloots/course-management-tools
           tag: "1.0.0"
@@ -36,23 +36,10 @@ jobs:
         with:
           java-version: 11
       
-      - name: Cache Ivy
-        uses: actions/cache@v2
+      - name: Setup Coursier Cache
+        uses: coursier/cache-action@v6.2
         with:
-          path: ~/.ivy2/cache
-          key: ${{ runner.os }}-ivy--${{ hashFiles('**/build.sbt') }}
-          restore-keys: |
-            ${{ runner.os }}-ivy-
-            ${{ runner.os }}-
-            
-      - name: Cache SBT
-        uses: actions/cache@v2
-        with:
-          path: ~/.sbt            
-          key: ${{ runner.os }}-sbt-${{ hashFiles('project/**') }}
-          restore-keys: |
-            ${{ runner.os }}-sbt-
-            ${{ runner.os }}-
+          root: "course-repo"
       
       - name: Generate Tests Script using CMT
         run: |
@@ -80,7 +67,7 @@ jobs:
           fetch-depth: 0          
       
       - name: Setup Course Management Tools
-        uses: robinraju/release-downloader@v1
+        uses: robinraju/release-downloader@v1.1
         with:
           repository: eloots/course-management-tools
           tag: "1.0.0"
@@ -95,23 +82,10 @@ jobs:
         with:
           java-version: 11
       
-      - name: Cache Ivy
-        uses: actions/cache@v2
+      - name: Setup Coursier Cache
+        uses: coursier/cache-action@v6.2
         with:
-          path: ~/.ivy2/cache
-          key: ${{ runner.os }}-ivy--${{ hashFiles('**/build.sbt') }}
-          restore-keys: |
-            ${{ runner.os }}-ivy-
-            ${{ runner.os }}-
-      
-      - name: Cache SBT
-        uses: actions/cache@v2
-        with:
-          path: ~/.sbt            
-          key: ${{ runner.os }}-sbt-${{ hashFiles('project/**') }}
-          restore-keys: |
-            ${{ runner.os }}-sbt-            
-            ${{ runner.os }}-
+          root: "lunatech-scala-2-to-scala3-course"
       
       - name: Studentify Repo
         run: |
