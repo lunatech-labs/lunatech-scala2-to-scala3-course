@@ -123,7 +123,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
         }
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(2 * updates.size - 1)
         Behaviors.same
-      case unchanged @ SudokuDetailProcessor.SudokuDetailUnchanged =>
+      case _: SudokuDetailProcessor.SudokuDetailUnchanged.type =>
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(-1)
         Behaviors.same
 

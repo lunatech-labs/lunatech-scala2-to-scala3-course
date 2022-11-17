@@ -72,7 +72,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
 
   def sending(): Behavior[CommandAndResponses] = 
     Behaviors.receiveMessage {
-      case SendNewSudoku =>
+      case _: SendNewSudoku.type =>
         context.log.debug("sending new sudoku problem")
         val nextRowUpdates = rowUpdatesSeq.next
         sudokuSolver ! SudokuSolver.InitialRowUpdates(nextRowUpdates, context.self)
