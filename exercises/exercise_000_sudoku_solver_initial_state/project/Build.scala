@@ -1,5 +1,19 @@
 import sbt._
 
+object CompileOptions {
+
+  val rewriteNewSyntax = Seq("-rewrite", "-new-syntax")
+  val rewriteIndent = Seq("-rewrite", "-indent")
+  val rewriteNoIndent = Seq("-rewrite", "-noindent")
+  val rewriteOldSyntax = Seq("-rewrite", "-old-syntax")
+
+  val compileOptions = Seq(
+    "-unchecked",
+    "-deprecation",
+    "-encoding", "UTF-8",
+  )
+}
+
 object Version {
   val akkaVer           = "2.6.19"
   val logbackVer        = "1.2.3"
@@ -27,11 +41,9 @@ object Dependencies {
     "org.scalameta" %% "munit" % Version.mUnitVer % Test
   )
 
-  val crossDependencies: Seq[ModuleID] =
-    akkaDeps ++
-    akkaTestkitDeps
-
   val dependencies: Seq[ModuleID] =
     logbackDeps ++
-    munitDeps
+    munitDeps ++
+    akkaDeps ++
+    akkaTestkitDeps
 }
