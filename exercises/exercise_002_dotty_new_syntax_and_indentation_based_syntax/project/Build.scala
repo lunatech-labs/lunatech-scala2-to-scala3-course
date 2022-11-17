@@ -11,7 +11,7 @@ object CompileOptions {
     "-unchecked",
     "-deprecation",
     "-encoding", "UTF-8",
-  ) ++ rewriteIndent
+  )
 }
 
 object Version {

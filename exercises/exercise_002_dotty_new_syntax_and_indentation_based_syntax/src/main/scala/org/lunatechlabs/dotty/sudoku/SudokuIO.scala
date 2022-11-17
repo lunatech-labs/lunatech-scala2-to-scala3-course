@@ -2,51 +2,44 @@ package org.lunatechlabs.dotty.sudoku
 
 import java.util.NoSuchElementException
 
-object SudokuIO {
+object SudokuIO:
 
-  def printRow( row: ReductionSet): String = {
-    def printSubRow( subRowNo: Int): String = {
+  def printRow( row: ReductionSet): String =
+    def printSubRow( subRowNo: Int): String =
       val printItems = List(1,2,3).map( x => x + subRowNo * 3)
-      (for  (elem <- row) 
+      (for  elem <- row 
         yield {
-          (printItems.map (item => if ((elem & printItems.toSet).contains(item)) item.toString else " ")).mkString("")
+          (printItems.map (item => if (elem & printItems.toSet).contains(item) then item.toString else " ")).mkString("")
         }).mkString("| ", " | ", " |")
-    }
-    (for  (subRow <- 0 until 3)  yield printSubRow(subRow)).mkString("\n")
-  }
+    (for  subRow <- 0 until 3  yield printSubRow(subRow)).mkString("\n")
 
-  def printRowShort( row: ReductionSet): String = {
-    (for (elem <- row)
+  def printRowShort( row: ReductionSet): String =
+    (for elem <- row
     yield {
-      if (elem.size == 1) elem.head.toString else " "
+      if elem.size == 1 then elem.head.toString else " "
     }).mkString("|","|","|")
 
-  }
 
-  private def sudokuCellRepresentation(content: CellContent): String = {
-    content.toList match {
+  private def sudokuCellRepresentation(content: CellContent): String =
+    content.toList match
       case Nil => "x"
       case singleValue +: Nil => singleValue.toString
       case _ => " "
-    }
-  }
 
-  private def sudokuRowPrinter(threeRows: Vector[ReductionSet]): String = {
-    val rowSubBlocks = for {
+  private def sudokuRowPrinter(threeRows: Vector[ReductionSet]): String =
+    val rowSubBlocks = for
       row <- threeRows
       rowSubBlock <- row.map(el => sudokuCellRepresentation(el)).sliding(3,3)
       rPres = rowSubBlock.mkString
 
-    } yield rPres
+    yield rPres
     rowSubBlocks.sliding(3,3).map(_.mkString("", "|", "")).mkString("|", "|\n|", "|\n")
-  }
 
-  def sudokuPrinter(result: SudokuSolver.SudokuSolution): String = {
+  def sudokuPrinter(result: SudokuSolver.SudokuSolution): String =
     result.sudoku
       .sliding(3,3)
       .map(sudokuRowPrinter)
       .mkString("\n+---+---+---+\n", "+---+---+---+\n", "+---+---+---+")
-  }
 
   /*
    * FileLineTraversable code taken from "Scala in Depth" by Joshua Suereth
@@ -54,52 +47,45 @@ object SudokuIO {
 
   import java.io.{BufferedReader, File, FileReader}
 
-  class FileLineTraversable(file: File) extends Iterable[String] {
+  class FileLineTraversable(file: File) extends Iterable[String]:
     val fr = new FileReader(file)
     val input = new BufferedReader(fr)
     var cachedLine: Option[String] = None
     var finished: Boolean = false
 
-    override def iterator: Iterator[String] = new Iterator[String] {
+    override def iterator: Iterator[String] = new Iterator[String]:
 
-      override def hasNext: Boolean = (cachedLine, finished) match {
+      override def hasNext: Boolean = (cachedLine, finished) match
         case (Some(_), _) => true
 
         case (None, true) => false
 
         case (None, false) =>
-          try {
+          try
             val line = input.readLine()
-            if (line == null) {
+            if line == null then
               finished = true
               input.close()
               fr.close()
               false
-            } else {
+            else
               cachedLine = Some(line)
               true
-            }
-          } catch {
+          catch
             case e: java.io.IOError =>
               throw new IllegalStateException(e.toString)
-          }
-      }
 
-      override def next(): String = {
-        if (! hasNext) {
+      override def next(): String =
+        if ! hasNext then
           throw new NoSuchElementException("No more lines in file")
-        }
         val currentLine = cachedLine.get
         cachedLine = None
         currentLine
-      }
-    }
     override def toString: String =
       "{Lines of " + file.getAbsolutePath + "}"
-  }
 
   def convertFromCellsToComplete(cellsIn: Vector[(String, Int)]): Vector[(Int, CellUpdates)] =
-    for {
+    for
       (rowCells, row) <- cellsIn
       updates = rowCells.zipWithIndex.foldLeft(cellUpdatesEmpty) {
         case (cellUpdates, (c, index)) if c != ' ' =>
@@ -107,10 +93,10 @@ object SudokuIO {
         case (cellUpdates, _) => cellUpdates
       }
 
-    } yield (row, updates)
+    yield (row, updates)
 
 
-  def readSudokuFromFile(sudokuInputFile: java.io.File): Vector[(Int, CellUpdates)] = {
+  def readSudokuFromFile(sudokuInputFile: java.io.File): Vector[(Int, CellUpdates)] =
     val dataLines = new FileLineTraversable(sudokuInputFile).toVector
     val cellsIn =
       dataLines
@@ -121,5 +107,3 @@ object SudokuIO {
         .zipWithIndex
 
     convertFromCellsToComplete(cellsIn)
-  }
-}
