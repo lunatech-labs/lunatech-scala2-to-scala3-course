@@ -28,6 +28,9 @@ $ cs complete-dep org.scala-lang:scala3-compiler_3:
 .
 ```
 
+Now that you've figured out what the most recent version of the Scala 3 compiler is,
+adapt the build to utilise this version (change `code/build.sbt`).
+
 As we need to have a look at the options supported by the Scala 3 compiler, we need to install
 the compiler first. Let's use Coursier to do this. For example, if we want to install version
 3.0.2 (which certainly isn't the most recent version at this moment...), we do this as follows:
@@ -40,7 +43,7 @@ $ scalac -version
 Scala compiler version 3.0.2 -- Copyright 2002-2021, LAMP/EPFL
 ```
 
-After having installed the compiler, we can have a look at itsoptions.
+After having installed the compiler, we can have a look at its options.
 Let's first explore what the compiler can help us with when migrating our
 Scala 2.13 based application to Scala 3. The compiler has an option `-source`
 for which we can specify an additional argument. Here's the abbreviated output
