@@ -9,7 +9,9 @@ The application will also start up an instance of a Sudoku problem generator
 that cycles through a series of Sudoko problems continuously at a configurable
 rate, tunable via configuration.
 
-We will first show you how to run the application.
+The course consists of a series of exercises in which you change the source code to leverage Scala 3 specific features. The application comes with tests that are basically the same across all exercises. The tests should pass at every stage: if they don't, you've broken something and you will need to fix it.
+
+We will first show you how to test and run the application.
 
 
 ## Steps
