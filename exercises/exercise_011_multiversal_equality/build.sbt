@@ -6,7 +6,6 @@ lazy val `moving-from-scala-2-to-scala-3` =
     scalaVersion := "3.1.2",
     Compile / scalacOptions ++= CompileOptions.compileOptions,
     libraryDependencies ++= Dependencies.dependencies,
-    libraryDependencies ++= Dependencies.crossDependencies.map(_.cross(CrossVersion.for3Use2_13)),
     testFrameworks += new TestFramework("munit.Framework"),
   )
 
