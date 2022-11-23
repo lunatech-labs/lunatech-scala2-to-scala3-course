@@ -1,12 +1,13 @@
-# Automatic rewriting  by the Scala 3 compiler of deprecated Scala 2 syntax 
+#  Rewriting deprecated Scala syntax
 
 ## Background
 
-In this exercise, we will play with `scalac`'s capability to report and rewrite
-occurrences of some of the Scala 2 language features that are deprecated in
-Scala 2.13.
+In this exercise, we will play with the Scala 3 compiler's capability to report 
+and rewrite occurrences of some of the Scala 2 language features that are deprecated
+in Scala 2.13. In fact, this is a feature that also applies to syntax that gets
+deprecated between different Scala 3 releases.
 
-In order to do this, we need to update the build definition to switch to the most recent
+In order to do this, we first need to update the build definition to switch to the most recent
 version of Scala 3.
 
 ## Steps

@@ -1,4 +1,4 @@
-# Exploring Scala 3's new control structure and significant indentation based syntax
+# Scala 3 - new control and indentation based syntax
 
 
 ## Background
