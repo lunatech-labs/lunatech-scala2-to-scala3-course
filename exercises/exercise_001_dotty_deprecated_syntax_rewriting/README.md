@@ -85,13 +85,17 @@ where possible standard options include:
                    future-migration, future
 ```
 
-We have introduced some deprecated Scala 2 syntactic constructions on purpose so
-that you can see the rewriting at work. Let's get started!
+We will add some code that trigger a number of compiler warnings which can
+be corrected by the compiler's code rewriting capabilities.
 
-- Execute the following command from the `sbt` prompt:
+Add the following code snippet to the `src/main/scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala` source code file:
 
 ```scala
-cmtc pull-template scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala
+  private def checkHaha(s: String) {
+    val haha = 'Haha
+    val noHaha = 'NoHaha
+    if (s startsWith haha.name) println(haha.name) else println(noHaha.name)
+  }
 ```
 
 > NOTE: The course repository you're using at the moment is a git repository.
@@ -135,8 +139,8 @@ scalacOptions ++=
 We can take this process a step further by changing the compiler
 `-source` compiler option to `-source:future-migration`.
 This will apply some syntax changes that are already scheduled for a
-a Scala release after the one you're currently using. One example is the change of wildcard
-import syntax from using an asterix (`*`) instead of an underscore (`_`).
+a Scala release after the one you're currently using. One example is the change of
+wildcard import syntax from using an asterix (`*`) instead of an underscore (`_`).
 
 - Try this out for yourself and check what is reported and what changes.
 - Add the "-rewrite" option to have the compiler apply all the reported
@@ -147,8 +151,11 @@ import syntax from using an asterix (`*`) instead of an underscore (`_`).
 > NOTE: The extra bit of code that was added via `cmtc pull-template ...` can either be left as-is
 >  or be removed. Your choice.
 
-And finally, **a tip**. You may perform a migration from Scala 2 to Scala 3 in different steps.
-After using the compiler's help via a given combination of `-rewrite` and `source:xxx-migration`,
-you may want to leave the latter enabled permanently in your Scala build, but take the first one out.
+And finally, **a tip**. You may perform a migration from Scala 2 to Scala 3 in
+different steps.
+After using the compiler's help via a given combination of `-rewrite` and
+`source:xxx-migration`,
+you may want to leave the latter enabled permanently in your Scala build, but
+take the first one out.
 By doing so, your attention will be drawn to code modifications that create issues (warning or errors)
 explicitly instead of them being corrected without you noticing them.

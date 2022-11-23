@@ -1,6 +1,6 @@
 package org.lunatechlabs.dotty.sudoku
 
-import org.lunatechlabs.dotty.sudoku.CellMappings._
+import org.lunatechlabs.dotty.sudoku.CellMappings.*
 
 class CellMappingSuite extends munit.FunSuite {
 
