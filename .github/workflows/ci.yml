@@ -16,9 +16,9 @@ jobs:
     outputs:
       exercises: ${{steps.list.outputs.exercises}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - id: list
-        run: echo "::set-output name=exercises::$(cd $EXERCISES_DIRECTORY; ls |grep exercise_ | jq -cnR '[inputs | select(length>0)]')"
+        run: echo "::set-output name=exercises::$(ls $EXERCISES_DIRECTORY | grep exercise_ | jq -cnR '[inputs | select(length>0)]')"
 
   validate_course:
     runs-on: ubuntu-latest
@@ -28,12 +28,12 @@ jobs:
       matrix:
         exercise: ${{fromJson(needs.list-exercises.outputs.exercises)}}   
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'temurin'
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: 11
+        distribution: 'temurin'
 
     - name: Cache Ivy
       uses: actions/cache@v2
@@ -52,6 +52,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-sbt-
           ${{ runner.os }}-
+
     - name: Test with sbt
       run: sbt test
       working-directory: ${{env.EXERCISES_DIRECTORY}}/${{matrix.exercise}}
