@@ -18,8 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: list
-#        run: echo "::set-output name=exercises::$(ls $EXERCISES_DIRECTORY | grep exercise_ | jq -cnR '[inputs | select(length>0)]')"
-        run: echo "name=exercises::$(ls $EXERCISES_DIRECTORY | grep exercise_ | jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+        run: echo "::set-output name=exercises::$(ls $EXERCISES_DIRECTORY | grep exercise_ | jq -cnR '[inputs | select(length>0)]')"
+#        run: echo "name=exercises::$(ls $EXERCISES_DIRECTORY | grep exercise_ | jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
   validate_course:
     runs-on: ubuntu-latest
