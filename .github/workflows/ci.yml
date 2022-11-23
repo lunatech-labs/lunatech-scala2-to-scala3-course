@@ -16,7 +16,7 @@ jobs:
     outputs:
       exercises: ${{steps.list.outputs.exercises}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: list
         run: echo "::set-output name=exercises::$(ls $EXERCISES_DIRECTORY | grep exercise_ | jq -cnR '[inputs | select(length>0)]')"
 
@@ -36,7 +36,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Cache Ivy
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.ivy2/cache
         key: ${{ runner.os }}-ivy--${{ hashFiles('**/build.sbt') }}
@@ -45,7 +45,7 @@ jobs:
           ${{ runner.os }}-  
    
     - name: Cache SBT
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.sbt
         key: ${{ runner.os }}-sbt-${{ hashFiles('project/**') }}
