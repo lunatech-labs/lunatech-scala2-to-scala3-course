@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: list
-        run: echo "::set-output name=exercises::$(ls $EXERCISES_DIRECTORY | jq -cnR '[inputs | select(length>0)]')"
+        run: echo "::set-output name=exercises::$(cd $EXERCISES_DIRECTORY; ls |grep exercise_ | jq -cnR '[inputs | select(length>0)]')"
 
   validate_course:
     runs-on: ubuntu-latest
