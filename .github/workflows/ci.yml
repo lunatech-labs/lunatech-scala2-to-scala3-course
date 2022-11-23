@@ -61,7 +61,7 @@ jobs:
     needs: validate_course
     steps:
       - name: Check build matrix status
-        if: ${{ needs.build.result != 'success' }}
+        if: ${{ needs.validate_course.result != 'success' }}
         run: exit 1
 
   create_release:
