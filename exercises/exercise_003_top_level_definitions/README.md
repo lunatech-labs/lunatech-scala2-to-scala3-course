@@ -33,9 +33,9 @@ def x(a: Int): Int = {
 
 ## Steps
 
-It's probably a good idea to have the Scala 3 `-source:future-migration`
+Just a reminder: it's probably a good idea to have the Scala 3 `-source:future-migration`
 compiler option enabled permanently in the build definition of our project.
-Let's do this first:
+If you haven't done this already, do it now:
 
 - Change the compiler options in `project/CompileOptions.scala` to include
   `-source:future-migration`.
