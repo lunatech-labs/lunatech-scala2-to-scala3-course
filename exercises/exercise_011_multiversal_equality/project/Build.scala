@@ -11,7 +11,8 @@ object CompileOptions {
     "-unchecked",
     "-deprecation",
     "-encoding", "UTF-8",
-    "-language:strictEquality"
+    "-source:future-migration",
+    "-language:strictEquality",
   )
 }
 
