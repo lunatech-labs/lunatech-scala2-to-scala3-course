@@ -22,7 +22,8 @@ Following is a typical protocol definition:
   case      object ResponseB              extends Response
 ```
 
-In Scala 3, we can use enumerations to encode the protocol in a more succinct way.
+This way of defining ADTs is perfectly valid in Scala 3, but there's an alternative, namely Scala 3 enumerations to encode the protocol in a more succinct way.
+
 The example protocol listed above can be encoded in the following fashion:
 
 ```scala
@@ -36,13 +37,14 @@ The example protocol listed above can be encoded in the following fashion:
     case ResponseB
 ```
 
-The compiler will desugar this encoding in `case class`es and `case object`s that
-are equivalent to the original encoding.
+The compiler will desugar this encoding in `case class`es and 
+`case object`s that are equivalent to the original encoding.
 
 There's one slight twist that comes with the new encoding: in the original
 encoding, the different case classes and objects reside at the package level,
 while in the enumeration based encoding, they are 'nested' one level deeper.
 For example, `CommandA`, qualified at the package level is at `Command.CommandA`.
+
 It would be inconvenient that, because of the switch to the elegant enum
 based encoding of the protocol, we would have to change all occurrences
 of `Command` or `Response` references to qualified ones. There's an easy way
@@ -64,12 +66,13 @@ in this exercise.
   - Note that some of the actors have so-called `ResponseWrappers`. Leave
     these unmodified: include them in the protocol for the time being: we
     will remove these in the next exercise. You may have to change the
-    `ResponseWrapper` from `private` to a public members
+    `ResponseWrapper` members from `private` to `public`. Again, this is
+    not really desirable, but we'll fix this in the exercise on Union types.
     
 - Use Scala 3's `export` feature to avoid having to refactor the code to
-  utilise qualified references to the messages
+  utilise qualified references to the messages.
 
 - Run the provided tests by executing the `test` command from the `sbt` prompt
-  and verify that all tests pass
+  and verify that all tests pass.
   
-- Verify that the application runs correctly
+- Verify that the application runs correctly.
