@@ -61,5 +61,10 @@ Which of these actors receive messages that are responses from other actors?
 - Run the provided tests by executing the `test` command from the `sbt` prompt
   and verify that all tests pass
 
+- Let's take a step back to see what we achieved:
+  - We have removed a lot boilerplate code which improves code reablility
+    tremendously.
+  - We have solved the issue of widening some of the actor's protocol
+    in the previous exercise for pure technical reasons.
+
 - Verify that the application runs correctly
-  
