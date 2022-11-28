@@ -1,7 +1,6 @@
 package org.lunatechlabs.dotty.sudoku
 
 import SudokuDetailProcessor.{Update, SudokuDetailUnchanged, BlockUpdate}
-import scala.language.implicitConversions
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
 import java.nio.file.*
 

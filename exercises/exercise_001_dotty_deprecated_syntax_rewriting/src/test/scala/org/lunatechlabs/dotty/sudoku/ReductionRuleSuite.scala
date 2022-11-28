@@ -1,7 +1,5 @@
 package org.lunatechlabs.dotty.sudoku
 
-import scala.language.implicitConversions
-
 class ReductionRuleSuite extends munit.FunSuite with SudokuTestHelpers {
   test("Applying reduction rules should eliminate values in isolated complete sets from occurrences in other cells (First reduction rule)") {
     /**

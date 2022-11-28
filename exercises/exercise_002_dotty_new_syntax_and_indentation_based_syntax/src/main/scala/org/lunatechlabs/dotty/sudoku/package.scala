@@ -18,7 +18,6 @@ package object sudoku:
 
   implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate])
       extends AnyVal:
-    import scala.language.implicitConversions
     def toSudokuField: SudokuField =
       val rows =
         update
@@ -56,7 +55,6 @@ package object sudoku:
       sudokuField.rotateCW.rowSwap(col1, col2).rotateCCW
 
     def randomSwapAround: SudokuField =
-      import scala.language.implicitConversions
       val possibleCellValues = Vector(1, 2, 3, 4, 5, 6, 7, 8, 9)
       // Generate a random swapping of cell values. A value 0 is used as a marker for a cell
       // with an unknown value (i.e. it can still hold all values 0 through 9). As such

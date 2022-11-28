@@ -28,7 +28,6 @@ object SudokuSolver:
   def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
     context: ActorContext[CommandAndResponses]
   ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
-    import scala.language.implicitConversions
     cellIndexesVector
       .map { index =>
         val detailProcessorName = summon[UpdateSender[A]].processorName(index)
