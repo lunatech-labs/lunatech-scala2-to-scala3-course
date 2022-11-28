@@ -185,4 +185,3 @@ class ReductionRuleSuite extends munit.FunSuite with SudokuTestHelpers:
 
     assertEquals(applyReductionRules(input), reducedInput)
   }
-}
