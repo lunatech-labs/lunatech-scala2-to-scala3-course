@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <logger name="akka.cluster.pi" level="info" additivity="false">
+    <logger name="org.lunatechlabs.dotty" level="info" additivity="false">
         <appender-ref ref="console"/>
     </logger>
 
