@@ -4,7 +4,7 @@ import akka.actor.typed.receptionist.{ Receptionist, ServiceKey }
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, StashBuffer }
 import akka.actor.typed.{ ActorRef, Behavior, SupervisorStrategy }
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 final case class SudokuField(sudoku: Sudoku)
 
@@ -31,7 +31,6 @@ object SudokuSolver {
   def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
     context: ActorContext[Command]
   ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] = {
-    import scala.language.implicitConversions
     cellIndexesVector
       .map { index =>
         val detailProcessorName = implicitly[UpdateSender[A]].processorName(index)
@@ -60,8 +59,8 @@ object SudokuSolver {
 class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
                             buffer: StashBuffer[SudokuSolver.Command]
 ) {
-  import CellMappings._
-  import SudokuSolver._
+  import CellMappings.*
+  import SudokuSolver.*
 
   val detailProcessorResponseMapper: ActorRef[SudokuDetailProcessor.Response] =
     context.messageAdapter(response => SudokuDetailProcessorResponseWrapped(response))
@@ -166,11 +165,9 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
       (_, processor) <- processors
     } processor ! SudokuDetailProcessor.ResetSudokuDetailState
 
-  // Added on purpose to illustrate code rewriting capabilities of dotc
-  // for deprecated language features
-  private def checkHaha(s: String) {
-    val haha = 'Haha
-    val noHaha = 'NoHaha
-    if (s startsWith haha.name) println(haha.name) else println(noHaha.name)
+  private def checkHaha(s: String): Unit = {
+    val haha = Symbol("Haha")
+    val noHaha = Symbol("NoHaha")
+    if (s `startsWith` haha.name) println(haha.name) else println(noHaha.name)
   }
 }

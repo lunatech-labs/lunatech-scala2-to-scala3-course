@@ -11,7 +11,7 @@ trait SudokuTestHelpers:
     val updates = for {
       (cellString, index) <- stringDef.zipWithIndex if cellString != ""
     } yield (index, cellString.replaceAll(" ", "").map { _.toString.toInt }.toSet)
-    CellUpdates(updates:_ *)
+    CellUpdates(updates*)
 
   def applyReductionRules(reductionSet: ReductionSet): ReductionSet = reductionSet.applyReductionRuleOne.applyReductionRuleTwo
 

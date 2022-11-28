@@ -28,7 +28,6 @@ object SudokuSolver:
   def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
     context: ActorContext[CommandAndResponses]
   ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
-    import scala.language.implicitConversions
     cellIndexesVector
       .map { index =>
         val detailProcessorName = summon[UpdateSender[A]].processorName(index)
@@ -123,7 +122,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
         }
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(2 * updates.size - 1)
         Behaviors.same
-      case unchanged @ SudokuDetailProcessor.SudokuDetailUnchanged =>
+      case _: SudokuDetailProcessor.SudokuDetailUnchanged.type =>
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(-1)
         Behaviors.same
 

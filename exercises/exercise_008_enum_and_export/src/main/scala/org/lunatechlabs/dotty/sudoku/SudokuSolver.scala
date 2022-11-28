@@ -4,7 +4,7 @@ import akka.actor.typed.receptionist.{ Receptionist, ServiceKey }
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, StashBuffer }
 import akka.actor.typed.{ ActorRef, Behavior, SupervisorStrategy }
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 final case class SudokuField(sudoku: Sudoku)
 
@@ -29,7 +29,6 @@ object SudokuSolver:
   def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
     context: ActorContext[Command]
   ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
-    import scala.language.implicitConversions
     cellIndexesVector
       .map { index =>
         val detailProcessorName = summon[UpdateSender[A]].processorName(index)
@@ -56,8 +55,8 @@ object SudokuSolver:
 class SudokuSolver private (context: ActorContext[SudokuSolver.Command],
                             buffer: StashBuffer[SudokuSolver.Command]
 ):
-  import CellMappings._
-  import SudokuSolver._
+  import CellMappings.*
+  import SudokuSolver.*
 
   val detailProcessorResponseMapper: ActorRef[SudokuDetailProcessor.Response] =
     context.messageAdapter(response => SudokuDetailProcessorResponseWrapped(response))

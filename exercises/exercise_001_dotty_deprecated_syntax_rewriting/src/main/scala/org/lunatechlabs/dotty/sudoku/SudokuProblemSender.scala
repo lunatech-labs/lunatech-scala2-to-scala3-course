@@ -32,7 +32,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
                                    timers: TimerScheduler[SudokuProblemSender.Command],
                                    sudokuSolverSettings: SudokuSolverSettings
 ) {
-  import SudokuProblemSender._
+  import SudokuProblemSender.*
 
   private val solutionWrapper: ActorRef[SudokuSolver.Response] =
     context.messageAdapter(response => SolutionWrapper(response))
@@ -79,7 +79,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
     Behaviors.receiveMessage {
       case SendNewSudoku =>
         context.log.debug("sending new sudoku problem")
-        val nextRowUpdates = rowUpdatesSeq.next
+        val nextRowUpdates = rowUpdatesSeq.next()
         sudokuSolver ! SudokuSolver.InitialRowUpdates(nextRowUpdates, solutionWrapper)
         Behaviors.same
       case SolutionWrapper(solution: SudokuSolver.SudokuSolution) =>

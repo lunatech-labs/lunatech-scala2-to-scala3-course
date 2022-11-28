@@ -1,4 +1,4 @@
-# Exploring Scala 3's new control structure and significant indentation based syntax
+# Scala 3 - new control and indentation based syntax
 
 
 ## Background
@@ -19,17 +19,13 @@ one came from, the formatting may be different, but semantically equivalent).
 
 ## Steps
 
-- Run the `pullSolution` command from the `sbt` prompt
-
-- Inspect the `build.sbt` file in the `exercises` folder
-  - At the end of this file, you will see the following 4 lines that have
-    been commented out:
+- Have a look at the `project/Build.scala` file and notice this section at the top:
 
 ```scala
-   // scalacOptions ++= rewriteToNewSyntax
-   // scalacOptions ++= rewriteToIndentBasedSyntax
-   // scalacOptions ++= rewriteToNonIndentBasedSyntax
-   // scalacOptions ++= rewriteToOldSyntax
+  val rewriteNewSyntax = Seq("-rewrite", "-new-syntax")
+  val rewriteIndent = Seq("-rewrite", "-indent")
+  val rewriteNoIndent = Seq("-rewrite", "-noindent")
+  val rewriteOldSyntax = Seq("-rewrite", "-old-syntax")
 ```
 
 - Before proceeding, let's take a snapshot of the current state of the exercises
@@ -40,14 +36,24 @@ $ git add -A
 $ git commit -m "Snapshot before Scala 3 compiler syntax rewrites"
 ```
 
-- The values on the right side of the `++=` operator are defined in the beginning
-  of the files and each contains a specific set of compiler options.
+You can now have the compiler rewrite the source code to switch to one of the
+alternative syntax options.
+
+- The values mentioned above each contain a specific set of compiler options
+  for a specific syntax rewrite.
 
 - Now go through the following sequence of actions:
-  - Uncomment one `scalacOptions ++= ...` line at a time
-  - As a consequence of this, the build definition is changed, so don't forget
-    to run the `reload` command on the `sbt` prompt
+  - Add one of the syntax rewrite values to the compiler option section.
+
+Question: you will need to concatenate the `Seq` of settings with the compiler
+option setting. How would you do that. If needed, consult the `Seq` Scala collection
+documentation.
+
+  - When the changes are applied, these will be picked up automatically by sbt because
+    the build has been configured as such.
   - From the sbt prompt, run the `clean` command followed by running `compile`.
-    You will see that the compiler will _patch_ the source files
+    You will see that the compiler will _patch_ the source files.
+  - Repeat this by compiling the test code (`Test / compile`).
   - Explore the changes applied by the rewrites (you can use the `git diff` command
-    for this)
+    for this).
+  - Repeat the process for another rewrite.

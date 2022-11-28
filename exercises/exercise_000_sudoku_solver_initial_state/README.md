@@ -1,18 +1,35 @@
-# An Akka Typed/Scala based Sudoku Solver - Initial State
+# Initial State
+
+## An Akka Typed/Scala based Sudoku Solver
 
 ## Background
 
-This application implements an Akka Typed/Scala based Sudoku Solver that
-consists of 29 actors.
+This application, written in Scala 2, implements an Akka Typed/Scala
+based Sudoku Solver that is composed of 29 actors.
 
-The application will also start up an instance of a Sudoku problem generator.
+The application will also start up an instance of a Sudoku problem generator
+that continuously cycles through a series of Sudoko problems at a configurable
+rate, tunable via configuration.
 
-We will first show you how to run the application.
+The course consists of a series of exercises in which you change the source code to leverage Scala 3 specific features. The application comes with tests that are basically the same across all exercises. The tests should pass at every stage: if they don't, you've broken something and you will need to fix it.
+
+We will first show you how to test and run the application.
 
 
 ## Steps
 
-- In the project's root folder, start an `sbt` session
+- The project uses sbt as build tool. Have a look at the build definition
+  in the `code/build.sbt` file to figure out what version of Scala it is
+  using. The full build definition is composed of `code/build.sbt` and
+  `code/project/Build.scala`. Other than inspecting the build definition,
+  is there another way to find out which Scala version is used?
+
+- In the project's `code` folder, start an `sbt` session.
+
+- Compile the main code and the test code by respectively running the
+  `compile` and `Test/compile` commands from the `sbt` prompt.
+  Look for compilation warnings and fix these so that compilation no longer
+  produces any warning(s).
 
 - Run the provided tests by executing the `test` command from the `sbt` prompt
   You should see output similar to the following:
@@ -54,9 +71,9 @@ SLF4J: See also http://www.slf4j.org/codes.html#replay
 man [e] > Scala 2 to Scala 3 > sudoku solver initial state >
 ```
 
-- Run the Sodukosolver by executing the `runSolver` command from the `sbt` prompt
+- Run the Sodukosolver by executing the `runSolver` command from the `sbt` prompt.
 
-- Note that you can stop the application by hitting `Return` in the sbt session
+- Note that you can stop the application by hitting `Return` in the sbt session.
 
 - Observe sudoku solver in action: you should see the following output:
 
@@ -103,6 +120,6 @@ Hit RETURN to stop solver
 .
 ```
 
-- You can control the rate at which the Sudoku problem generator sends problems by
-  tweaking the setting `sudoku-solver.problem-sender.send-interval` in the
-  `sudokusolver.conf` configuration file
+- You can control the rate at which the Sudoku problem generator sends
+  problems by tweaking the setting `sudoku-solver.problem-sender.send-interval`
+  in the `sudokusolver.conf` configuration file.

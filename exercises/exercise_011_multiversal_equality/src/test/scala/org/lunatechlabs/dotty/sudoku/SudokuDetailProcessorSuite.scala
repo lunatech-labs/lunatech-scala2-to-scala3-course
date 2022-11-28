@@ -1,9 +1,8 @@
 package org.lunatechlabs.dotty.sudoku
 
 import SudokuDetailProcessor.{Update, SudokuDetailUnchanged, BlockUpdate}
-import scala.language.implicitConversions
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
-import java.nio.file._
+import java.nio.file.*
 
 class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers:
 
@@ -60,7 +59,7 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers:
           "     6789",
           " 23   78 "
         )).zipWithIndex.map { _.swap}
-      Update(CellUpdates(cellUpdates:_ *), detailParentProbe.ref)
+      Update(CellUpdates(cellUpdates*), detailParentProbe.ref)
 
     detailProcessor ! update1
 
@@ -78,7 +77,7 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers:
         " 23      "
       )).zipWithIndex.map(_.swap)
 
-      BlockUpdate(2, CellUpdates(cellUpdates:_ *))
+      BlockUpdate(2, CellUpdates(cellUpdates*))
 
     detailParentProbe.expectMessage(reducedUpdate1)
 

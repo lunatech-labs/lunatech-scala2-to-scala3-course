@@ -82,7 +82,7 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
       replyTo ! SudokuProgressTracker.SudokuDetailState(id, state)
       Behaviors.same
 
-    case ResetSudokuDetailState =>
+    case _: ResetSudokuDetailState.type =>
       operational(id, InitialDetailState, fullyReduced = false)
 
   }
