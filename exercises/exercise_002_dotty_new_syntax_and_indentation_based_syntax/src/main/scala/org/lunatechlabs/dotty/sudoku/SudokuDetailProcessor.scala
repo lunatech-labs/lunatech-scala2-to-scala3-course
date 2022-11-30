@@ -20,8 +20,6 @@ object SudokuDetailProcessor:
   final case class BlockUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   case object SudokuDetailUnchanged extends Response
 
-  val InitialDetailState: ReductionSet = cellIndexesVector.map(_ => initialCell)
-
   def apply[DetailType <: SudokoDetailType](id: Int, state: ReductionSet = InitialDetailState)(
     implicit updateSender: UpdateSender[DetailType]
   ): Behavior[Command] =
