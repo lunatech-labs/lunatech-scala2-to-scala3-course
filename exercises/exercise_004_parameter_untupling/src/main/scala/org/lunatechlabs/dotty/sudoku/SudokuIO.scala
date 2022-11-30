@@ -4,22 +4,6 @@ import java.util.NoSuchElementException
 
 object SudokuIO:
 
-  def printRow( row: ReductionSet): String =
-    def printSubRow( subRowNo: Int): String =
-      val printItems = List(1,2,3).map( x => x + subRowNo * 3)
-      (for  elem <- row 
-        yield {
-          (printItems.map (item => if (elem & printItems.toSet).contains(item) then item.toString else " ")).mkString("")
-        }).mkString("| ", " | ", " |")
-    (for  subRow <- 0 until 3  yield printSubRow(subRow)).mkString("\n")
-
-  def printRowShort( row: ReductionSet): String =
-    (for (elem <- row)
-    yield {
-      if elem.size == 1 then elem.head.toString else " "
-    }).mkString("|","|","|")
-
-
   private def sudokuCellRepresentation(content: CellContent): String =
     content.toList match
       case Nil => "x"
