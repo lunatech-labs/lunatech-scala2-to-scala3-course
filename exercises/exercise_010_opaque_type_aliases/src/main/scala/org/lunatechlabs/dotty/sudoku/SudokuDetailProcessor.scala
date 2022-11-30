@@ -21,8 +21,6 @@ object SudokuDetailProcessor:
     case SudokuDetailUnchanged
   export Response.*
 
-  val InitialDetailState: ReductionSet = cellIndexesVector.map(_ => initialCell)
-
   def apply[DetailType <: SudokoDetailType](id: Int,
                                             state: ReductionSet = InitialDetailState)
                                            (using updateSender: UpdateSender[DetailType]): Behavior[Command] =
