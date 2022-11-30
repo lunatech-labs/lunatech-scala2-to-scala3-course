@@ -3,9 +3,9 @@ package org.lunatechlabs.dotty.sudoku
 trait SudokuTestHelpers:
 
   def stringToReductionSet(stringDef: Vector[String]): ReductionSet =
-    for {
+    ReductionSet(for {
       cellString <- stringDef
-    } yield cellString.replaceAll(" ", "").map { _.toString.toInt }.toSet
+    } yield cellString.replaceAll(" ", "").map { _.toString.toInt }.toSet)
 
   def stringToIndexedUpdate(stringDef: Vector[String]): CellUpdates =
     for {

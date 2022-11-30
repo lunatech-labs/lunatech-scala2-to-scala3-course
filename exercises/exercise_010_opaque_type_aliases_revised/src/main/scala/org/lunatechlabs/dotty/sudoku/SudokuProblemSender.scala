@@ -78,6 +78,6 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
         sudokuSolver ! SudokuSolver.InitialRowUpdates(nextRowUpdates, context.self)
         Behaviors.same
       case solution: SudokuSolver.SudokuSolution =>
-        context.log.info(s"${SudokuIO.sudokuPrinter(solution)}")
+        context.log.info(s"${sudokuPrinter(solution.sudoku)}")
         Behaviors.same
     }

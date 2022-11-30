@@ -1,70 +1,76 @@
-# Union Types
+# Opaque Type Aliases
 
 ## Background
 
-In the previous exercise, we re-encoded the protocol of the different actors
-in our application from a `sealed trait` based one to one using Scala 3
-enumerations. This however, is only a small first step towards a major
-simplification of the way encode the exchange of messages between actors.
-We will now explore using Scala 3's `Union Types` to vastly simplify the Scala 2
-based implementation. We will succeed in eliminating the so-called message
-adapters and response wrappers from our code!
+An Opaque Type Alias can be used to provide the functionality of a "wrapper
+type" (i.e. a type that wraps, and therefore hides, another type) but without
+any runtime overhead. The aim is to provide additional type-safety at
+compile-time but then be stripped away at runtime. It is a powerful new feature
+of Scala 3 for supporting Information Hiding.
 
-The general idea is that we have both an external protocol for an actor (which
-is exactly the same as in the original implementation) and an [extended] 
-internal protocol that also 'understands' the responses the actor can receive.
+Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the later
+just provide a new name for a type but wherever this new name is used, the
+call-site still knows the details of the original type being aliased. With
+Opaque Type Aliases, the original type being aliased is hidden (or is opaque) at
+the call-site.
 
 ## Steps
 
-Have close look at the 4 different actors in the application:
+We will change two type aliases, `ReductionSet` and `Sudoku` into opaque type
+aliases and we will do this in two steps tackling the conversion of
+`ReductionSet` first. Each time you change the code, recompile the project to see
+the effect. Don't forget to compile the tests too...
 
-  - `SudokuProblemSender`
-  - `SudokuSolver`
-  - `SudokuProgressTracker`
-  - `SudokuDetailProcessor`
+> __Tip:__ Fix all of the compilation errors of this form `value {name} is not a
+      member of ...` before tackling the other types of error like `Found: ...
+      Required: ...`
 
-Which of these actors receive messages that are responses from other actors?
+> __Tip:__ Some of the mission members for our new opaque type are generic (i.e.
+      type-parameterised) methods. Do not be afraid to implement extension
+      methods that are non-generic (i.e. without type-parameters), which might
+      mean modifying existing call-sites.
 
+- Have a look at the `TopLevelDefinitions.scala` file. This is the current definition
+  of the `ReductionSet` type alias (the definition of `CellContent` is shown too for
+  clarity; we will leave this type alias unmodified):
 
-`Hint:` In its present form, the application utilises message adapters. You
-      can easily spot these by doing a search on the factory method to
-      create them: `context.messageAdapter`.
+```scala
+type CellContent = Set[Int]
+type ReductionSet = Vector[CellContent]
+```
 
-`Tip:`  Tackle the `SudokuProblemSender` first. After this, proceed with
-      the other actors.
+- Move `ReductionSet` type alias to its own source file (`ReductionSet.scala`).
+- Convert it to an opaque type alias.`
+- Compile again which shows compilation errors in file `ReductionRules.scala`;
+  move the extension methods to `ReductionSet.scala` as they are extensions on
+  `ReductionSet`.
+- As `InitialDetailState` is a `ReductionSet`, move it to `ReductionSet.scala`.
+  Move `cellIndexesVector` and `initialCell` with it.
+- Create an apply method in a `ReductionSet` companion object that allows us
+  to initialise `InitialDetailState` via a call to `ReductionSet(cellIndexesVector)`.
 
-- Create a type alias named `CommandAndResponses` for the Union of the
-  actor's external protocol (`Command`) and the `Response` message types.
-  This new type will be the type of the internal protocol.
+- Compile again.
+- Next up is `stateTally.updated` in `SudokuDetailProcessor.scala`. As it operates
+  on a state of type `ReductionSet` and returns a `ReductionSet`, it makes sense
+  to move this to `ReductionSet.scala` and to convert it to an extension method.
+- Repeat this for `stateChanges` and `isFullyReduced` in `SudokuDetailProcessor.scala`.
 
-- Adapt the `apply` method that creates the actor's behaviour so that it
-  still is the original behaviour as seen from the outside, but which
-  has the extended behaviour (corresponding to `CommandAndResponses`).
-  You will need to make a few extra modifications to make everything
-  type check. Some hints that may put you on the right track:
+- Compile again.
+- Next errors reported are in `SudokuIO.scala`. Although the move is less clear cut,
+  we move methods `sudokuCellRepresentation`, `sudokuRowPrinter`, and `sudokuPrinter`
+  to `ReductionSet.scala`. We may need to revisit this move later.
+- Change `sudokuPrinter` to take a `Sudoku` as argument. Change this at the (only)
+  call site of this method.
 
-  - Note that `Behaviors.setup` has a type parameter
-  - `Behaviors.setup` returns a `Behavior` of some type. Look at the
-    API docs of `Behavior` and specifically at the `narrow` method.
-    You will need to apply this method in your code
-  - A typical pattern in Akka Typed code is the inclusion of a so-called
-    `ActorRef` conventionally called `replyTo`. In the existing code,
-    this is the message adaptor. With the latter being eliminated from
-    the code, you need to substitute it with another `ActorRef`. Which
-    one makes sense? In this context, have a look at the available
-    members on an actor's `context`
+- Compile again.
+- You will see that compilation errors are reported in the `TopLevelDefinitions.scala`
+  source file. These are linked to the extension methods defined on `SudokuField`.
+- Move these extension methods to `ReductionSet.scala`.
+- You will see that compilation errors remain in the `randomSwapAround` and
+  `toRowUpdates` extension methods. Fix these errors. Defining two extra extension
+  methods on `ReductionSet` and using these at the right spot should be sufficient.
 
-- Eliminate any unused code such as:
-  - The message adapters
-  - The `Response` message wrappers
-
-- Run the provided tests by executing the `test` command from the `sbt` prompt
-  and verify that all tests pass
-
-- Let's take a step back to see what we achieved:
-  - We have removed a lot boilerplate code which improves code reablility
-    tremendously.
-  - We have solved the issue of widening some of the actor's protocol
-    in the previous exercise for pure technical reasons.
+- Once all the compilation errors are fixed, run the provided tests by executing
+  the `test` command from the `sbt` prompt and verify that all tests pass
 
 - Verify that the application runs correctly

@@ -6,8 +6,6 @@ import akka.actor.typed.{ ActorRef, Behavior, SupervisorStrategy }
 
 import scala.concurrent.duration.*
 
-final case class SudokuField(sudoku: Sudoku)
-
 object SudokuSolver:
 
   // SudokuSolver Protocol
