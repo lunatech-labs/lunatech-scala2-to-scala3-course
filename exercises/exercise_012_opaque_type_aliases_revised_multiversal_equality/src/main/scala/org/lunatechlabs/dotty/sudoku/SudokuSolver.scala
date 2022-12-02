@@ -83,6 +83,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
     }
 
   def processRequest(requestor: Option[ActorRef[Response]], startTime: Long): Behavior[CommandAndResponses] =
+    import SudokuDetailProcessor.SudokuDetailUnchanged
     Behaviors.receiveMessage {
       case SudokuDetailProcessor.RowUpdate(rowNr, updates) =>
         updates.foreach { (rowCellNr, newCellContent) =>
@@ -120,7 +121,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
         }
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(2 * updates.size - 1)
         Behaviors.same
-      case unchanged @ SudokuDetailProcessor.SudokuDetailUnchanged =>
+      case _ : SudokuDetailUnchanged.type =>
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(-1)
         Behaviors.same
 

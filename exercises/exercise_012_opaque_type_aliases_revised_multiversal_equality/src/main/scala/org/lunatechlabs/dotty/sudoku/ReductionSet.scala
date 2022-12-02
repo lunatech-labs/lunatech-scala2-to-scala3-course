@@ -8,6 +8,8 @@ opaque type ReductionSet = Vector[CellContent]
 
 opaque type Sudoku = Vector[ReductionSet]
 
+given CanEqual[ReductionSet, ReductionSet] = CanEqual.derived
+
 extension (sudoku: Sudoku)
   def sliding(n1: Int, n2: Int): Iterator[Sudoku] =
     sudoku.sliding(n1, n2)

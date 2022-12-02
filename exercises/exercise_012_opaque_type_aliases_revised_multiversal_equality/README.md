@@ -1,76 +1,44 @@
-# Opaque Type Aliases
+# Multiversal Equality
 
 ## Background
 
-An Opaque Type Alias can be used to provide the functionality of a "wrapper
-type" (i.e. a type that wraps, and therefore hides, another type) but without
-any runtime overhead. The aim is to provide additional type-safety at
-compile-time but then be stripped away at runtime. It is a powerful new feature
-of Scala 3 for supporting Information Hiding.
+Scala 2.x uses _universal equality_, meaning that any two values of any two
+types can be compared with each other using `==` and `!=`. However, this can
+sometimes lead to buggy programs where we assume that we are comparing two
+values of the same type but in fact the types are different. In this case,
+because of universal equality, the compiler validates the buggy code but at
+runtime the comparison will _always_ return the same result regardless of the two
+values being compared — it will always return `false` in the case of `==`,  and
+always `true` in the case of `!=`. This is almost certainly not the desired
+outcome!
 
-Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the later
-just provide a new name for a type but wherever this new name is used, the
-call-site still knows the details of the original type being aliased. With
-Opaque Type Aliases, the original type being aliased is hidden (or is opaque) at
-the call-site.
+This kind of bug often occurs after a refactoring that modifies the types in a
+program — e.g. like the modification we have just finished to convert a plain
+type alias to an opaque type alias.
+
+Scala 3 introduces _multiversal equality_ to help deal with this problem. We can
+explicitly "opt in" to the new, safer multiversal equality, either with an
+`import` in the relevant source files or with the addition of a compiler option.
+Once enabled, multiversal equality checks for the presence of an `Eql`
+("equality") typeclass instance that allows the comparison of the types of the
+two values being compared with `==` or `!=`. If no valid `Eql` instance is
+found, then the comparison does not type-check and the compilation fails with an
+error.
 
 ## Steps
+- Update the compiler option settings in file `project/Build.sbt` by adding the
+  `-language:strictEquality` option to opt in to safer multiversal equality.
 
-We will change two type aliases, `ReductionSet` and `Sudoku` into opaque type
-aliases and we will do this in two steps tackling the conversion of
-`ReductionSet` first. Each time you change the code, recompile the project to see
-the effect. Don't forget to compile the tests too...
+- Use the course notes on Multiversal Equality and your experience from the
+  exercise on `given`s to make the code compile with the flag
+  `-language:strictEquality` enabled
+    - Hint: The simplest solution will probably involve using `Eql.derived`
 
-> __Tip:__ Fix all of the compilation errors of this form `value {name} is not a
-      member of ...` before tackling the other types of error like `Found: ...
-      Required: ...`
+- When the code is compiled, a number of compilation errors will be shown that,
+  at first sight, shouldn't be related to the fact that the `strictEquality`
+  compiler option was enabled. These errors are linked to pattern matching
+  on singleton enum members. You should be able to fix this by making slight
+  changes to the pattern matches.
 
-> __Tip:__ Some of the mission members for our new opaque type are generic (i.e.
-      type-parameterised) methods. Do not be afraid to implement extension
-      methods that are non-generic (i.e. without type-parameters), which might
-      mean modifying existing call-sites.
-
-- Have a look at the `TopLevelDefinitions.scala` file. This is the current definition
-  of the `ReductionSet` type alias (the definition of `CellContent` is shown too for
-  clarity; we will leave this type alias unmodified):
-
-```scala
-type CellContent = Set[Int]
-type ReductionSet = Vector[CellContent]
-```
-
-- Move `ReductionSet` type alias to its own source file (`ReductionSet.scala`).
-- Convert it to an opaque type alias.`
-- Compile again which shows compilation errors in file `ReductionRules.scala`;
-  move the extension methods to `ReductionSet.scala` as they are extensions on
-  `ReductionSet`.
-- As `InitialDetailState` is a `ReductionSet`, move it to `ReductionSet.scala`.
-  Move `cellIndexesVector` and `initialCell` with it.
-- Create an apply method in a `ReductionSet` companion object that allows us
-  to initialise `InitialDetailState` via a call to `ReductionSet(cellIndexesVector)`.
-
-- Compile again.
-- Next up is `stateTally.updated` in `SudokuDetailProcessor.scala`. As it operates
-  on a state of type `ReductionSet` and returns a `ReductionSet`, it makes sense
-  to move this to `ReductionSet.scala` and to convert it to an extension method.
-- Repeat this for `stateChanges` and `isFullyReduced` in `SudokuDetailProcessor.scala`.
-
-- Compile again.
-- Next errors reported are in `SudokuIO.scala`. Although the move is less clear cut,
-  we move methods `sudokuCellRepresentation`, `sudokuRowPrinter`, and `sudokuPrinter`
-  to `ReductionSet.scala`. We may need to revisit this move later.
-- Change `sudokuPrinter` to take a `Sudoku` as argument. Change this at the (only)
-  call site of this method.
-
-- Compile again.
-- You will see that compilation errors are reported in the `TopLevelDefinitions.scala`
-  source file. These are linked to the extension methods defined on `SudokuField`.
-- Move these extension methods to `ReductionSet.scala`.
-- You will see that compilation errors remain in the `randomSwapAround` and
-  `toRowUpdates` extension methods. Fix these errors. Defining two extra extension
-  methods on `ReductionSet` and using these at the right spot should be sufficient.
-
-- Once all the compilation errors are fixed, run the provided tests by executing
-  the `test` command from the `sbt` prompt and verify that all tests pass
-
-- Verify that the application runs correctly
+- Run the provided tests by executing the `test` command from the `sbt` prompt
+  and verify that all tests pass.
