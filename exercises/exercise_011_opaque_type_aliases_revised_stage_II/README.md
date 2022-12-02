@@ -1,38 +1,10 @@
 # Opaque Type Aliases
 
-## Background
-
-An Opaque Type Alias can be used to provide the functionality of a "wrapper
-type" (i.e. a type that wraps, and therefore hides, another type) but without
-any runtime overhead. The aim is to provide additional type-safety at
-compile-time but then be stripped away at runtime. It is a powerful new feature
-of Scala 3 for supporting Information Hiding.
-
-Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the later
-just provide a new name for a type but wherever this new name is used, the
-call-site still knows the details of the original type being aliased. With
-Opaque Type Aliases, the original type being aliased is hidden (or is opaque) at
-the call-site.
-
 ## Steps
 
-We will change two type aliases, `ReductionSet` and `Sudoku` into opaque type
-aliases and we will do this in two steps tackling the conversion of
-`ReductionSet` first. Each time you change the code, recompile the project to see
-the effect. Don't forget to compile the tests too...
+In this step you will convert the `Sudoku` type alias into an opaque type alias.
 
-> __Tip:__ Fix all of the compilation errors of this form `value {name} is not a
-      member of ...` before tackling the other types of error like `Found: ...
-      Required: ...`
-
-> __Tip:__ Some of the mission members for our new opaque type are generic (i.e.
-      type-parameterised) methods. Do not be afraid to implement extension
-      methods that are non-generic (i.e. without type-parameters), which might
-      mean modifying existing call-sites.
-
-- Have a look at the `TopLevelDefinitions.scala` file. This is the current definition
-  of the `ReductionSet` type alias (the definition of `CellContent` is shown too for
-  clarity; we will leave this type alias unmodified):
+In file `TopLevelDefinitions.scala`, we have the following:
 
 ```scala
 type CellContent = Set[Int]
