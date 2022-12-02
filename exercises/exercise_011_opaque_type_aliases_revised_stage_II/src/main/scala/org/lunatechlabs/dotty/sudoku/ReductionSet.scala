@@ -8,9 +8,6 @@ opaque type ReductionSet = Vector[CellContent]
 
 opaque type Sudoku = Vector[ReductionSet]
 
-extension (sudoku: Sudoku)
-  def sliding(n1: Int, n2: Int): Iterator[Sudoku] =
-    sudoku.sliding(n1, n2)
 
 object ReductionSet:
   def apply(vs: Vector[Set[Int]]): ReductionSet =
@@ -27,6 +24,9 @@ object Sudoku:
       .mkString("\n+---+---+---+\n", "+---+---+---+\n", "+---+---+---+")
 
 extension (sudoku: Sudoku)
+  def sliding(n1: Int, n2: Int): Iterator[Sudoku] =
+    sudoku.sliding(n1, n2)
+
   def transpose: Sudoku = sudoku.transpose
 
   def reverse: Sudoku = sudoku.reverse
