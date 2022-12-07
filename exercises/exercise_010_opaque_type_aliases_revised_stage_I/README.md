@@ -25,7 +25,7 @@ the effect. Don't forget to compile the tests too...
       member of ...` before tackling the other types of error like `Found: ...
       Required: ...`
 
-> __Tip:__ Some of the mission members for our new opaque type are generic (i.e.
+> __Tip:__ Some of the missing members for our new opaque type are generic (i.e.
       type-parameterised) methods. Do not be afraid to implement extension
       methods that are non-generic (i.e. without type-parameters), which might
       mean modifying existing call-sites.
