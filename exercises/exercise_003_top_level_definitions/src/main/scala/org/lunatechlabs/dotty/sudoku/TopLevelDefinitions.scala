@@ -13,6 +13,8 @@ type Sudoku = Vector[ReductionSet]
 type CellUpdates = Vector[(Int, Set[Int])]
 val cellUpdatesEmpty = Vector.empty[(Int, Set[Int])]
 
+final case class SudokuField(sudoku: Sudoku)
+
 import SudokuDetailProcessor.RowUpdate
 
 implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate]) extends AnyVal:
