@@ -40,24 +40,25 @@ final case class SudokuField(sudoku: Sudoku)
 
 import SudokuDetailProcessor.RowUpdate
 
-extension (update: Vector[SudokuDetailProcessor.RowUpdate]) def toSudokuField: SudokuField =
-  import scala.language.implicitConversions
-  val rows =
-        update
-          .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
-          .to(Map).withDefaultValue(cellUpdatesEmpty)
-  val sudoku = for
-    (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
-    x = cellUpdates.to(Map).withDefaultValue(Set(0))
-    y = Vector.range(0, 9).map(n => x(n))
-  yield y
-  SudokuField(sudoku)
+extension (update: Vector[SudokuDetailProcessor.RowUpdate])
+  def toSudokuField: SudokuField =
+    import scala.language.implicitConversions
+    val rows =
+          update
+            .map { case SudokuDetailProcessor.RowUpdate(id, cellUpdates) => (id, cellUpdates)}
+            .to(Map).withDefaultValue(cellUpdatesEmpty)
+    val sudoku = for
+      (row, cellUpdates) <- Vector.range(0, 9).map(row => (row, rows(row)))
+      x = cellUpdates.to(Map).withDefaultValue(Set(0))
+      y = Vector.range(0, 9).map(n => x(n))
+    yield y
+    SudokuField(sudoku)
 
 // Collective Extensions:
 // define extension methods that share the same left-hand parameter type under a single extension instance.
 extension (sudokuField: SudokuField)
 
-  def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
+  def mirrorOnMainDiagonal: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 
   def rotateCW: SudokuField = SudokuField(sudokuField.sudoku.reverse.transpose)
 

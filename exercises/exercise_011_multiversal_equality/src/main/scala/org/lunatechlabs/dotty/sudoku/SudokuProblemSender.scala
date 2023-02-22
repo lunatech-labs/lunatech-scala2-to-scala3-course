@@ -49,17 +49,17 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
         initialSudokuField.rotateCW,
         initialSudokuField.rotateCCW,
         initialSudokuField.rotateCW.rotateCW,
-        initialSudokuField.transpose,
+        initialSudokuField.mirrorOnMainDiagonal,
         initialSudokuField.randomSwapAround,
-        initialSudokuField.rotateCW.transpose,
+        initialSudokuField.rotateCW.mirrorOnMainDiagonal,
         initialSudokuField.randomSwapAround,
-        initialSudokuField.rotateCCW.transpose,
+        initialSudokuField.rotateCCW.mirrorOnMainDiagonal,
         initialSudokuField.randomSwapAround,
         initialSudokuField.randomSwapAround,
-        initialSudokuField.flipVertically.transpose,
+        initialSudokuField.flipVertically.mirrorOnMainDiagonal,
         initialSudokuField.flipVertically.rotateCW,
         initialSudokuField.columnSwap(4, 5).columnSwap(0, 2).rowSwap(3, 4),
-        initialSudokuField.rotateCW.rotateCW.transpose
+        initialSudokuField.rotateCW.rotateCW.mirrorOnMainDiagonal
       ).map(_.toRowUpdates)
     )
     .flatten

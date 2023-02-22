@@ -32,7 +32,7 @@ implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.
     SudokuField(sudoku)
 
 implicit class SudokuFieldOps(val sudokuField: SudokuField) extends AnyVal:
-  def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
+  def mirrorOnMainDiagonal: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 
   def rotateCW: SudokuField = SudokuField(sudokuField.sudoku.reverse.transpose)
 
