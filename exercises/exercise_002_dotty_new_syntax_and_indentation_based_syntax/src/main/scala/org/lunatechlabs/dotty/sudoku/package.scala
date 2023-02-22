@@ -34,8 +34,8 @@ package object sudoku:
       yield y
       SudokuField(sudoku)
 
-  implicit class SudokuFieldOps(val sudokuField: SudokuField) extends AnyVal:
-    def transpose: SudokuField = SudokuField(sudokuField.sudoku.transpose)
+  implicit class SudokuFieldOps(val sudokuField: SudokuField) extends AnyVal {
+    def mirrorOnMainDiagonal: SudokuField = SudokuField(sudokuField.sudoku.transpose)
 
     def rotateCW: SudokuField = SudokuField(sudokuField.sudoku.reverse.transpose)
 
