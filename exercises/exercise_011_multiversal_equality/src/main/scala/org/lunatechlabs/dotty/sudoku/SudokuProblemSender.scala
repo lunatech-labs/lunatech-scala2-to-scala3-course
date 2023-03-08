@@ -11,6 +11,8 @@ object SudokuProblemSender:
     case SendNewSudoku
   export Command.*
 
+  given CanEqual[Command, CommandAndResponses] = CanEqual.derived
+
   type CommandAndResponses = Command | SudokuSolver.Response
 
   private val rowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =

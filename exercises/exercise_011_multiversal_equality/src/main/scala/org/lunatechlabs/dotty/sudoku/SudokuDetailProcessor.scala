@@ -4,6 +4,7 @@ import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
 import org.lunatechlabs.dotty.sudoku.SudokuDetailProcessor.UpdateSender
 
+
 object SudokuDetailProcessor:
 
   // My protocol
@@ -13,6 +14,8 @@ object SudokuDetailProcessor:
     case GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
   export Command.*
 
+  given CanEqual[Command, Command] = CanEqual.derived
+  
   // My responses
   enum Response:
     case RowUpdate(id: Int, cellUpdates: CellUpdates)

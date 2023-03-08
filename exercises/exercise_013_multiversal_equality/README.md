@@ -26,15 +26,14 @@ found, then the comparison does not type-check and the compilation fails with an
 error.
 
 ## Steps
-- Create a new file `exercises/build.sbt`
 
-- Add the code `scalacOptions in Compile += "-language:strictEquality"` to opt
-  in to safer multiversal equality
+- Enable multiversal equality at the project level by adding `-language:strictEquality`
+  to the Scalaa compiler options in `project/Build.scala`
 
 - Use the course notes on Multiversal Equality and your experience from the
   exercise on `given`s to make the code compile with the flag
   `-language:strictEquality` enabled
-    - Hint: The simplest solution will probably involve using `Eql.derived`
+  - Hint: The simplest solution will probably involve using `CanEqual.derived`
 
 - Run the provided tests by executing the `test` command from the `sbt` prompt
   and verify that all tests pass

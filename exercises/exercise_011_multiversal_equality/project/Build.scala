@@ -12,6 +12,7 @@ object CompileOptions {
     "-deprecation",
     "-encoding", "UTF-8",
     "-source:future-migration",
+    "-language:strictEquality",
   )
 }
 
