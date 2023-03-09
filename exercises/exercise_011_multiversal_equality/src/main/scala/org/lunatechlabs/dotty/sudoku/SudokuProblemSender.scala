@@ -11,6 +11,8 @@ object SudokuProblemSender:
     case SendNewSudoku
   export Command.*
 
+  given CanEqual[Command, CommandAndResponses] = CanEqual.derived
+
   type CommandAndResponses = Command | SudokuSolver.Response
 
   private val rowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =
@@ -72,7 +74,7 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
 
   def sending(): Behavior[CommandAndResponses] = 
     Behaviors.receiveMessage {
-      case _: SendNewSudoku.type =>
+      case SendNewSudoku =>
         context.log.debug("sending new sudoku problem")
         val nextRowUpdates = rowUpdatesSeq.next()
         sudokuSolver ! SudokuSolver.InitialRowUpdates(nextRowUpdates, context.self)

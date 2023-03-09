@@ -32,38 +32,80 @@ type CellUpdates = Vector[(Int, Set[Int])]
 
 To keep things manageable we will only focus on one of these type aliases for
 this exercise. Specifically we will convert the last of these type aliases,
-`CellUpdates` into an Opaque Type Alias.
+`ReductionSet` into an Opaque Type Alias.
 
-- To do that, simply add the keyword `opaque` in front of the type alias
+- Start by moving the type alias to a new source file, `ReductionSet`.
+
+- Now add the keyword `opaque` in front of the type alias
   declaration and recompile. Do you expect this to compile successfully? If not,
   why?
 
-- Use your experience from the exercise on Extension Methods to fix the
-  compilation errors of the form `value {name} is not a member of
-  org.lunatechlabs.dotty.sudoku.CellUpdates`
-    - Tip: Fix all of the compilation errors of this form `value {name} is not a
-      member of ...` before tackling the other types of error like `Found: ...
-      Required: ...`
-    - Tip: Some of the mission members for our new opaque type are generic (i.e.
-      type-parameterised) methods. Do not be afraid to implement extension
-      methods that are non-generic (i.e. without type-parameters), which might
-      mean modifying existing call-sites.
+- So it seems we need to tackle quite a few compilation errors... Let's get
+  started.
 
-- Now that we have added the necessary extension methods we still have to fix
-  the remaining errors where we have a value of type `Vector[(Int, Set[Int])]`
-  but the compiler is expecting the opaque type `CellUpates`
-    - Tip: This is the point where we have to think how do we _get_ values of
-      our opaque type
-    - Tip: In general, an opaque type goes well together with a companion
-      object.
+> Tip: In general, try to fix all of the compilation errors of this form
+>      `value {name} is not a member of ...` before tackling the other types
+>      of error like `Found: ... Required: ...`
 
-- Note: Fixing one type of error (e.g. `Found: ... Required: ...`) may reveal
-  new errors of type `value {name} is not a member of ...`. If that happens, it
-  is generally easier to first fix the error of type `value {name} is not a
-  member of ...` by adding an extension method, and then continue with the other
-  type of error.
+- The first errors are in the source file `ReductionRules`. As this file contains
+  two extension methods on `ReductionSet`, moving these to `ReductionSet` will
+  resolve these errors.
+
+- Next up is an error linked to value `InitialDetailState`. It's an
+  `InitialDetailState` which is a `ReductionSet`. Again, move it to the
+   `ReductionSet` source file. You may have to annotate its type.
+
+- Recompile and look at the first few error in source file `SudokuDetailProcessor`.
+  These are linked to methods `mergeState`, `stateChanges`, and `isFullyReduced`.
+  As these 3 methods all take a `ReductionSet` as argument, it makes sense to
+  convert them to extension methods on `ReductionSet`. Do so, and adapt the
+  call sites to take the change into account. Note that you may have to change
+  the visibility of the methods.
+
+- Recompile and notice the errors in `SudokuIO`. The relevant code is doing some
+  kind of pretty print of a `Vector[ReductionSet]` (which is a `Sudoku`; see the
+  type alias in `TopLevelDefinitions`). Move the method `SudokuRowPrinter` to
+  `ReductionSet` and convert it to an extension method (name it `printSudokuRow`).
+  Move the private `sudokuCellRepresentation` helper method along with it. Make
+  the necessary changes at the call site.
+
+- Recompile. Notice the extension methods on `SudokuField` that are now in error.
+  Move these to `ReductionSet` and recompile. Methods `randomSwapAround` and
+  `toRowUpdates` show errors.
+
+- The core issue with method `randomSwapAround` is the mapping on a `ReductionSet`.
+  One way to tackle this is to add an extension method on `ReductionSet` with the
+  following signature: `def swapValues(shuffledValuesMap: Map[Int, Int]): ReductionSet`
+  Make the necessary changes to `randomSwapAround` to make it compile.
+
+- The core issue with method `toRowUpdates` is invoking `zipWithIndex` on `ReductionSet`.
+  Add a private extension method `zipWithIndex` on `ReductionSet`.
+
+- We've almost eliminated all complilation errors. The last error can be corrected
+  by adding an apply method in a `ReductionSet` companion object that allows
+  one to create a `ReductionSet` from a `Vector[CellContent]`.
 
 - Once all the compilation errors are fixed, run the provided tests by executing
   the `test` command from the `sbt` prompt and verify that all tests pass
 
 - Verify that the application runs correctly
+
+## Conclusions
+
+In summary, all we did was changing a single type alias into an opaque one.
+
+It does raise some questions:
+
+- Was it worth the effort?
+  - What have we gained, if anything?
+- Are there alternatives to this approach?
+- What are the gotchas 
+
+There are many more potential type aliases to which we could apply the same
+procedure. One that sticks out is the `Sudoku` type alias
+(`type Sudoku = Vector[ReductionSet`).
+
+
+
+
+

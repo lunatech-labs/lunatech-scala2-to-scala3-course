@@ -4,25 +4,10 @@ import java.util.NoSuchElementException
 
 object SudokuIO:
 
-  private def sudokuCellRepresentation(content: CellContent): String =
-    content.toList match
-      case Nil => "x"
-      case singleValue +: Nil => singleValue.toString
-      case _ => " "
-
-  private def sudokuRowPrinter(threeRows: Vector[ReductionSet]): String =
-    val rowSubBlocks = for
-      row <- threeRows
-      rowSubBlock <- row.map(el => sudokuCellRepresentation(el)).sliding(3,3)
-      rPres = rowSubBlock.mkString
-
-    yield rPres
-    rowSubBlocks.sliding(3,3).map(_.mkString("", "|", "")).mkString("|", "|\n|", "|\n")
-
   def sudokuPrinter(result: SudokuSolver.SudokuSolution): String =
     result.sudoku
       .sliding(3,3)
-      .map(sudokuRowPrinter)
+      .map(_.printSudokuRow)
       .mkString("\n+---+---+---+\n", "+---+---+---+\n", "+---+---+---+")
 
   /*

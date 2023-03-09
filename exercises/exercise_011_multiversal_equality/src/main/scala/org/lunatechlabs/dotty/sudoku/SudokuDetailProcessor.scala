@@ -4,6 +4,7 @@ import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
 import org.lunatechlabs.dotty.sudoku.SudokuDetailProcessor.UpdateSender
 
+
 object SudokuDetailProcessor:
 
   // My protocol
@@ -13,6 +14,8 @@ object SudokuDetailProcessor:
     case GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
   export Command.*
 
+  given CanEqual[Command, Command] = CanEqual.derived
+  
   // My responses
   enum Response:
     case RowUpdate(id: Int, cellUpdates: CellUpdates)
@@ -55,7 +58,7 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
     Behaviors.receiveMessage {
     case Update(cellUpdates, replyTo) if ! fullyReduced =>
       val previousState = state
-      val updatedState = mergeState(state, cellUpdates)
+      val updatedState = state.mergeState(cellUpdates)
       if updatedState == previousState && cellUpdates != cellUpdatesEmpty then
         replyTo ! SudokuDetailUnchanged
         Behaviors.same
@@ -69,8 +72,8 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
           // The following can also be written as:
           // given ActorRef[Response] = replyTo
           // updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))         
-          updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))(using replyTo)
-          operational(id, transformedUpdatedState, isFullyReduced(transformedUpdatedState))
+          updateSender.sendUpdate(id, state.stateChanges(transformedUpdatedState))(using replyTo)
+          operational(id, transformedUpdatedState, transformedUpdatedState.isFullyReduced)
 
     case Update(cellUpdates, replyTo) =>
       replyTo ! SudokuDetailUnchanged
@@ -80,27 +83,9 @@ class SudokuDetailProcessor[DetailType <: SudokoDetailType : UpdateSender] priva
       replyTo ! SudokuProgressTracker.SudokuDetailState(id, state)
       Behaviors.same
 
-    case _: ResetSudokuDetailState.type =>
+    case ResetSudokuDetailState =>
       operational(id, InitialDetailState, fullyReduced = false)
 
   }
 
-  private def mergeState(state: ReductionSet, cellUpdates: CellUpdates): ReductionSet =
-      cellUpdates.foldLeft(state) {
-      case (stateTally, (index, updatedCellContent)) =>
-        stateTally.updated(index, stateTally(index) & updatedCellContent)
-    }
-
-  private def stateChanges(state: ReductionSet, updatedState: ReductionSet): CellUpdates =
-    (state zip updatedState).zipWithIndex.foldRight(cellUpdatesEmpty) {
-      case (((previousCellContent, updatedCellContent), index), cellUpdates)
-        if updatedCellContent != previousCellContent =>
-        (index, updatedCellContent) +: cellUpdates
-
-      case (_, cellUpdates) => cellUpdates
-    }
-
-  private def isFullyReduced(state: ReductionSet): Boolean =
-    val allValuesInState = state.flatten
-    allValuesInState == allValuesInState.distinct
 
