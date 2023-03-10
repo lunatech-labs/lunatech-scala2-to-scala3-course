@@ -25,7 +25,7 @@ object SudokuSolver:
   
   import SudokuDetailProcessor.UpdateSender
 
-  def genDetailProcessors[A <: SudokoDetailType: UpdateSender](
+  def genDetailProcessors[A <: SudokuDetailType: UpdateSender](
     context: ActorContext[CommandAndResponses]
   ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
     cellIndexesVector

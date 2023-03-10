@@ -20,7 +20,7 @@ object SudokuDetailProcessor {
   final case class BlockUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   case object SudokuDetailUnchanged extends Response
 
-  def apply[DetailType <: SudokoDetailType](id: Int, state: ReductionSet = InitialDetailState)(
+  def apply[DetailType <: SudokuDetailType](id: Int, state: ReductionSet = InitialDetailState)(
     implicit updateSender: UpdateSender[DetailType]
   ): Behavior[Command] =
     Behaviors.setup { context =>
@@ -51,7 +51,7 @@ object SudokuDetailProcessor {
   }
 }
 
-class SudokuDetailProcessor[DetailType <: SudokoDetailType: UpdateSender] private (
+class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] private(
   context: ActorContext[SudokuDetailProcessor.Command]
 ) {
 
