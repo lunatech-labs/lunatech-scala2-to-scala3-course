@@ -17,6 +17,11 @@ on:
       - 'scripts/**'
     branches: [ main ]
 
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
 env:
   EXERCISES_DIRECTORY: ./exercises
 
