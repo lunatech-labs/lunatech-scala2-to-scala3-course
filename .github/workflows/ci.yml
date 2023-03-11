@@ -74,10 +74,10 @@ jobs:
           fetch-depth: 0          
       
       - name: Setup Course Management Tools
-        uses: robinraju/release-downloader@v1.1
+        uses: robinraju/release-downloader@v1.7
         with:
-          repository: eloots/course-management-tools
-          tag: "1.0.0"
+          repository: lunatech-labs/course-management-tools
+          tag: "2.0.0-RC6"
           fileName: "course-management-tools.zip"
           out-file-path: "."
       - run: |
@@ -101,13 +101,13 @@ jobs:
           export PATH=${PATH}:$GITHUB_WORKSPACE/CMT/bin
           git config --global user.email "no-reply@lunatech.com"
           git config --global user.name "Lunatech Labs"
-          cmt-studentify -dot -g lunatech-scala-2-to-scala3-course studentified
+          cmta studentify -f -g -m lunatech-scala-2-to-scala3-course -d studentified
           (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
           
       - name: Linearize Repo
         run: |
           mkdir -p linearized
-          cmt-linearize -dot lunatech-scala-2-to-scala3-course linearized
+          cmta linearize -f -m lunatech-scala-2-to-scala3-course -d linearized
           mv linearized/lunatech-scala-2-to-scala3-course linearized/lunatech-scala-2-to-scala3-course-linearized
           (cd linearized && exec zip -r lunatech-scala-2-to-scala3-course-linearized.zip lunatech-scala-2-to-scala3-course-linearized)
         
