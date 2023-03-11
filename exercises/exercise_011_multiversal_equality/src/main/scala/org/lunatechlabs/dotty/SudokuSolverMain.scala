@@ -32,7 +32,7 @@ object Main:
   def apply(): Behavior[NotUsed] =
     Behaviors.setup { context =>
       val sudokuSolverSettings = SudokuSolverSettings("sudokusolver.conf")
-      // Start a SodukuSolver
+      // Start a SudokuSolver
       val sudokuSolver = context.spawn(SudokuSolver(sudokuSolverSettings), s"sudoku-solver")
       // Start a Sudoku problem sender
       context.spawn(SudokuProblemSender(sudokuSolver, sudokuSolverSettings),
