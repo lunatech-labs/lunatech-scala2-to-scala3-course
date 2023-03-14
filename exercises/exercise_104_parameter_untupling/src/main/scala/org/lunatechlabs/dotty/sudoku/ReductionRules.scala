@@ -1,10 +1,10 @@
 package org.lunatechlabs.dotty.sudoku
 
-object ReductionRules:
+object ReductionRules {
 
-  def reductionRuleOne(reductionSet: ReductionSet): ReductionSet =
+  def reductionRuleOne(reductionSet: ReductionSet): ReductionSet = {
     val inputCellsGrouped = reductionSet.filter(_.size <= 7).groupBy(identity)
-    val completeInputCellGroups = inputCellsGrouped.filter { (set, setOccurrences) => 
+    val completeInputCellGroups = inputCellsGrouped.filter { (set, setOccurrences) =>
       set.size == setOccurrences.length
     }
     val completeAndIsolatedValueSets = completeInputCellGroups.keys.toList
@@ -13,30 +13,30 @@ object ReductionRules:
         if cell != caivSet then cell &~ caivSet else cell
       }
     }
+  }
 
-  def reductionRuleTwo(reductionSet: ReductionSet): ReductionSet =
+  def reductionRuleTwo(reductionSet: ReductionSet): ReductionSet = {
     val valueOccurrences = CELLPossibleValues.map { value =>
-      cellIndexesVector.zip(reductionSet).foldLeft(Vector.empty[Int]) {
-        case (acc, (index, cell)) =>
-          if cell contains value then index +: acc else acc
+      cellIndexesVector.zip(reductionSet).foldLeft(Vector.empty[Int]) { case (acc, (index, cell)) =>
+        if cell contains value then index +: acc else acc
       }
     }
 
     val cellIndexesToValues =
-      CELLPossibleValues
-        .zip(valueOccurrences)
-        .groupBy ((value, occurrence) => occurrence )
-        .filter { case (loc, occ) => loc.length == occ.length && loc.length <= 6 }
+      CELLPossibleValues.zip(valueOccurrences).groupBy((value, occurrence) => occurrence).filter { case (loc, occ) =>
+        loc.length == occ.length && loc.length <= 6
+      }
 
     val cellIndexListToReducedValue = cellIndexesToValues.map { (index, seq) =>
-      (index, (seq.map ((value, _) => value )).toSet)
+      (index, (seq.map((value, _) => value)).toSet)
     }
 
     val cellIndexToReducedValue = cellIndexListToReducedValue.flatMap { (cellIndexList, reducedValue) =>
       cellIndexList.map(cellIndex => cellIndex -> reducedValue)
     }
 
-    reductionSet.zipWithIndex.foldRight(Vector.empty[CellContent]) {
-      case ((cellValue, cellIndex), acc) =>
-        cellIndexToReducedValue.getOrElse(cellIndex, cellValue) +: acc
+    reductionSet.zipWithIndex.foldRight(Vector.empty[CellContent]) { case ((cellValue, cellIndex), acc) =>
+      cellIndexToReducedValue.getOrElse(cellIndex, cellValue) +: acc
     }
+  }
+}

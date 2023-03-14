@@ -1,31 +1,33 @@
 package org.lunatechlabs.dotty.sudoku
 
-import akka.actor.typed.receptionist.{ Receptionist, ServiceKey }
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, StashBuffer }
-import akka.actor.typed.{ ActorRef, Behavior, SupervisorStrategy }
+import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors, StashBuffer}
+import akka.actor.typed.{ActorRef, Behavior, SupervisorStrategy}
 
 import scala.concurrent.duration.*
 
-object SudokuSolver:
+object SudokuSolver {
 
   // SudokuSolver Protocol
-  enum Command:
-    case InitialRowUpdates(rowUpdates: Vector[SudokuDetailProcessor.RowUpdate],
-                                     replyTo: ActorRef[SudokuSolver.Response])
+  enum Command {
+    case InitialRowUpdates(
+        rowUpdates: Vector[SudokuDetailProcessor.RowUpdate],
+        replyTo: ActorRef[SudokuSolver.Response])
+  }
   export Command.InitialRowUpdates
 
   // My Responses
-  enum Response:
+  enum Response {
     case SudokuSolution(sudoku: Sudoku)
+  }
   export Response.SudokuSolution
 
   type CommandAndResponses = Command | SudokuDetailProcessor.Response | SudokuProgressTracker.Response
-  
+
   import SudokuDetailProcessor.UpdateSender
 
   def genDetailProcessors[A <: SudokuDetailType: UpdateSender](
-    context: ActorContext[CommandAndResponses]
-  ): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
+      context: ActorContext[CommandAndResponses]): Map[Int, ActorRef[SudokuDetailProcessor.Command]] =
     cellIndexesVector
       .map { index =>
         val detailProcessorName = summon[UpdateSender[A]].processorName(index)
@@ -37,21 +39,20 @@ object SudokuSolver:
   def apply(sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =
     Behaviors
       .supervise[CommandAndResponses] {
-        Behaviors.withStash(capacity = sudokuSolverSettings.SudokuSolver.StashBufferSize) {
-          buffer =>
-            Behaviors.setup { context =>
-              new SudokuSolver(context, buffer).idle()
-            }
+        Behaviors.withStash(capacity = sudokuSolverSettings.SudokuSolver.StashBufferSize) { buffer =>
+          Behaviors.setup { context =>
+            new SudokuSolver(context, buffer).idle()
+          }
         }
       }
       .onFailure[Exception](
-        SupervisorStrategy
-          .restartWithBackoff(minBackoff = 5.seconds, maxBackoff = 1.minute, randomFactor = 0.2)
-      ).narrow
+        SupervisorStrategy.restartWithBackoff(minBackoff = 5.seconds, maxBackoff = 1.minute, randomFactor = 0.2))
+      .narrow
+}
 
-class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndResponses],
-                            buffer: StashBuffer[SudokuSolver.CommandAndResponses]
-):
+class SudokuSolver private (
+    context: ActorContext[SudokuSolver.CommandAndResponses],
+    buffer: StashBuffer[SudokuSolver.CommandAndResponses]) {
   import CellMappings.*
   import SudokuSolver.*
 
@@ -62,17 +63,14 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
     List(rowDetailProcessors, columnDetailProcessors, blockDetailProcessors)
 
   private val progressTracker =
-    context.spawn(SudokuProgressTracker(rowDetailProcessors, context.self),
-                  "sudoku-progress-tracker"
-    )
+    context.spawn(SudokuProgressTracker(rowDetailProcessors, context.self), "sudoku-progress-tracker")
 
   def idle(): Behavior[CommandAndResponses] =
     Behaviors.receiveMessage {
 
       case InitialRowUpdates(rowUpdates, sender) =>
-        rowUpdates.foreach {
-          case SudokuDetailProcessor.RowUpdate(row, cellUpdates) =>
-            rowDetailProcessors(row) ! SudokuDetailProcessor.Update(cellUpdates, context.self)
+        rowUpdates.foreach { case SudokuDetailProcessor.RowUpdate(row, cellUpdates) =>
+          rowDetailProcessors(row) ! SudokuDetailProcessor.Update(cellUpdates, context.self)
         }
         progressTracker ! SudokuProgressTracker.NewUpdatesInFlight(rowUpdates.size)
         processRequest(Some(sender), System.currentTimeMillis())
@@ -125,9 +123,7 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
         Behaviors.same
 
       case SudokuProgressTracker.Result(sudoku) =>
-        context.log.info(
-          s"Sudoku processing time: ${System.currentTimeMillis() - startTime} milliseconds"
-        )
+        context.log.info(s"Sudoku processing time: ${System.currentTimeMillis() - startTime} milliseconds")
         requestor.get ! SudokuSolution(sudoku)
         resetAllDetailProcessors()
         buffer.unstashAll(idle())
@@ -141,7 +137,9 @@ class SudokuSolver private (context: ActorContext[SudokuSolver.CommandAndRespons
     }
 
   private def resetAllDetailProcessors(): Unit =
-    for
+    for {
       processors <- allDetailProcessors
       (_, processor) <- processors
+    }
     do processor ! SudokuDetailProcessor.ResetSudokuDetailState
+}

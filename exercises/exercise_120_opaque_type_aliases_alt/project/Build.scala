@@ -13,6 +13,7 @@ object CompileOptions {
     "-encoding", "UTF-8",
     "-source:future-migration",
   )
+
 }
 
 object Version {

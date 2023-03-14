@@ -1,6 +1,6 @@
 package org.lunatechlabs.dotty.sudoku
 
-trait SudokuTestHelpers:
+trait SudokuTestHelpers {
 
   import org.lunatechlabs.dotty.sudoku.ReductionRules.{reductionRuleOne, reductionRuleTwo}
 
@@ -15,3 +15,4 @@ trait SudokuTestHelpers:
     } yield (index, cellString.replaceAll(" ", "").map { _.toString.toInt }.toSet)
 
   def applyReductionRules(reductionSet: ReductionSet): ReductionSet = reductionRuleTwo(reductionRuleOne(reductionSet))
+}
