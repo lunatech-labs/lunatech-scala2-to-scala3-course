@@ -1,0 +1,49 @@
+import sbt._
+
+object CompileOptions {
+
+  lazy val rewriteNewSyntax = Seq("-rewrite", "-new-syntax")
+  lazy val rewriteIndent = Seq("-rewrite", "-indent")
+  lazy val rewriteNoIndent = Seq("-rewrite", "-noindent")
+  lazy val rewriteOldSyntax = Seq("-rewrite", "-old-syntax")
+
+  lazy val compileOptions = Seq(
+    "-unchecked",
+    "-deprecation",
+    "-encoding", "UTF-8",
+    "-source:future-migration",
+  )
+}
+
+object Version {
+  lazy val akkaVer           = "2.6.20"
+  lazy val logbackVer        = "1.2.3"
+  lazy val mUnitVer          = "0.7.26"
+}
+
+object Dependencies {
+
+  private lazy val akkaDeps = Seq(
+    "com.typesafe.akka"             %% "akka-actor-typed",
+    "com.typesafe.akka"             %% "akka-slf4j",
+    "com.typesafe.akka"             %% "akka-stream",
+  ).map (_ % Version.akkaVer)
+
+  private lazy val akkaTestkitDeps = Seq(
+    "com.typesafe.akka"             %% "akka-actor-testkit-typed" % Version.akkaVer % Test
+  )
+
+  private lazy val logbackDeps = Seq (
+    "ch.qos.logback"                 %  "logback-classic",
+  ).map (_ % Version.logbackVer)
+
+  private lazy val munitDeps = Seq(
+    "org.scalameta" %% "munit" % Version.mUnitVer % Test
+  )
+
+  lazy val dependencies: Seq[ModuleID] =
+    logbackDeps ++
+    munitDeps ++
+    akkaDeps ++
+    akkaTestkitDeps
+}
