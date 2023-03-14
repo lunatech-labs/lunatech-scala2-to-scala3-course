@@ -75,7 +75,5 @@ implicit class SudokuFieldOps(val sudokuField: SudokuField) extends AnyVal {
       .map(row => row.filterNot(_._1 == Set(0)))
       .zipWithIndex
       .filter(_._1.nonEmpty)
-      .map { (c, i) =>
-        RowUpdate(i, c.map(_.swap))
-      }
+      .map((c, i) => RowUpdate(i, c.map(_.swap)))
 }

@@ -9,11 +9,10 @@ extension (reductionSet: ReductionSet) {
       set.size == setOccurrences.length
     }
     val completeAndIsolatedValueSets = completeInputCellGroups.keys.toList
-    completeAndIsolatedValueSets.foldLeft(reductionSet) { (cells, caivSet) =>
+    completeAndIsolatedValueSets.foldLeft(reductionSet)((cells, caivSet) =>
       cells.map { cell =>
         if cell != caivSet then cell &~ caivSet else cell
-      }
-    }
+      })
   }
 
   def applyReductionRuleTwo: ReductionSet = {
@@ -24,17 +23,16 @@ extension (reductionSet: ReductionSet) {
     }
 
     val cellIndexesToValues =
-      CELLPossibleValues.zip(valueOccurrences).groupBy((value, occurrence) => occurrence).filter { case (loc, occ) =>
-        loc.length == occ.length && loc.length <= 6
-      }
+      CELLPossibleValues
+        .zip(valueOccurrences)
+        .groupBy((value, occurrence) => occurrence)
+        .filter((loc, occ) => loc.length == occ.length && loc.length <= 6)
 
-    val cellIndexListToReducedValue = cellIndexesToValues.map { (index, seq) =>
-      (index, (seq.map((value, _) => value)).toSet)
-    }
+    val cellIndexListToReducedValue =
+      cellIndexesToValues.map((index, seq) => (index, (seq.map((value, _) => value)).toSet))
 
-    val cellIndexToReducedValue = cellIndexListToReducedValue.flatMap { (cellIndexList, reducedValue) =>
-      cellIndexList.map(cellIndex => cellIndex -> reducedValue)
-    }
+    val cellIndexToReducedValue = cellIndexListToReducedValue.flatMap((cellIndexList, reducedValue) =>
+      cellIndexList.map(cellIndex => cellIndex -> reducedValue))
 
     reductionSet.zipWithIndex.foldRight(Vector.empty[CellContent]) { case ((cellValue, cellIndex), acc) =>
       cellIndexToReducedValue.getOrElse(cellIndex, cellValue) +: acc
