@@ -23,6 +23,7 @@ This repository is structured in such a way that it can be transformed into two 
 
 - A _studentified_ repository: this is a standalone sbt project which is typically used for teaching or learning purposes. A user of this repository will be working on one exercise at any one point in time and will be able to use a number of commands via the `cmtc` cli:
 
+    - `cmtc set-course-root`: Sets the location of the current course as the default location for subsequent cmtc command invocations.
     - `cmtc list-exercises`: will print a list of all available exercises. The current exercise is marked with a **_*_**.
     - `cmtc next-exercise`: move to the next exercise and pull in the tests (if any) and exercise instructions for that exercise. This command preserves the current state of the application leaving any code added or changed by the student unmodified.
     - `cmtc previous-exercise`: the opposite of the `next-exercise` command.
@@ -47,9 +48,9 @@ This repository is structured in such a way that it can be transformed into two 
     repo by a process of `delinearization`
   - _There is a second use case for a linearized repo: it can can be used to inspect the differences between consecutive exercises (using a tools such as `SourceTree` or `GitKraken`)_
 
-_Studentification_, _linearization_, and _delinearization_ as well as some administrative tasks (such as renumbering exercises), is done using the so-called [Course Management Tools](https://github.com/lightbend/course-management-tools).
+_Studentification_, _linearization_, and _delinearization_ as well as some administrative tasks (such as renumbering exercises), is done using the so-called [Course Management Tools](https://github.com/lunatech-labs/course-management-tools).
 
-In the following sections, we'll explain `studentify`, `linearize` and `delinearize` commands.
+In the following sections, we'll explain how to `studentify` this course.
 
 ### How to _"studentify"_ a master repository
 

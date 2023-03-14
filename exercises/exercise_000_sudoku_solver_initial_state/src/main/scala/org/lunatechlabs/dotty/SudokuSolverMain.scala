@@ -1,5 +1,5 @@
 /**
-  * Copyright © 2016-2020 Lightbend, Inc.
+  * Copyright © 2020-2023 Lunatech Labs.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   *
   * NO COMMERCIAL SUPPORT OR ANY OTHER FORM OF SUPPORT IS OFFERED ON
-  * THIS SOFTWARE BY LIGHTBEND, Inc.
+  * THIS SOFTWARE BY Lunatech Labs.
   *
   * See the License for the specific language governing permissions and
   * limitations under the License.
