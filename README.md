@@ -23,6 +23,7 @@ This repository is structured in such a way that it can be transformed into two 
 
 - A _studentified_ repository: this is a standalone sbt project which is typically used for teaching or learning purposes. A user of this repository will be working on one exercise at any one point in time and will be able to use a number of commands via the `cmtc` cli:
 
+    - `cmtc set-course-root`: Sets the location of the current course as the default location for subsequent cmtc command invocations.
     - `cmtc list-exercises`: will print a list of all available exercises. The current exercise is marked with a **_*_**.
     - `cmtc next-exercise`: move to the next exercise and pull in the tests (if any) and exercise instructions for that exercise. This command preserves the current state of the application leaving any code added or changed by the student unmodified.
     - `cmtc previous-exercise`: the opposite of the `next-exercise` command.
