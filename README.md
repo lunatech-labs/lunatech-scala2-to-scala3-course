@@ -48,9 +48,9 @@ This repository is structured in such a way that it can be transformed into two 
     repo by a process of `delinearization`
   - _There is a second use case for a linearized repo: it can can be used to inspect the differences between consecutive exercises (using a tools such as `SourceTree` or `GitKraken`)_
 
-_Studentification_, _linearization_, and _delinearization_ as well as some administrative tasks (such as renumbering exercises), is done using the so-called [Course Management Tools](https://github.com/lightbend/course-management-tools).
+_Studentification_, _linearization_, and _delinearization_ as well as some administrative tasks (such as renumbering exercises), is done using the so-called [Course Management Tools](https://github.com/lunatech-labs/course-management-tools).
 
-In the following sections, we'll explain `studentify`, `linearize` and `delinearize` commands.
+In the following sections, we'll explain how to `studentify` this course.
 
 ### How to _"studentify"_ a master repository
 
