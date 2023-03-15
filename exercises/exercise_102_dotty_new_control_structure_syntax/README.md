@@ -1,4 +1,4 @@
-# Scala 3 - new control and indentation based syntax
+# Scala 3 - new control syntax
 
 
 ## Background
@@ -16,6 +16,9 @@ cannot be done in a single step.
 
 Changing the syntax is a reversible process (except that after going back to where
 one came from, the formatting may be different, but semantically equivalent).
+
+In this exercise, we will use the compiler to change all control structures to
+the new syntax version.
 
 ## Steps
 
@@ -42,8 +45,7 @@ alternative syntax options.
 - The values mentioned above each contain a specific set of compiler options
   for a specific syntax rewrite.
 
-- Now go through the following sequence of actions:
-  - Add one of the syntax rewrite values to the compiler option section.
+- Now add the `rewriteNewSyntax` settings to the compiler options.
 
 Question: you will need to concatenate the `Seq` of settings with the compiler
 option setting. How would you do that. If needed, consult the `Seq` Scala collection
@@ -56,7 +58,9 @@ documentation.
   - Repeat this by compiling the test code (`Test / compile`).
   - Explore the changes applied by the rewrites (you can use the `git diff` command
     for this).
-  - Repeat the process for another rewrite.
+
+We will explore the rewriting to indentation based syntax in one of the upcoming
+exercises.
 
 ## Source code formatting & Markdown viewer in IntelliJ
 
