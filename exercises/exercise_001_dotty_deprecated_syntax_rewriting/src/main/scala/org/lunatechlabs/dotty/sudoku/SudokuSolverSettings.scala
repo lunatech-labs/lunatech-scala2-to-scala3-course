@@ -1,8 +1,8 @@
 package org.lunatechlabs.dotty.sudoku
 
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{Config, ConfigFactory}
 
-import scala.concurrent.duration.{ Duration, FiniteDuration, MILLISECONDS as Millis }
+import scala.concurrent.duration.{Duration, FiniteDuration, MILLISECONDS as Millis}
 
 object SudokuSolverSettings {
 

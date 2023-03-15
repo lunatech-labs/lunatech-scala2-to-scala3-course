@@ -1,7 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
-import akka.actor.typed.{ ActorRef, Behavior }
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
+import akka.actor.typed.{ActorRef, Behavior}
 import org.lunatechlabs.dotty.sudoku.SudokuDetailProcessor.UpdateSender
 
 object SudokuDetailProcessor:
@@ -10,8 +10,7 @@ object SudokuDetailProcessor:
   sealed trait Command
   case object ResetSudokuDetailState extends Command
   final case class Update(cellUpdates: CellUpdates, replyTo: ActorRef[Response]) extends Command
-  final case class GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command])
-      extends Command
+  final case class GetSudokuDetailState(replyTo: ActorRef[SudokuProgressTracker.Command]) extends Command
 
   // My responses
   sealed trait Response
@@ -20,9 +19,8 @@ object SudokuDetailProcessor:
   final case class BlockUpdate(id: Int, cellUpdates: CellUpdates) extends Response
   case object SudokuDetailUnchanged extends Response
 
-  def apply[DetailType <: SudokuDetailType](id: Int, state: ReductionSet = InitialDetailState)(
-    implicit updateSender: UpdateSender[DetailType]
-  ): Behavior[Command] =
+  def apply[DetailType <: SudokuDetailType](id: Int, state: ReductionSet = InitialDetailState)(implicit
+      updateSender: UpdateSender[DetailType]): Behavior[Command] =
     Behaviors.setup { context =>
       (new SudokuDetailProcessor[DetailType](context)).operational(id, state, fullyReduced = false)
     }
@@ -46,11 +44,10 @@ object SudokuDetailProcessor:
       sender ! BlockUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"blk-processor-$id"
 
-class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] private(
-  context: ActorContext[SudokuDetailProcessor.Command]
-):
+class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] private (
+    context: ActorContext[SudokuDetailProcessor.Command]):
 
-  import ReductionRules.{ reductionRuleOne, reductionRuleTwo }
+  import ReductionRules.{reductionRuleOne, reductionRuleTwo}
   import SudokuDetailProcessor.*
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
@@ -85,9 +82,8 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] privat
     }
 
   private def mergeState(state: ReductionSet, cellUpdates: CellUpdates): ReductionSet =
-    cellUpdates.foldLeft(state) {
-      case (stateTally, (index, updatedCellContent)) =>
-        stateTally.updated(index, stateTally(index) & updatedCellContent)
+    cellUpdates.foldLeft(state) { case (stateTally, (index, updatedCellContent)) =>
+      stateTally.updated(index, stateTally(index) & updatedCellContent)
     }
 
   private def stateChanges(state: ReductionSet, updatedState: ReductionSet): CellUpdates =
@@ -102,4 +98,3 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] privat
   private def isFullyReduced(state: ReductionSet): Boolean =
     val allValuesInState = state.flatten
     allValuesInState == allValuesInState.distinct
-

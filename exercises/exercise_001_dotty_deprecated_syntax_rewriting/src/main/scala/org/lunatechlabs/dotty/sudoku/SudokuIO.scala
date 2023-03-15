@@ -6,27 +6,24 @@ object SudokuIO {
 
   private def sudokuCellRepresentation(content: CellContent): String = {
     content.toList match {
-      case Nil => "x"
+      case Nil                => "x"
       case singleValue +: Nil => singleValue.toString
-      case _ => " "
+      case _                  => " "
     }
   }
 
   private def sudokuRowPrinter(threeRows: Vector[ReductionSet]): String = {
     val rowSubBlocks = for {
       row <- threeRows
-      rowSubBlock <- row.map(el => sudokuCellRepresentation(el)).sliding(3,3)
+      rowSubBlock <- row.map(el => sudokuCellRepresentation(el)).sliding(3, 3)
       rPres = rowSubBlock.mkString
 
     } yield rPres
-    rowSubBlocks.sliding(3,3).map(_.mkString("", "|", "")).mkString("|", "|\n|", "|\n")
+    rowSubBlocks.sliding(3, 3).map(_.mkString("", "|", "")).mkString("|", "|\n|", "|\n")
   }
 
   def sudokuPrinter(result: SudokuSolver.SudokuSolution): String = {
-    result.sudoku
-      .sliding(3,3)
-      .map(sudokuRowPrinter)
-      .mkString("\n+---+---+---+\n", "+---+---+---+\n", "+---+---+---+")
+    result.sudoku.sliding(3, 3).map(sudokuRowPrinter).mkString("\n+---+---+---+\n", "+---+---+---+\n", "+---+---+---+")
   }
 
   /*
@@ -67,7 +64,7 @@ object SudokuIO {
       }
 
       override def next(): String = {
-        if (! hasNext) {
+        if (!hasNext) {
           throw new NoSuchElementException("No more lines in file")
         }
         val currentLine = cachedLine.get
@@ -90,15 +87,14 @@ object SudokuIO {
 
     } yield (row, updates)
 
-
   def readSudokuFromFile(sudokuInputFile: java.io.File): Vector[(Int, CellUpdates)] = {
     val dataLines = new FileLineTraversable(sudokuInputFile).toVector
     val cellsIn =
       dataLines
-        .map { inputLine => """\|""".r replaceAllIn(inputLine, "")}     // Remove 3x3 separator character
-        .filter (_ != "---+---+---")              // Remove 3x3 line separator
-        .map ("""^[1-9 ]{9}$""".r findFirstIn(_)) // Input data should only contain values 1-9 or ' '
-        .collect { case Some(x) => x}
+        .map { inputLine => """\|""".r.replaceAllIn(inputLine, "") } // Remove 3x3 separator character
+        .filter(_ != "---+---+---") // Remove 3x3 line separator
+        .map("""^[1-9 ]{9}$""".r.findFirstIn(_)) // Input data should only contain values 1-9 or ' '
+        .collect { case Some(x) => x }
         .zipWithIndex
 
     convertFromCellsToComplete(cellsIn)

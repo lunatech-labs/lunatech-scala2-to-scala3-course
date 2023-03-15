@@ -2,8 +2,8 @@ package org.lunatechlabs.dotty.sudoku
 
 import java.io.File
 
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, TimerScheduler }
-import akka.actor.typed.{ ActorRef, Behavior }
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors, TimerScheduler}
+import akka.actor.typed.{ActorRef, Behavior}
 
 object SudokuProblemSender:
 
@@ -16,20 +16,24 @@ object SudokuProblemSender:
   private val rowUpdates: Vector[SudokuDetailProcessor.RowUpdate] =
     SudokuIO
       .readSudokuFromFile(new File("sudokus/001.sudoku"))
-      .map ((rowIndex, update) => SudokuDetailProcessor.RowUpdate(rowIndex, update))
+      .map((rowIndex, update) => SudokuDetailProcessor.RowUpdate(rowIndex, update))
 
-  def apply(sudokuSolver: ActorRef[SudokuSolver.Command],
-            sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =
-    Behaviors.setup[CommandAndResponses] { context =>
-      Behaviors.withTimers { timers =>
-        new SudokuProblemSender(sudokuSolver, context, timers, sudokuSolverSettings).sending()
+  def apply(
+      sudokuSolver: ActorRef[SudokuSolver.Command],
+      sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =
+    Behaviors
+      .setup[CommandAndResponses] { context =>
+        Behaviors.withTimers { timers =>
+          new SudokuProblemSender(sudokuSolver, context, timers, sudokuSolverSettings).sending()
+        }
       }
-    }.narrow // Restrict the actor's [external] protocol to its set of commands
+      .narrow // Restrict the actor's [external] protocol to its set of commands
 
-class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
-                                   context: ActorContext[SudokuProblemSender.CommandAndResponses],
-                                   timers: TimerScheduler[SudokuProblemSender.CommandAndResponses],
-                                   sudokuSolverSettings: SudokuSolverSettings):
+class SudokuProblemSender private (
+    sudokuSolver: ActorRef[SudokuSolver.Command],
+    context: ActorContext[SudokuProblemSender.CommandAndResponses],
+    timers: TimerScheduler[SudokuProblemSender.CommandAndResponses],
+    sudokuSolverSettings: SudokuSolverSettings):
   import SudokuProblemSender.*
 
   private val initialSudokuField = rowUpdates.toSudokuField
@@ -59,18 +63,17 @@ class SudokuProblemSender private (sudokuSolver: ActorRef[SudokuSolver.Command],
         initialSudokuField.flipVertically.mirrorOnMainDiagonal,
         initialSudokuField.flipVertically.rotateCW,
         initialSudokuField.columnSwap(4, 5).columnSwap(0, 2).rowSwap(3, 4),
-        initialSudokuField.rotateCW.rotateCW.mirrorOnMainDiagonal
-      ).map(_.toRowUpdates)
-    )
+        initialSudokuField.rotateCW.rotateCW.mirrorOnMainDiagonal).map(_.toRowUpdates))
     .flatten
     .iterator
 
   private val problemSendInterval = sudokuSolverSettings.ProblemSender.SendInterval
-  timers.startTimerAtFixedRate(SendNewSudoku,
-                               problemSendInterval
+  timers.startTimerAtFixedRate(
+    SendNewSudoku,
+    problemSendInterval
   ) // on a 5 node RPi 4 based cluster in steady state, this can be lowered to about 6ms
 
-  def sending(): Behavior[CommandAndResponses] = 
+  def sending(): Behavior[CommandAndResponses] =
     Behaviors.receiveMessage {
       case _: SendNewSudoku.type =>
         context.log.debug("sending new sudoku problem")
