@@ -48,7 +48,8 @@ project/plugins/project/
 *.sublime-workspace
 
 # OS specific
-.DS_Store
+**/.DS_Store
+**/__MACOSX
 
 # Other
 Preci*.pdf
