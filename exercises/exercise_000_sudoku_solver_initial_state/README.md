@@ -123,3 +123,10 @@ Hit RETURN to stop solver
 - You can control the rate at which the Sudoku problem generator sends
   problems by tweaking the setting `sudoku-solver.problem-sender.send-interval`
   in the `sudokusolver.conf` configuration file.
+
+> Note: [scalafmt](https://github.com/scalameta/scalafmt) based source code formatting is
+> in place in this project. scalafmt supports both Scala 2 and Scala 3. You can
+> [re]format the code by running `scalafmtAll` from the sbt prompt. As we switch from
+> Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration is
+> in place. In any of the exercises, you can run `cmtc pull-template .scalafmt.conf`
+> to "pull-in" the correct configuration file.
