@@ -64,9 +64,6 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] privat
             Behaviors.same
           else
             val updateSender = summon[UpdateSender[DetailType]]
-            // The following can also be written as:
-            // given ActorRef[Response] = replyTo
-            // updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))
             updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))(using replyTo)
             operational(id, transformedUpdatedState, isFullyReduced(transformedUpdatedState))
 
