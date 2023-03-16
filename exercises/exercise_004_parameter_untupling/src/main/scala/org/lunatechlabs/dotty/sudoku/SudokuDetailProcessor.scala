@@ -71,7 +71,7 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] privat
             updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))(replyTo)
             operational(id, transformedUpdatedState, isFullyReduced(transformedUpdatedState))
 
-      case Update(cellUpdates, replyTo) =>
+      case Update(_, replyTo) =>
         replyTo ! SudokuDetailUnchanged
         Behaviors.same
 

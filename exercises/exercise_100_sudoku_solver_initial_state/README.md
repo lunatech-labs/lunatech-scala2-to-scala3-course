@@ -2,14 +2,14 @@
 
 ## Documentation
 
-You may want to have look at the [LEARN SCALA](https://docs.scala-lang.org)
+You may want to have look at the [Scala Language website](https://www3.scala-lang.org)
 and bookmark it in your favourite browser.
 
 It has a number of links among which:
 
-- The [Scala 3 Language Reference](https://docs.scala-lang.org/scala3/reference).
-- The [Scala API documentation](https://docs.scala-lang.org/api/all.html) for every version of Scala.
-- The [Scala 3 Book](https://docs.scala-lang.org/scala3/book/introduction.html) which
+- The [Scala 3 Language Reference](https://docs3.scala-lang.org/scala3/reference).
+- The [Scala API documentation](https://docs3.scala-lang.org/api/all.html) for every version of Scala.
+- The [Scala 3 Book](https://docs3.scala-lang.org/scala3/book/introduction.html) which
   gives you a concise introduction to all things Scala 3.
 
 ## An Akka Typed/Scala based Sudoku Solver

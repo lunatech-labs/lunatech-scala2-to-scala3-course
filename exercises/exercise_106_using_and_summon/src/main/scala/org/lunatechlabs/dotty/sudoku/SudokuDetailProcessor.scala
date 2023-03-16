@@ -74,7 +74,7 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] privat
           }
         }
 
-      case Update(cellUpdates, replyTo) =>
+      case Update(_, replyTo) =>
         replyTo ! SudokuDetailUnchanged
         Behaviors.same
 
