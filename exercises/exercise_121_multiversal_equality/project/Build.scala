@@ -16,7 +16,7 @@ object CompileOptions {
   )
 }
 
-object Version {
+object Versions {
   lazy val akkaVer           = "2.6.20"
   lazy val logbackVer        = "1.2.3"
   lazy val mUnitVer          = "0.7.26"
@@ -28,18 +28,18 @@ object Dependencies {
     "com.typesafe.akka"             %% "akka-actor-typed",
     "com.typesafe.akka"             %% "akka-slf4j",
     "com.typesafe.akka"             %% "akka-stream",
-  ).map (_ % Version.akkaVer)
+  ).map (_ % Versions.akkaVer)
 
   private lazy val akkaTestkitDeps = Seq(
-    "com.typesafe.akka"             %% "akka-actor-testkit-typed" % Version.akkaVer % Test
+    "com.typesafe.akka"             %% "akka-actor-testkit-typed" % Versions.akkaVer % Test
   )
 
   private lazy val logbackDeps = Seq (
     "ch.qos.logback"                 %  "logback-classic",
-  ).map (_ % Version.logbackVer)
+  ).map (_ % Versions.logbackVer)
 
   private lazy val munitDeps = Seq(
-    "org.scalameta" %% "munit" % Version.mUnitVer % Test
+    "org.scalameta" %% "munit" % Versions.mUnitVer % Test
   )
 
   lazy val dependencies: Seq[ModuleID] =
