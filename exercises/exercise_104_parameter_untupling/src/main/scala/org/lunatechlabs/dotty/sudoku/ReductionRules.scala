@@ -26,7 +26,7 @@ object ReductionRules {
         .filter((loc, occ) => loc.length == occ.length && loc.length <= 6)
 
     val cellIndexListToReducedValue =
-      cellIndexesToValues.map((index, seq) => (index, (seq.map((value, _) => value)).toSet))
+      cellIndexesToValues.map((index, seq) => (index, seq.map((value, _) => value).toSet))
 
     val cellIndexToReducedValue = cellIndexListToReducedValue.flatMap((cellIndexList, reducedValue) =>
       cellIndexList.map(cellIndex => cellIndex -> reducedValue))

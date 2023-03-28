@@ -27,7 +27,7 @@ object ReductionRules:
       }
 
     val cellIndexListToReducedValue = cellIndexesToValues.map { (index, seq) =>
-      (index, (seq.map((value, _) => value)).toSet)
+      (index, seq.map((value, _) => value).toSet)
     }
 
     val cellIndexToReducedValue = cellIndexListToReducedValue.flatMap { (cellIndexList, reducedValue) =>
