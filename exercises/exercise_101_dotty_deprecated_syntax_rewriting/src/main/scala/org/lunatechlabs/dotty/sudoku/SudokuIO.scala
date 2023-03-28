@@ -1,5 +1,6 @@
 package org.lunatechlabs.dotty.sudoku
 
+import java.io.{BufferedReader, File, FileReader}
 import java.util.NoSuchElementException
 
 object SudokuIO {
@@ -29,8 +30,6 @@ object SudokuIO {
   /*
    * FileLineTraversable code taken from "Scala in Depth" by Joshua Suereth
    */
-
-  import java.io.{BufferedReader, File, FileReader}
 
   class FileLineTraversable(file: File) extends Iterable[String] {
     val fr = new FileReader(file)
