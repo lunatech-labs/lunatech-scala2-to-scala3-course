@@ -3,7 +3,7 @@ package org.lunatechlabs.dotty.sudoku
 import scala.collection.Factory
 
 private val N = 9
-val CELLPossibleValues: Vector[Int] = (1 to N).toVector
+val CellPossibleValues: Vector[Int] = (1 to N).toVector
 val cellIndexesVector: Vector[Int] = Vector.range(0, N)
 val initialCell: Set[Int] = Set.range(1, 10)
 val InitialDetailState = cellIndexesVector.map(_ => initialCell)
