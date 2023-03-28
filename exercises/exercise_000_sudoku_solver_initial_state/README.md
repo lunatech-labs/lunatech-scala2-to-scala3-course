@@ -148,7 +148,7 @@ Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration
 in place. In any of the exercises, you can run `cmtc pull-template .scalafmt.conf`
 to "pull-in" the correct configuration file.
 
-### Markdown viewer in IntelliJ
+### Markdown viewer in IntelliJ IDEA
 
 The font size can be a bit too small for the taste of some people. You can change the
 Markdown zoom setting in IntelliJ by pasting the following CSS snippet in the
