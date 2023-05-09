@@ -1,4 +1,4 @@
-# Setting up IntelliJ or Visual Code Studio for Scala development
+# Setting up IntelliJ Idea or Visual Code Studio for Scala development
 
 ## Setting up IntelliJ for Scala development
 
