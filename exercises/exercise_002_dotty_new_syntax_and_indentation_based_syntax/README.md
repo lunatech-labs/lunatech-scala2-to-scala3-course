@@ -56,7 +56,11 @@ documentation.
   - Repeat this by compiling the test code (`Test / compile`).
   - Explore the changes applied by the rewrites (you can use the `git diff` command
     for this).
-  - Repeat the process for another rewrite.
+  - Repeat the process for the next rewrite, so that you end up with code using the
+    New Control Structures syntax and the Fewer Braces syntax.
+
+> For the remainder of the exercises in this course, we will use the New Control
+> Structure syntax and the Fewer Braces syntax.
 
 ## Source code formatting & Markdown viewer in IntelliJ
 
