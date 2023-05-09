@@ -13,5 +13,5 @@ trait SudokuTestHelpers:
     } yield (index, cellString.replaceAll(" ", "").map { _.toString.toInt }.toSet)
     CellUpdates(updates*)
 
-  def applyReductionRules(reductionSet: ReductionSet): ReductionSet = reductionSet.applyReductionRuleOne.applyReductionRuleTwo
-
+  def applyReductionRules(reductionSet: ReductionSet): ReductionSet =
+    reductionSet.applyReductionRuleOne.applyReductionRuleTwo

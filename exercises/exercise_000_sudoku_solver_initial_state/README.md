@@ -1,5 +1,17 @@
 # Initial State
 
+## Documentation
+
+You may want to have look at the [Scala Language website](https://www3.scala-lang.org)
+and bookmark it in your favourite browser.
+
+It has a number of links among which:
+
+- The [Scala 3 Language Reference](https://docs3.scala-lang.org/scala3/reference).
+- The [Scala API documentation](https://docs3.scala-lang.org/api/all.html) for every version of Scala.
+- The [Scala 3 Book](https://docs3.scala-lang.org/scala3/book/introduction.html) which
+  gives you a concise introduction to all things Scala 3.
+
 ## An Akka Typed/Scala based Sudoku Solver
 
 ## Background
@@ -123,3 +135,30 @@ Hit RETURN to stop solver
 - You can control the rate at which the Sudoku problem generator sends
   problems by tweaking the setting `sudoku-solver.problem-sender.send-interval`
   in the `sudokusolver.conf` configuration file.
+
+## Source code formatting & Markdown viewer in IntelliJ
+
+
+### Source code formatting
+
+[scalafmt](https://github.com/scalameta/scalafmt) based source code formatting is
+in place in this project. scalafmt supports both Scala 2 and Scala 3. You can
+[re]format the code by running `scalafmtAll` from the sbt prompt. As we switch from
+Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration is
+in place. In any of the exercises, you can run `cmtc pull-template .scalafmt.conf`
+to "pull-in" the correct configuration file.
+
+### Markdown viewer in IntelliJ IDEA
+
+The font size can be a bit too small for the taste of some people. You can change the
+Markdown zoom setting in IntelliJ by pasting the following CSS snippet in the
+markdown setting in _" Settings" -> "Languages & Frameworks" -> "Custom CSS -> CSS rules"_ and adjust the font-size setting to your liking:
+
+```
+body {
+  font-size: 120% !important;
+}
+```
+
+![IntelliJ Markdown viewer settings](images/Markdown-viewer-IntelliJ.png)
+

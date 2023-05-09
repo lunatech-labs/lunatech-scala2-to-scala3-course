@@ -56,4 +56,34 @@ documentation.
   - Repeat this by compiling the test code (`Test / compile`).
   - Explore the changes applied by the rewrites (you can use the `git diff` command
     for this).
-  - Repeat the process for another rewrite.
+  - Repeat the process for the next rewrite, so that you end up with code using the
+    New Control Structures syntax and the Fewer Braces syntax.
+
+> For the remainder of the exercises in this course, we will use the New Control
+> Structure syntax and the Fewer Braces syntax.
+
+## Source code formatting & Markdown viewer in IntelliJ
+
+### Source code formatting
+
+[scalafmt](https://github.com/scalameta/scalafmt) based source code formatting is
+in place in this project. scalafmt supports both Scala 2 and Scala 3. You can
+[re]format the code by running `scalafmtAll` from the sbt prompt. As we switch from
+Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration is
+in place. In any of the exercises, you can run `cmtc pull-template .scalafmt.conf`
+to "pull-in" the correct configuration file.
+
+### Markdown viewer in IntelliJ
+
+The font size can be a bit too small for the taste of some people. You can change the
+Markdown zoom setting in IntelliJ by pasting the following CSS snippet in the
+markdown setting in _" Settings" -> "Languages & Frameworks" -> "Custom CSS -> CSS rules"_
+and adjust the font-size setting to your liking:
+
+```
+body {
+  font-size: 120% !important;
+  }
+```
+
+![IntelliJ Markdown viewer settings](images/Markdown-viewer-IntelliJ.png)

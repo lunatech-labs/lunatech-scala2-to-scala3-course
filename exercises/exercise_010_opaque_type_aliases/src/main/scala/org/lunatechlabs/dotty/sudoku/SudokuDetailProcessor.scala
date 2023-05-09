@@ -21,9 +21,8 @@ object SudokuDetailProcessor:
     case SudokuDetailUnchanged
   export Response.*
 
-  def apply[DetailType <: SudokuDetailType](id: Int,
-                                            state: ReductionSet = InitialDetailState)
-                                           (using updateSender: UpdateSender[DetailType]): Behavior[Command] =
+  def apply[DetailType <: SudokuDetailType](id: Int, state: ReductionSet = InitialDetailState)(using
+      updateSender: UpdateSender[DetailType]): Behavior[Command] =
     Behaviors.setup { context =>
       (new SudokuDetailProcessor[DetailType](context)).operational(id, state, fullyReduced = false)
     }
@@ -47,42 +46,38 @@ object SudokuDetailProcessor:
       sender ! BlockUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"blk-processor-$id"
 
-class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] private(context: ActorContext[SudokuDetailProcessor.Command]):
+class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] private (
+    context: ActorContext[SudokuDetailProcessor.Command]):
 
   import SudokuDetailProcessor.*
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
     Behaviors.receiveMessage {
-    case Update(cellUpdates, replyTo) if ! fullyReduced =>
-      val previousState = state
-      val updatedState = state.mergeState(cellUpdates)
-      if updatedState == previousState && cellUpdates != cellUpdatesEmpty then
-        replyTo ! SudokuDetailUnchanged
-        Behaviors.same
-      else
-        val transformedUpdatedState = updatedState.applyReductionRuleOne.applyReductionRuleTwo
-        if transformedUpdatedState == state then
+      case Update(cellUpdates, replyTo) if !fullyReduced =>
+        val previousState = state
+        val updatedState = state.mergeState(cellUpdates)
+        if updatedState == previousState && cellUpdates != cellUpdatesEmpty then
           replyTo ! SudokuDetailUnchanged
           Behaviors.same
         else
-          val updateSender = summon[UpdateSender[DetailType]]
-          // The following can also be written as:
-          // given ActorRef[Response] = replyTo
-          // updateSender.sendUpdate(id, stateChanges(state, transformedUpdatedState))         
-          updateSender.sendUpdate(id, state.stateChanges(transformedUpdatedState))(using replyTo)
-          operational(id, transformedUpdatedState, transformedUpdatedState.isFullyReduced)
+          val transformedUpdatedState = updatedState.applyReductionRuleOne.applyReductionRuleTwo
+          if transformedUpdatedState == state then
+            replyTo ! SudokuDetailUnchanged
+            Behaviors.same
+          else
+            val updateSender = summon[UpdateSender[DetailType]]
+            updateSender.sendUpdate(id, state.stateChanges(transformedUpdatedState))(using replyTo)
+            operational(id, transformedUpdatedState, transformedUpdatedState.isFullyReduced)
 
-    case Update(cellUpdates, replyTo) =>
-      replyTo ! SudokuDetailUnchanged
-      Behaviors.same
+      case Update(_, replyTo) =>
+        replyTo ! SudokuDetailUnchanged
+        Behaviors.same
 
-    case GetSudokuDetailState(replyTo) =>
-      replyTo ! SudokuProgressTracker.SudokuDetailState(id, state)
-      Behaviors.same
+      case GetSudokuDetailState(replyTo) =>
+        replyTo ! SudokuProgressTracker.SudokuDetailState(id, state)
+        Behaviors.same
 
-    case ResetSudokuDetailState =>
-      operational(id, InitialDetailState, fullyReduced = false)
+      case ResetSudokuDetailState =>
+        operational(id, InitialDetailState, fullyReduced = false)
 
-  }
-
-
+    }

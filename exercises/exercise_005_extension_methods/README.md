@@ -67,11 +67,36 @@ part of this exercise (adding the new extension methods).
   exercise, doesn't compile. Figure out what's wrong (or rather,
   what's missing; remember we're doing an exercise on extension methods).
   Fix the problem (and don't change the test code).
-  
+
 > Tip: consider creating new extension methods (names as suggested by the tests)
   at the `org.lunatechlabs.dotty.sudoku` package level.
-  
+
 - Run the tests and make adjustments to your code until they pass.
 
 - Verify that the application runs correctly.
 
+## Source code formatting & Markdown viewer in IntelliJ
+
+### Source code formatting
+
+[scalafmt](https://github.com/scalameta/scalafmt) based source code formatting is
+in place in this project. scalafmt supports both Scala 2 and Scala 3. You can
+[re]format the code by running `scalafmtAll` from the sbt prompt. As we switch from
+Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration is
+in place. In any of the exercises, you can run `cmtc pull-template .scalafmt.conf`
+to "pull-in" the correct configuration file.
+
+### Markdown viewer in IntelliJ
+
+The font size can be a bit too small for the taste of some people. You can change the
+Markdown zoom setting in IntelliJ by pasting the following CSS snippet in the
+markdown setting in _" Settings" -> "Languages & Frameworks" -> "Custom CSS -> CSS rules"_
+and adjust the font-size setting to your liking:
+
+```
+body {
+  font-size: 120% !important;
+  }
+```
+
+![IntelliJ Markdown viewer settings](images/Markdown-viewer-IntelliJ.png)

@@ -3,7 +3,7 @@ package org.lunatechlabs.dotty
 package object sudoku:
 
   private val N = 9
-  val CELLPossibleValues: Vector[Int] = (1 to N).toVector
+  val CellPossibleValues: Vector[Int] = (1 to N).toVector
   val cellIndexesVector: Vector[Int] = Vector.range(0, N)
   val initialCell: Set[Int] = Set.range(1, 10)
   val InitialDetailState: ReductionSet = cellIndexesVector.map(_ => initialCell)
@@ -19,8 +19,7 @@ package object sudoku:
 
   import SudokuDetailProcessor.RowUpdate
 
-  implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate])
-      extends AnyVal:
+  implicit class RowUpdatesToSudokuField(val update: Vector[SudokuDetailProcessor.RowUpdate]) extends AnyVal:
     def toSudokuField: SudokuField =
       val rows =
         update
@@ -46,13 +45,11 @@ package object sudoku:
     def flipHorizontally: SudokuField = sudokuField.rotateCW.flipVertically.rotateCCW
 
     def rowSwap(row1: Int, row2: Int): SudokuField =
-      SudokuField(
-        sudokuField.sudoku.zipWithIndex.map {
-          case (_, `row1`) => sudokuField.sudoku(row2)
-          case (_, `row2`) => sudokuField.sudoku(row1)
-          case (row, _) => row
-        }
-      )
+      SudokuField(sudokuField.sudoku.zipWithIndex.map {
+        case (_, `row1`) => sudokuField.sudoku(row2)
+        case (_, `row2`) => sudokuField.sudoku(row1)
+        case (row, _)    => row
+      })
 
     def columnSwap(col1: Int, col2: Int): SudokuField =
       sudokuField.rotateCW.rowSwap(col1, col2).rotateCCW
@@ -75,8 +72,6 @@ package object sudoku:
         .map(row => row.filterNot(_._1 == Set(0)))
         .zipWithIndex
         .filter(_._1.nonEmpty)
-        .map {
-          case (c, i) =>
-            RowUpdate(i, c.map(_.swap))
+        .map { case (c, i) =>
+          RowUpdate(i, c.map(_.swap))
         }
-
