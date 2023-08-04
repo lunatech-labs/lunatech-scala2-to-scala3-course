@@ -30,11 +30,13 @@ class SudokuProgressTracker private (
   def trackProgress(updatesInFlight: Int): Behavior[Command] =
     Behaviors.receiveMessage {
       case NewUpdatesInFlight(updateCount) if updatesInFlight - 1 == 0 =>
+        context.log.debug("NewUpdatesInFlight({}) - UpdatesInFlight={}", updateCount, updatesInFlight + updateCount)
         rowDetailProcessors.foreach { case (_, processor) =>
           processor ! SudokuDetailProcessor.GetSudokuDetailState(context.self)
         }
         collectEndState()
       case NewUpdatesInFlight(updateCount) =>
+        context.log.debug("NewUpdatesInFlight({}) - UpdatesInFlight={}", updateCount, updatesInFlight + updateCount)
         trackProgress(updatesInFlight + updateCount)
       case msg: SudokuDetailState =>
         context.log.error("Received unexpected message in state 'trackProgress': {}", msg)

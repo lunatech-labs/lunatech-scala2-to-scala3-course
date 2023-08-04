@@ -1,24 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>info</level>
+            <level>INFO</level>
         </filter>
         <encoder>
-            <pattern>%date{HH:mm:ss} %-5level [%X{akkaSource}] - %msg%n</pattern>
+            <pattern>[%date{ISO8601}] [%level] [%logger] [%marker] [%thread] - %msg %n</pattern>
         </encoder>
     </appender>
 
-    <logger name="org.lunatechlabs.dotty" level="info" additivity="false">
-        <appender-ref ref="console"/>
-    </logger>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>target/sudoku.log</file>
+        <encoder>
+            <pattern>[%date{ISO8601}] [%level] [%logger] [%marker] [%thread] - %msg %n</pattern>
+        </encoder>
+    </appender>
 
-    <logger name="akka.actor.RepointableActorRef" level="info" additivity="false">
-        <appender-ref ref="console"/>
-    </logger>
-
-    <root level="info">
-        <appender-ref ref="console"/>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </root>
-
 </configuration>
