@@ -24,6 +24,7 @@ permissions:
 
 env:
   EXERCISES_DIRECTORY: ./exercises
+  THIS_REPO: ${{ github.event.repository.name }}
 
 jobs:
   list-exercises:
@@ -80,14 +81,14 @@ jobs:
       - name: Checkout Course Repo
         uses: actions/checkout@v3
         with:
-          path: lunatech-scala-2-to-scala3-course
+          path: ${{ env.THIS_REPO }}
           fetch-depth: 0          
       
       - name: Setup Course Management Tools
         uses: robinraju/release-downloader@v1.7
         with:
           repository: lunatech-labs/course-management-tools
-          tag: "2.0.0-RC6"
+          tag: "2.0.0"
           fileName: "course-management-tools.zip"
           out-file-path: "."
       - run: |
@@ -103,7 +104,7 @@ jobs:
       - name: Setup Coursier Cache
         uses: coursier/cache-action@v6.2
         with:
-          root: "lunatech-scala-2-to-scala3-course"
+          root: ${{ env.THIS_REPO }}
       
       - name: Studentify Repo
         run: |
@@ -111,15 +112,15 @@ jobs:
           export PATH=${PATH}:$GITHUB_WORKSPACE/CMT/bin
           git config --global user.email "no-reply@lunatech.com"
           git config --global user.name "Lunatech Labs"
-          cmta studentify -f -g -m lunatech-scala-2-to-scala3-course -d studentified
-          (cd studentified && exec zip -r lunatech-scala-2-to-scala3-course-student.zip lunatech-scala-2-to-scala3-course)  
+          cmta studentify -f -g -m ${{ env.THIS_REPO }} -d studentified
+          (cd studentified && exec zip -r ${{ env.THIS_REPO }}-student.zip ${{ env.THIS_REPO }})  
           
       - name: Linearize Repo
         run: |
           mkdir -p linearized
-          cmta linearize -f -m lunatech-scala-2-to-scala3-course -d linearized
-          mv linearized/lunatech-scala-2-to-scala3-course linearized/lunatech-scala-2-to-scala3-course-linearized
-          (cd linearized && exec zip -r lunatech-scala-2-to-scala3-course-linearized.zip lunatech-scala-2-to-scala3-course-linearized)
+          cmta linearize -f -m ${{ env.THIS_REPO }} -d linearized
+          mv linearized/${{ env.THIS_REPO }} linearized/${{ env.THIS_REPO }}-linearized
+          (cd linearized && exec zip -r ${{ env.THIS_REPO }}-linearized.zip ${{ env.THIS_REPO }}-linearized)
         
       - name: Create Github Release
         id: create_release
@@ -138,8 +139,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # release created from previous step
-          asset_path: ./studentified/lunatech-scala-2-to-scala3-course-student.zip
-          asset_name: lunatech-scala-2-to-scala3-course-student.zip
+          asset_path: ./studentified/${{ env.THIS_REPO }}-student.zip
+          asset_name: ${{ env.THIS_REPO }}-student.zip
           asset_content_type: application/zip
      
       - name: Upload Linearized repo to Github release
@@ -148,6 +149,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # release created from previous step
-          asset_path: ./linearized/lunatech-scala-2-to-scala3-course-linearized.zip
-          asset_name: lunatech-scala-2-to-scala3-course-linearized.zip
+          asset_path: ./linearized/${{ env.THIS_REPO }}-linearized.zip
+          asset_name: ${{ env.THIS_REPO }}-linearized.zip
           asset_content_type: application/zip
+
