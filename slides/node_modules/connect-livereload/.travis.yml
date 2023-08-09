@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "6"
+  - "5"
+  - "4"
+  - "node"
+
+before_script:
+  - "npm install"
+
+script:
+  - "node_modules/mocha/bin/mocha"
+
+notifications:
+  email: andi.neck@intesso.com
+

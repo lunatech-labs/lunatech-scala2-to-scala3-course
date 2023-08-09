@@ -1,0 +1,104 @@
+{
+  "name": "ansi-colors",
+  "description": "Easily add ANSI colors to your text and symbols in the terminal.",
+  "version": "2.0.5",
+  "homepage": "https://github.com/doowb/ansi-colors",
+  "author": "Brian Woodward (https://github.com/doowb)",
+  "contributors": [
+    "Brian Woodward (https://twitter.com/doowb)",
+    "Jason Schilling (https://sourecode.de)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Jordan (https://github.com/Silic0nS0ldier)",
+    "Luke Edwards (https://lukeed.com)"
+  ],
+  "repository": "doowb/ansi-colors",
+  "bugs": {
+    "url": "https://github.com/doowb/ansi-colors/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "types/index.d.ts"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "gulp-format-md": "^1.0.0",
+    "justified": "^1.0.1",
+    "mocha": "^3.5.3",
+    "text-table": "^0.2.0"
+  },
+  "keywords": [
+    "ansi",
+    "bgblack",
+    "bgBlack",
+    "bgblue",
+    "bgBlue",
+    "bgcyan",
+    "bgCyan",
+    "bggreen",
+    "bgGreen",
+    "bgmagenta",
+    "bgMagenta",
+    "bgred",
+    "bgRed",
+    "bgwhite",
+    "bgWhite",
+    "bgyellow",
+    "bgYellow",
+    "black",
+    "blue",
+    "bold",
+    "colors",
+    "cyan",
+    "dim",
+    "gray",
+    "green",
+    "grey",
+    "hidden",
+    "inverse",
+    "italic",
+    "magenta",
+    "red",
+    "reset",
+    "strikethrough",
+    "underline",
+    "white",
+    "yellow"
+  ],
+  "types": "./types/index.d.ts",
+  "verb": {
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "data": {
+      "author": {
+        "linkedin": "woodwardbrian",
+        "twitter": "doowb"
+      }
+    },
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "related": {
+      "list": [
+        "ansi-wrap",
+        "strip-color"
+      ]
+    },
+    "reflinks": [
+      "colors",
+      "supports-color"
+    ]
+  }
+}
