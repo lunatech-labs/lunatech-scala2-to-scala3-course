@@ -1,0 +1,117 @@
+{
+  "name": "qunit",
+  "title": "QUnit",
+  "description": "The powerful, easy-to-use testing framework.",
+  "version": "2.19.3",
+  "homepage": "https://qunitjs.com",
+  "author": {
+    "name": "OpenJS Foundation and other contributors",
+    "url": "https://github.com/qunitjs/qunit/blob/2.19.3/AUTHORS.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/qunitjs/qunit.git"
+  },
+  "keywords": [
+    "testing",
+    "unit",
+    "assert",
+    "assertion",
+    "tap",
+    "tape",
+    "karma",
+    "jquery"
+  ],
+  "bugs": {
+    "url": "https://github.com/qunitjs/qunit/issues"
+  },
+  "license": "MIT",
+  "bin": {
+    "qunit": "bin/qunit.js"
+  },
+  "files": [
+    "bin/",
+    "src/cli/",
+    "qunit/qunit.js",
+    "qunit/qunit.css",
+    "LICENSE.txt"
+  ],
+  "main": "qunit/qunit.js",
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "commander": "7.2.0",
+    "node-watch": "0.7.3",
+    "tiny-glob": "0.2.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/plugin-external-helpers": "^7.18.6",
+    "@babel/preset-env": "^7.19.4",
+    "@qunitjs/browserstack-runner": "0.9.5-qunitjs.1",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.1.0",
+    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@rollup/plugin-replace": "^3.0.0",
+    "benchmark": "2.1.4",
+    "eslint": "7.32.0",
+    "eslint-config-semistandard": "^16.0.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-compat": "^4.0.2",
+    "eslint-plugin-html": "^6.1.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-json-es": "^1.5.5",
+    "eslint-plugin-markdown": "^2.2.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-qunit": "^6.2.0",
+    "fixturify": "^2.1.1",
+    "fuzzysort": "1.2.1",
+    "grunt": "^1.5.3",
+    "grunt-contrib-connect": "^3.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-qunit": "^5.1.1",
+    "grunt-git-authors": "^3.2.0",
+    "grunt-search": "^0.1.8",
+    "kleur": "4.1.5",
+    "npm-reporter": "file:./test/cli/fixtures/npm-reporter",
+    "nyc": "^15.1.0",
+    "proxyquire": "^1.8.0",
+    "requirejs": "^2.3.6",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.79.1",
+    "semver": "^7.3.8"
+  },
+  "scripts": {
+    "build": "rollup -c && grunt copy:src-css",
+    "build-coverage": "rollup -c --environment BUILD_TARGET:coverage && grunt copy:src-css",
+    "build-dev": "node build/watch.js",
+    "benchmark": "npm install --silent --no-audit --prefix test/benchmark/ && node test/benchmark/index-node.js",
+    "lint": "eslint --cache .",
+    "lint-fix": "eslint --cache --fix .",
+    "test-main": "grunt test",
+    "test-cli": "node bin/qunit.js test/main/ test/cli/*.js",
+    "test": "npm run lint && npm run build && npm run test-main && npm run test-cli",
+    "test-nolint": "npm run build && npm run test-main && npm run test-cli",
+    "test-integration": "npm run build && node bin/qunit.js test/integration/*.js",
+    "browserstack": "browserstack-runner -v",
+    "authors": "grunt authors",
+    "coverage": "npm run build-coverage && npm run coverage-cli && npm run coverage-main && nyc report",
+    "coverage-cli": "nyc --use-spawn-wrap --silent bin/qunit.js test/cli/*.js",
+    "coverage-main": "nyc instrument --in-place qunit/ && grunt connect:base qunit"
+  },
+  "nyc": {
+    "include": [
+      "bin/**",
+      "qunit/**",
+      "src/**"
+    ],
+    "reporter": [
+      "text",
+      "html",
+      "clover"
+    ],
+    "report-dir": "coverage"
+  }
+}

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+    <title>Moving from Scala to Java</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+
+    <!-- Title-Footer initialisation -->
+    <link rel="stylesheet" href="plugin/title-footer/title-footer.css">
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/lunatech.css">
+
+    <!-- Prevent reveal to change any header to all-caps -->
+    <style>
+      .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5 {
+        text-transform: none;
+		  }
+    </style>
+
+    <!-- Change color for links globally -->
+    <style>
+      .reveal section a { color: #0000FF; } /* CSS link color */
+    </style>
+
+    <!-- Reduce font size -->
+    <style>
+      .reveal section p {
+      display: inline-block;
+      font-size: 0.2em;
+      line-height: 1.0em;
+      vertical-align: top;
+    }
+    </style>
+    
+    <!-- Fix allignment on first bullet line when followed by an image -->
+    <style type="text/css">
+      .reveal p {
+        text-align: left;
+      }
+      .reveal ul {
+        display: block;
+      }
+      .reveal ol {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section id="title-page">
+          <section data-markdown="00-title-page.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="introduction">
+          <section data-markdown="01-introduction.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="02-recap-scala2-akka-typed-scala3.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="03-the-scala2-application.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="04-scala3-compiler-rewrite-capabilities.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="05-top-level-definitions.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="06-parameter-untupling.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="07-extension-methods.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="08-given-using-summon.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="09-enumerations-and-export.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="10-intersection-and-union-types.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="11-opaque-type-aliases.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="12-multiversal-equality.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+        <section id="recap-basics">
+          <section data-markdown="50-references.md"
+                   data-separator="^---"
+                   data-separator-notes="^Note:"
+                   data-background-image="images/bg-reveal-content.ps.png"
+                   data-charset="iso-8859-15">
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        margin: 0.05,
+        minScale: 0.6,
+        maxScale: 1.9,
+        center: false,
+        slideNumber: 'c/t',
+        controls: true,
+        //controlsBackArrows: 'hidden',
+        progress: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+        dependencies: [
+          { src: 'plugin/title-footer/title-footer.js', async: true, callback: function() { title_footer.initialize("   Moving from Scala 2 to Scala 3", 'rgba(255, 255, 255, 1.0)'); } } ]
+      });
+    </script>
+  </body>
+</html>

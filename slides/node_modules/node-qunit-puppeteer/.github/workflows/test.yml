@@ -1,0 +1,37 @@
+# Tests build
+name: test
+
+env:
+  NODE_VERSION: 16
+
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - v*
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # Number of commits to fetch. 0 indicates all history.
+          fetch-depth: 0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          # actions/setup-node@v3 already has caching under hood.
+          cache: "yarn"
+      - name: Run bash commands
+        shell: bash
+        run: |
+          ls -alt
+
+          yarn install
+          yarn lint
+          yarn test
