@@ -20,6 +20,7 @@ import akka.actor.typed.scaladsl.adapter.TypedActorSystemOps
 import akka.actor.typed.scaladsl.{Behaviors, Routers}
 import akka.actor.typed.{ActorSystem, Behavior, Terminated}
 import org.lunatechlabs.dotty.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
+import kamon.Kamon
 
 import scala.Console.{GREEN, RESET}
 import scala.io.StdIn
@@ -42,6 +43,7 @@ object Main {
 object SudokuSolverMain {
 
   def main(args: Array[String]): Unit = {
+    Kamon.init()
 
     val system = ActorSystem[NotUsed](Main(), "sudoku-solver-system")
 

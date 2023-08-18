@@ -12,6 +12,7 @@ object CompileOptions {
 
 object Versions {
   lazy val akkaVer = "2.6.20"
+  lazy val kamonVer = "2.6.3"
   lazy val logbackVer = "1.2.3"
   lazy val mUnitVer = "0.7.26"
 }
@@ -29,9 +30,15 @@ object Dependencies {
 
   private lazy val munitDeps = Seq("org.scalameta" %% "munit" % Versions.mUnitVer % Test)
 
+  private lazy val kamonDeps = Seq(
+    "io.kamon" %% "kamon-bundle" % Versions.kamonVer,
+    "io.kamon" %% "kamon-prometheus" % Versions.kamonVer
+  )
+
   lazy val dependencies: Seq[ModuleID] =
-    logbackDeps ++
-      munitDeps ++
-      akkaDeps ++
-      akkaTestkitDeps
+    akkaDeps ++
+      akkaTestkitDeps ++
+      kamonDeps ++
+      logbackDeps ++
+      munitDeps
 }

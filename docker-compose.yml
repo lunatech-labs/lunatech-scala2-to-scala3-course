@@ -1,0 +1,49 @@
+version: '3.9'
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-oss:9.5.7
+    volumes:
+      - ./infrastructure/grafana/etc:/etc/grafana:ro
+      #- grafana-log:/var/log/grafana
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - prometheus
+    privileged: true
+    networks:
+      - monitoring
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.46.0
+    volumes:
+      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    restart: always
+    privileged: true
+    networks:
+      - monitoring
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin:2.24
+    ports:
+      - "9411:9411"
+    networks:
+      - monitoring
