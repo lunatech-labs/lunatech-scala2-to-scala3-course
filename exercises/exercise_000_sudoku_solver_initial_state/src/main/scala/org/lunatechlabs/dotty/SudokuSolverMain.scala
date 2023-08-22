@@ -48,7 +48,7 @@ object SudokuSolverMain {
     val system = ActorSystem[NotUsed](Main(), "sudoku-solver-system")
 
     println(s"${GREEN}Hit RETURN to stop solver${RESET}")
-    StdIn.readLine()
-    system.terminate()
+    // StdIn.readLine()
+    // system.terminate()
   }
 }
