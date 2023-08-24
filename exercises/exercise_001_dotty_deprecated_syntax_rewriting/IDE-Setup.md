@@ -19,7 +19,7 @@ IntelliJ or VSCode by following the instructions linked in the following section
 #### Installing Visual Code Studio with the Metals extension
 
 * [Install Visual Studio Code](https://code.visualstudio.com/docs/setup/setup-overview)
-    * [Install the Visual Code Studio Metals extension](https://scalameta.org/metals/docs/editors/vscode/)
+    * [Install Metals, the Scala extension](https://scalameta.org/metals/docs/editors/vscode/)
 
 ### Other Scala source editors
 
