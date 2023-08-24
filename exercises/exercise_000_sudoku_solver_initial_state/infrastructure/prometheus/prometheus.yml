@@ -1,10 +1,10 @@
 global:
-  scrape_interval: 5s
-  evaluation_interval: 5s
+  scrape_interval: 5ms
+  evaluation_interval: 5ms
 
 scrape_configs:
   - job_name: prometheus
-    scrape_interval: 5s
+    scrape_interval: 5ms
     metrics_path: /metrics
     static_configs:
       - targets: [ 'host.docker.internal:9095' ]
