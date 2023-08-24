@@ -12,10 +12,20 @@ We start from an existing Scala 2 application: an [[Akka](https://akka.io)] acto
 
 Through a series of exercises, we look at specific Scala 3 features and apply these to the Scala 2 code, thereby transforming it step-by-step into a version that exploits a whole series of nice features offered by the new language.
 
-Note that this is work in progress, so keep watching this space!
+Note that this course gets updated on regular basis, so keep watching this space!
 
 
 ## Course installation
+
+Some prerequisites need to be met in order to install the course. The following components
+need to be installed:
+
+* Coursier
+* A Java JDK (JDK 11 or 17). Note that Coursier allows you to install a JDK
+* The `cmtc` Course Management Tools Client CLI
+* An IDE
+
+The following sections detail how these components.
 
 ### Install Coursier
 
@@ -27,15 +37,36 @@ Coursier will, as part of its base installation, install a number of useful appl
 * `scala-cli` - the Scala interactive toolkit
 * `scala` - the Scala REPL
 * `scalac` - the Scala compiler
+* `java` - JDK 8 by default (we will need to install a more recent version of the JDK)
 
 Coursier, once installed, will make it extremely easy to switch between different versions of the
 installed tools (such as the Scala compiler and REPL).
 
 **If you haven't installed Coursier, install it first by following the [Install Scala on your computer](https://docs.scala-lang.org/getting-started/index.html#install-scala-on-your-computer) instructions.**
 
+### Install a JDK
+
+If you haven't installed a JDK yet (version 11 or 17), you can do this in the following manner.
+In a terminal on your system, issue the following command to install JDK 11:
+
+```bash
+$ cs java --jvm temurin:1.11 --setup
+Checking if ~/.profile, ~/.zprofile, ~/.bash_profile need(s) updating.
+Some shell configuration files were updated. It is recommended to close this terminal once the setup command is done, and open a new one for the changes to be taken into account
+```
+
+Close the current terminal and start a new one. Verify that the JDK is installed correctly:
+
+```bash
+$ java -version
+openjdk version "11.0.20" 2023-07-18
+OpenJDK Runtime Environment Temurin-11.0.20+8 (build 11.0.20+8)
+OpenJDK 64-Bit Server VM Temurin-11.0.20+8 (build 11.0.20+8, mixed mode)
+```
+
 ### Install `cmtc`
 
-During the course, you will use the `cmtc` command, the **C**ourse **M**anagement **T**ools **C**lient* CLI.
+During the course, you will use the `cmtc` command, the **C**ourse **M**anagement **T**ools **C**lient CLI.
 
 Install it using Coursier from the command line (all Linux, Mac, or Windows platforms) as follows:
 
@@ -98,32 +129,56 @@ Exercises in repository:
 
 As can be seen in the above output, `cmtc` installed the course in the `/Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course` folder. Note that this location is OS specific, so, take a note of the location.
 
-### Loading the course exercises
+#### Verifying the course installation
 
-You can now load the course exercises in the development environment of your choice. You will be
-positioned at the first exercise in the exercise series. During the course, you will use the `cmtc`
-command to move around the different exercises in the course, specifically 'pull' code bits, save
-the current state of the current exercise (and restore it in exactly the same state at a later point
-in time).
+Verify that the the course was installed correctly by launching `sbt test` in the root folder of the
+course exercises. You should see the following output:
 
-Here is a short summary of the different `cmtc` commands:
+```bash
+$ sbt test
+[info] welcome to sbt 1.9.3 (Eclipse Adoptium Java 11.0.20)
+[info] loading settings for project global-plugins from idea.sbt ...
+[info] loading global plugins from /Users/ericloots/.sbt/1.0/plugins
+[info] loading settings for project lunatech-scala2-to-scala3-course-build from plugins.sbt ...
+[info] loading project definition from /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course/project
+[info] compiling 1 Scala source to /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course/project/target/scala-2.12/sbt-1.0/classes ...
+[info] loading settings for project moving-from-scala-2-to-scala-3 from build.sbt ...
+[info] set current project to moving-from-scala-2-to-scala-3 (in build file:/Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course/)
+[info] compiling 11 Scala sources to /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course/target/scala-2.13/classes ...
+[warn] /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course/src/main/scala/org/lunatechlabs/dotty/sudoku/SudokuProblemSender.scala:81:44: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method next,
+[warn] or remove the empty argument list from its definition (Java-defined methods are exempt).
+[warn] In Scala 3, an unapplied method like this will be eta-expanded into a function.
+[warn]         val nextRowUpdates = rowUpdatesSeq.next
+[warn]                                            ^
+[warn] one warning found
+[info] compiling 4 Scala sources to /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/lunatech-scala2-to-scala3-course/target/scala-2.13/test-classes ...
+org.lunatechlabs.dotty.sudoku.CellMappingSuite:
+org.lunatechlabs.dotty.sudoku.ReductionRuleSuite:
+  + Mapping row coordinates should result in correct column & block coordinates 0.02s
+  + Mapping column coordinates should result in correct row & block coordinates 0.001s
+  + Mapping block coordinates should result in correct row & column coordinates 0.001s
+  + Applying reduction rules should eliminate values in isolated complete sets from occurrences in other cells (First reduction rule) 0.045s
+  + Applying reduction rules should eliminate values in isolated complete sets of 5 values from occurrences in other cells (First reduction rule) 0.001s
+  + Applying reduction rules should eliminate values in 2 isolated complete sets of 3 values from occurrences in other cells (First reduction rule) 0.001s
+  + Applying reduction rules should eliminate values in shadowed complete sets from occurrences in same cells (Second reduction rule) 0.001s
+  + Applying reduction rules should eliminate values in shadowed complete (6 value) sets from occurrences in same cells (Second reduction rule) 0.001s
+SLF4J: A number (1) of logging calls during the initialization phase have been intercepted and are
+SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
+SLF4J: See also http://www.slf4j.org/codes.html#replay
+org.lunatechlabs.dotty.sudoku.SudokuDetailProcessorSuite:
+  + Sending no updates to a sudoku detail processor should result in sending a SudokuDetailUnchanged messsage 0.007s
+  + Sending an update to a fresh instance of the SudokuDetailProcessor that sets one cell to a single value should result in sending an update that reflects this update 0.002s
+  + Sending a series of subsequent Updates to a SudokuDetailProcessor should result in sending updates and ultimately return no changes 0.003s
+[info] Passed: Total 11, Failed 0, Errors 0, Passed 11
+[success] Total time: 5 s, completed 24 Aug 2023, 08:30:54
+```
 
-- `cmtc set-course-root`: Sets the location of the current course as the default location for subsequent cmtc command invocations.
-- `cmtc list-exercises`: will print a list of all available exercises. The current exercise is marked with a **_*_**.
-- `cmtc next-exercise`: move to the next exercise and pull in the tests (if any) and exercise instructions for that exercise. This command preserves the current state of the application leaving any code added or changed by the student unmodified.
-- `cmtc previous-exercise`: the opposite of the `next-exercise` command.
-- `cmtc pull-template <template-spec>`: pulls parts of the reference solution, either a single file or a folder.
-- `cmtc pull-solution`: pulls in the reference solution code for the current exercise. This command is handy in a class room setting where at some point in time, the instructor wants to move to the next exercise and the student hasn't completed the current exercise. Note that it will overwrite any code written by the student. Before pulling the exercise
-  solution, the student can save the current state of their work with the `cmtc save-state` command.
-- `cmtc goto-exercise <exerciseID>`: jump to an exercise specified by the exerciseID.
-  Remember that this will pull in tests for the exercise and probably you'll want to
-  pull in the solution by running the `pullSolution` command.
-- `cmtc save-state`: can be executed prior to executing the `cmtc pull-solution`
-  command: it will save the current state of an exercise so that it can be restored
-  later.
-- `cmtc list-saved-states`: show the exercise ids of all exercises for which a
-  state was saved.
-- `cmtc restore-state <exerciseID>`: restore a previously save exercise state.
+Observe that all (11) tests passed successfully.
+
+### Installing an IDE
+
+Instructions are provided in the `IDE-Setup.md` file in the root folder of the installed
+course.
 
 ## A note to course authors & contributors
 
