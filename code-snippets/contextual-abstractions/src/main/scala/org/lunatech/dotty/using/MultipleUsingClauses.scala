@@ -4,10 +4,7 @@ final case class RecordDev(recordType: String)
 final case class PlayerDev(playerType: String)
 
 object MultipleUsingClauses {
-  def recordAndMonitor(recordGain: Int)
-                      (using recordDev: RecordDev)
-                      (volume: Int = 3)
-                      (using player: PlayerDev) = {
+  def recordAndMonitor(recordGain: Int)(using recordDev: RecordDev)(volume: Int = 3)(using player: PlayerDev) = {
     println(s"Recording with gain $recordGain from $recordDev to $player with volume $volume")
   }
 
@@ -27,8 +24,8 @@ object MultipleUsingClauses2 {
   opaque type Mul = Int
   opaque type Add = Int
 
-  object Mul { def apply(n: Int): Mul = n}
-  object Add { def apply(n: Int): Add = n}
+  object Mul { def apply(n: Int): Mul = n }
+  object Add { def apply(n: Int): Add = n }
 
   import scala.annotation.targetName
 
@@ -39,7 +36,7 @@ object MultipleUsingClauses2 {
   extension (a: Add)
     @targetName("addAsInt")
     def asInt: Int = a
- 
+
   @main def MUC_1: Unit = {
     val r = 5
     println(r)

@@ -1,8 +1,8 @@
 package org.lunatech.dotty.intersectionanduniontypes
 
-type S            // Some type S
-type T            // Some type T
-type ST = S & T   // Intersection Type ST which has all the properties of both S & T
+type S // Some type S
+type T // Some type T
+type ST = S & T // Intersection Type ST which has all the properties of both S & T
 
 @main def inter() = {
   trait Growable {
@@ -20,7 +20,7 @@ type ST = S & T   // Intersection Type ST which has all the properties of both S
   }
 
   def resizeAndPaint(obj: Growable & Paintable): Unit = {
-    obj.growBy(20).paint(0x10FF00).growBy(40).paint(0x0010FF)
+    obj.growBy(20).paint(0x10ff00).growBy(40).paint(0x0010ff)
   }
 
   resizeAndPaint(new Growable with Paintable)

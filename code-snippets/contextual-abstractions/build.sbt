@@ -1,3 +1,1 @@
-scalacOptions ++= Seq(
-	"-source:3.0",
-)
+scalacOptions ++= Seq("-source:3.0")

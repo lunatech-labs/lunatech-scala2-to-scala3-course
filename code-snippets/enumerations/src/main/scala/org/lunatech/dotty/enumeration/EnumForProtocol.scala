@@ -10,7 +10,7 @@ object SomeActor {
   }
   export Command._
 
-  //def apply(): Behavior[Command] = ???
+  // def apply(): Behavior[Command] = ???
 }
 
 // someActor ! SomeActor.Command.Execute(5)

@@ -8,3 +8,7 @@ object A {
   }
   export B.C.x
 }
+
+@main def test: Unit =
+  import A._
+  println(x)
