@@ -1,27 +1,31 @@
 package org.lunatech.dotty
 
 object NewControlStructures {
-  var x = 5
-  def f(x: Int) = x * x + 5
-  val xs = List.range(1,4)
-  val ys = Vector.range(3,7)
+  var x = -6
+  def f(x: Int): Int = x + 1
+  val xs = Seq(1, 2, 3)
+  val ys = Seq(3, 4, 5)
 
-  if (x < 0) "negative"
-  else if (x == 0)
-    "zero"
-  else
-    "positive"
+  def body: Int = 6
 
-  if (x < 0) -x else x
+  if x < 0 then "negative"
+  else if x == 0 then "zero"
+  else "positive"
 
-  while (x >= 0) x = f(x)
+  if x < 0 then -x else x
 
-  for (x <- xs if x > 0)
-    yield x * x
+  while x <= 0 do x = f(x)
 
-  for {
+  println(x)
+
+  for x <- xs if x > 0
+  yield x * x
+
+  for
     x <- xs
     y <- ys
-  } println(x + y)
-  
+  do println(x + y)
+
+  // try body
+  // catch case ex: IOException => handle
 }

@@ -4,7 +4,7 @@ object Ovens {
   private class HotAirOven {
     var on = false
     var tempSetting = 180
-    def setTemp(temp: Int): Unit = {tempSetting = temp; println(s"Setting temperature to $temp")}
+    def setTemp(temp: Int): Unit = { tempSetting = temp; println(s"Setting temperature to $temp") }
     def turnOn: Unit = on = true
     def turnOff: Unit = on = false
     def status: String = s"Hot-air oven is ${if (on) "on" else "off"} - Temperature setting at $tempSetting"
@@ -13,7 +13,7 @@ object Ovens {
   private class MicrowaveOven {
     var on = false
     var powerSetting = 600
-    def setPower(watts: Int): Unit = {powerSetting = watts; println(s"Setting power to $powerSetting")}
+    def setPower(watts: Int): Unit = { powerSetting = watts; println(s"Setting power to $powerSetting") }
     def turnOn: Unit = on = true
     def turnOff: Unit = on = false
     def status: String = s"Microwave oven is ${if (on) "on" else "off"} - Power setting at $powerSetting Watt"
@@ -28,3 +28,19 @@ object Ovens {
     export microwaveOven.{setPower, turnOn => microwaveOn, turnOff => microwaveOff}
   }
 }
+
+@main def overRunner(): Unit =
+  import Ovens.CombiOven
+
+  val combiOven = CombiOven()
+
+  println(combiOven.status)
+  combiOven.microwaveOn
+  println(combiOven.status)
+  combiOven.setPower(350)
+  combiOven.hotAirOn
+  println(combiOven.status)
+  combiOven.hotAirOff
+  combiOven.microwaveOff
+  combiOven.setTemp(250)
+  println(combiOven.status)

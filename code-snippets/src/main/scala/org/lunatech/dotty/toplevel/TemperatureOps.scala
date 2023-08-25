@@ -18,15 +18,9 @@ case class Temperature(value: Double, scale: TemperatureScale) {
 
 // A private toplevel definition is always visible from everywhere in the enclosing package.
 private def convertToFarenheit(temperature: Temperature): Temperature = {
-  Temperature(
-    (temperature.value * 9/5) + 32,
-    Farenheit
-  )
+  Temperature((temperature.value * 9 / 5) + 32, Farenheit)
 }
 
 def convertToCelcius(temperature: Temperature): Temperature = {
-  Temperature(
-    (temperature.value - 32) * 5/9,
-    Celsius
-  )
+  Temperature((temperature.value - 32) * 5 / 9, Celsius)
 }

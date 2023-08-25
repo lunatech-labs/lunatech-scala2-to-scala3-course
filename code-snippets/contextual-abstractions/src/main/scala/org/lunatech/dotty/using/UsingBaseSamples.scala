@@ -12,7 +12,7 @@ object Scala2Example {
   @main def CA_0: Unit = {
     startEngine(Engine("AC-35-B/002"))
   }
-  
+
 }
 
 object MovingToDotty_1 {
@@ -25,7 +25,7 @@ object MovingToDotty_1 {
   @main def CA_1: Unit = {
     startEngine(Engine("AC-35-B/002"))
   }
-  
+
 }
 
 object MovingToDotty_2 {
@@ -38,5 +38,5 @@ object MovingToDotty_2 {
   @main def CA_2: Unit = {
     startEngine(Engine("AC-35-B/002"))
   }
-  
+
 }

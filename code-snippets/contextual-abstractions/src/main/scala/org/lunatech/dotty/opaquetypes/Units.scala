@@ -3,9 +3,7 @@ package org.lunatech.dotty.opaquetypes
 object Scala2TypeAliases:
   type Kilometres = Double
   class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(distanceTravelled + distanceToAdvance)
 
   type Miles = Double
   class Booster():
@@ -18,18 +16,17 @@ object Scala2ClassWrappers:
   case class Kilometres(value: Double)
   class Rocket(distanceTravelled: Kilometres):
     def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      Kilometres(distanceTravelled.value + distanceToAdvance.value)
-    )
+      Kilometres(distanceTravelled.value + distanceToAdvance.value))
 
     case class Miles(value: Double)
     class Booster() {
+
       /** COMMENTED OUT. DOES NOT COMPILE. */
 
       // def advanceRocket(rocket: Rocket, distanceToAdvance: Miles): Rocket = {
       //   // Kilometres and Miles are different types. So compiler prevents this bug
       //   rocket.advance(distanceToAdvance)
       // }
-
 
     }
 end Scala2ClassWrappers
@@ -137,7 +134,7 @@ object Scala3OpaqueTypeAliasesDefinitions:
     def toMiles: Miles = a / 1.6
 
   extension (a: Miles)
-    @targetName("plusMiles")  
+    @targetName("plusMiles")
     def +(b: Miles): Miles = a + b
 
     def toKm: Kilometres = a * 1.6
@@ -148,9 +145,7 @@ object Scala3OpaqueTypeAliasesTypeSafety:
   import Scala3OpaqueTypeAliasesDefinitions._
 
   class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(distanceTravelled + distanceToAdvance)
 
   class Booster():
     def advanceRocket(rocket: Rocket, distanceToAdvance: Kilometres): Rocket = {
@@ -169,9 +164,7 @@ object Scala3OpaqueTypeAliasesNoAllocations1:
   export Scala3OpaqueTypeAliasesDefinitions._
 
   class Rocket(val distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(distanceTravelled + distanceToAdvance)
 
   type Distance = Kilometres | Miles
   class Booster():
@@ -179,7 +172,7 @@ object Scala3OpaqueTypeAliasesNoAllocations1:
     // SO WE HAVE A BUG. Any 'Kilometres' passed to this method will be multiplied by 1.6
     def advanceRocket(rocket: Rocket, distanceToAdvance: Distance): Rocket = {
       val distanceInKm = distanceToAdvance match {
-        case miles: Miles => miles.toKm
+        case miles: Miles   => miles.toKm
         case km: Kilometres => km
       }
       rocket.advance(distanceInKm)
@@ -202,9 +195,7 @@ object Scala3OpaqueTypeAliasesNoAllocations2:
   import Scala3OpaqueTypeAliasesDefinitions._
 
   class Rocket(val distanceTravelled: Kilometres) {
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(distanceTravelled + distanceToAdvance)
   }
 
   type Conversion[A] = A => Kilometres
@@ -239,6 +230,6 @@ object Scala3OpaqueTypeAliasesNoAllocations3:
    *    public static double[] distances() {
    *        return Scala3OpaqueTypeAliasesNoAllocations3$.MODULE$.distances();
    *    }
-   * 
+   *
    */
   val distances: Array[Kilometres] = Array(Kilometres(10)) // No allocation of Kilometres object
