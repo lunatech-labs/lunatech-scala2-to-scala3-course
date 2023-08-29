@@ -6,8 +6,6 @@ object NewControlStructures {
   val xs = Seq(1, 2, 3)
   val ys = Seq(3, 4, 5)
 
-  def body: Int = 6
-
   if x < 0 then "negative"
   else if x == 0 then "zero"
   else "positive"
@@ -26,6 +24,12 @@ object NewControlStructures {
     y <- ys
   do println(x + y)
 
-  // try body
-  // catch case ex: IOException => handle
+  def body: Int =
+    throw new IllegalArgumentException("Bad argument")
+    5
+
+  def handle = ???
+  val result =
+    try body
+    catch case ex: IllegalArgumentException => handle
 }
