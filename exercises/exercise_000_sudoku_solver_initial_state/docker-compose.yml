@@ -43,11 +43,3 @@ services:
       - monitoring
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-  zipkin:
-    container_name: zipkin
-    image: openzipkin/zipkin:2.24
-    ports:
-      - "9411:9411"
-    networks:
-      - monitoring

@@ -19,7 +19,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -30,6 +29,243 @@
         "w": 24,
         "x": 0,
         "y": 0
+      },
+      "id": 24,
+      "panels": [],
+      "title": "Akka System Metrics",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "N/A",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 0,
+        "y": 1
+      },
+      "id": 25,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "builder",
+          "expr": "sum(akka_system_unhandled_messages_total)",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Unhandled Messages",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "N/A",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 5,
+        "y": 1
+      },
+      "id": 26,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "builder",
+          "expr": "sum(akka_system_dead_letters_total)",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Dead Letters",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 13,
+        "x": 10,
+        "y": 1
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "builder",
+          "expr": "sum(irate(akka_actor_errors_total[$__interval]))",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
       },
       "id": 21,
       "panels": [],
@@ -97,7 +333,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 8
       },
       "id": 20,
       "options": {
@@ -120,7 +356,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_system_processed_messages_total[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{system}}",
           "range": true,
           "refId": "A"
         }
@@ -189,7 +425,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 8
       },
       "id": 19,
       "options": {
@@ -212,7 +448,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_system_active_actors_bucket[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{system}}",
           "range": true,
           "refId": "A"
         }
@@ -281,7 +517,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 16
       },
       "id": 22,
       "options": {
@@ -304,7 +540,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_system_unhandled_messages_total[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{system}}",
           "range": true,
           "refId": "A"
         }
@@ -373,7 +609,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 16
       },
       "id": 23,
       "options": {
@@ -396,7 +632,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_system_dead_letters_total[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{system}}",
           "range": true,
           "refId": "A"
         }
@@ -410,7 +646,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 23
       },
       "id": 15,
       "panels": [],
@@ -478,7 +714,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 24
       },
       "id": 16,
       "options": {
@@ -501,7 +737,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_actor_processing_time_seconds_bucket[$__rate_interval])",
-          "legendFormat": "",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -570,7 +806,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 24
       },
       "id": 18,
       "options": {
@@ -593,7 +829,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_actor_processing_time_seconds_sum[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -662,7 +898,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 32
       },
       "id": 17,
       "options": {
@@ -685,7 +921,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_actor_processing_time_seconds_count[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -699,12 +935,104 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 40
       },
       "id": 14,
       "panels": [],
       "title": "Mailbox",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 41
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "builder",
+          "expr": "rate(akka_actor_mailbox_size_bucket[$__rate_interval])",
+          "legendFormat": "{{path}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Actor Mailbox Size Bucket",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -769,7 +1097,7 @@
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "{dispatcher=\"akka.actor.default-dispatcher\", instance=\"host.docker.internal:9095\", job=\"prometheus\", le=\"+Inf\", path=\"sudoku-solver-system/user/sudoku-problem-sender\", system=\"sudoku-solver-system\"}"
+                  "sudoku-solver-system/user/sudoku-solver"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -791,100 +1119,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 34
-      },
-      "id": 11,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "builder",
-          "expr": "rate(akka_actor_mailbox_size_bucket[$__rate_interval])",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Actor Mailbox Size Bucket",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
         "x": 12,
-        "y": 34
+        "y": 41
       },
       "id": 13,
       "options": {
@@ -909,7 +1145,7 @@
           "exemplar": false,
           "expr": "rate(akka_actor_time_in_mailbox_seconds_bucket{job=\"prometheus\"}[$__rate_interval])",
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -1003,7 +1239,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 42
+        "y": 49
       },
       "id": 10,
       "options": {
@@ -1026,7 +1262,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_actor_mailbox_size_count[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -1095,7 +1331,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 42
+        "y": 49
       },
       "id": 9,
       "options": {
@@ -1118,7 +1354,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_actor_time_in_mailbox_seconds_count[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -1187,7 +1423,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 50
+        "y": 57
       },
       "id": 8,
       "options": {
@@ -1210,7 +1446,7 @@
           },
           "editorMode": "builder",
           "expr": "rate(akka_actor_mailbox_size_sum[$__rate_interval])",
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -1279,7 +1515,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 50
+        "y": 57
       },
       "id": 12,
       "options": {
@@ -1302,7 +1538,7 @@
           },
           "editorMode": "builder",
           "expr": "akka_actor_time_in_mailbox_seconds_count",
-          "legendFormat": "__auto",
+          "legendFormat": "{{path}}",
           "range": true,
           "refId": "A"
         }
@@ -1311,7 +1547,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 38,
   "style": "dark",
   "tags": [],
