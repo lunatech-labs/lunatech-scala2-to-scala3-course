@@ -2,7 +2,6 @@ package org.lunatechlabs.dotty.sudoku
 
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
-import org.lunatechlabs.dotty.sudoku.SudokuDetailProcessor.UpdateSender
 
 object SudokuDetailProcessor:
 
@@ -44,7 +43,7 @@ object SudokuDetailProcessor:
       sender ! BlockUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"blk-processor-$id"
 
-class SudokuDetailProcessor[DetailType <: SudokuDetailType: UpdateSender] private (
+class SudokuDetailProcessor[DetailType <: SudokuDetailType: SudokuDetailProcessor.UpdateSender] private (
     context: ActorContext[SudokuDetailProcessor.Command]):
 
   import SudokuDetailProcessor.*
