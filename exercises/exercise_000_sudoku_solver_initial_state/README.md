@@ -83,7 +83,7 @@ SLF4J: See also http://www.slf4j.org/codes.html#replay
 man [e] > Scala 2 to Scala 3 > sudoku solver initial state >
 ```
 
-- Run the Sudokusolver by executing the `runSolver` command from the `sbt` prompt.
+- Run the SudokuSolver by executing the `runSolver` command from the `sbt` prompt.
 
 - Note that you can stop the application by hitting `Return` in the sbt session.
 

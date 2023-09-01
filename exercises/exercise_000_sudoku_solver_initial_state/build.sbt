@@ -1,6 +1,6 @@
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-lazy val `moving-from-scala-2-to-scala-3` =
+lazy val `lunatech-scala2-to-scala3-course` =
   (project in file(".")).settings(
     scalaVersion := "2.13.10",
     Compile / scalacOptions ++= CompileOptions.compileOptions,
