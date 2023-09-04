@@ -374,12 +374,27 @@ object Scala3OpaqueTypeAliasesDefinitions:
 ```
 
 ---
+
 <!-- .slide: data-background-color="#94aabb" data-background-image="images/bg-reveal.ps.png" -->
 
+## EXERCISE
+## Using ***`Opaque Type Aliases`***
+## &#173;
+
+* In this exercise, we will take a deeper look at Opaque type aliases
+    * Make sure you're positioned at exercise *"exploring opaque type aliases"*
+    * Follow the exercise instructions provided in the README.md file in the code folder
+<!-- .slide: data-background-color="#94aabb" data-background-image="images/bg-reveal.ps.png" -->
+
+---
+
+<!-- .slide: data-background-color="#94aabb" data-background-image="images/bg-reveal.ps.png" -->
+
+## EXERCISE
 ## OPTIONAL EXERCISE
 ## Using ***`Opaque Type Aliases`***
 ## &#173;
 
 * In this exercise, we will explore the mechanism for creating Opaque Type aliases
-    * Make sure you're positioned at exercise *"opaque type aliases"*
+    * Make sure you're positioned at exercise *"optional opaque type aliases"*
     * Follow the exercise instructions provided in the README.md file in the code folder
