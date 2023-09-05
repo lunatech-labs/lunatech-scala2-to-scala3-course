@@ -63,11 +63,19 @@
 ## &#173;
 
 * Course Overview
-* A recap on:
-    * Scala 2
-    * The Scala 3 project
-    * The Akka Toolkit
-* A detailed look at the Scala 2/Akka Typed based Sudoku Solver
+* Scala 3 Migration course
+  * Setting up the Scala 3 Migration Tool
+  * Migrating:
+    * Scala dependencies
+    * Scala compiler options
+    * Scala syntax
+    * Types
+* Moving from Scala 2 to Scala 3 workshop/course
+  * A recap on:
+      * Scala 2
+      * The Scala 3 project
+      * The Akka Toolkit
+  * A [detailed] look at the Scala 2/Akka Typed based Sudoku Solver
 
 ---
 
@@ -91,6 +99,16 @@
 ## The teachers
 ## &#173;
 
-* Eric Loots
-* Adrien Picquerez
-* Trevor Burton-McCreadie
+* _Eric Loots_ (Lunatech Belgium)
+* _Adrien Picquerez_ (EPFL Scala Center Switzerland)
+* _Trevor Burton-McCreadie_ (Lunatech United Kingdom)
+
+---
+
+## You!
+## &#173;
+
+* Briefly introduce yourself (Name? Where do you live/work? Passions, ...)
+* What is your connection with Scala [3]?
+* Please share your experience with Scala and your migration experiences, if any.
+* What would you like to learn in the coming two days?
