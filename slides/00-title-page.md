@@ -4,7 +4,6 @@
 ## &#173;
 ## &#173;
 ## &#173;
-## Present day Java versus Scala
+# Moving from Scala 2 to Scala 3
 #### &#173;
-#### *Modern Java's features from a Scala developer's point of view*
 

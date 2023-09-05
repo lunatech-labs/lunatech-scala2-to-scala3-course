@@ -96,8 +96,76 @@ Commands:
   set-current-course   Sets the current course to point to a directory
   version              Print version info
 ```
-  
-### Install the course
+
+### Install the (Scala Center) "Scala 3 migration course"
+
+Installing this course can be done via the `cmtc install` command as follows:
+
+```bash
+$ cmtc install -s scalacenter/scala3-migration-course
+Downloading studentified course from 'https://github.com/scalacenter/scala3-migration-course/releases/download/v0.1.0/scala3-migration-course-student.zip' to courses directory
+
+Project scala3-migration-course (v0.1.0) successfully installed to:
+  /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/scala3-migration-course
+
+Current course set to '/Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/scala3-migration-course'
+
+Exercises in repository:
+  1.  *   exercise_000_initial_state
+  2.      exercise_001_install_sbt_scala3_migrate
+  3.      exercise_002_migrate_dependencies
+  4.      exercise_003_migrate_scalac_options
+  5.      exercise_004_migrate_syntax
+  6.      exercise_005_migrate_types
+  7.      exercise_006_update_scala_version
+```
+
+#### Verifying the course installation
+
+Verify that the the course was installed correctly by launching `sbt test` in the root folder of the
+course exercises. You should see the following output:
+
+```bash
+$ sbt test
+[info] welcome to sbt 1.9.3 (Eclipse Adoptium Java 11.0.20)
+[info] loading settings for project global-plugins from idea.sbt ...
+[info] loading global plugins from /Users/ericloots/.sbt/1.0/plugins
+[info] loading settings for project scala3-migration-course-build from plugins.sbt ...
+[info] loading project definition from /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/scala3-migration-course/project
+[info] loading settings for project main from build.sbt ...
+[info] set current project to main (in build file:/Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/scala3-migration-course/)
+[info] compiling 8 Scala sources to /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/scala3-migration-course/target/scala-2.13/classes ...
+[warn] 1 deprecation
+[warn] 1 deprecation (since 2.13.11)
+[warn] 2 deprecations in total; re-run with -deprecation for details
+[warn] three warnings found
+[info] compiling 8 Scala sources to /Users/ericloots/Library/Caches/com.lunatech.cmt/Courses/scala3-migration-course/target/scala-2.13/test-classes ...
+[warn] 1 deprecation
+[warn] 1 deprecation (since 2.13.3)
+[warn] 2 deprecations in total; re-run with -deprecation for details
+[warn] three warnings found
+[info] example.SyntaxRewritesTests:
+[info]   + parentheses around lambda parameter 0.017s
+[info]   + auto-application 0.0s
+[info] example.FunctorTests:
+[info]   + either left functor 0.002s
+[info] example.DiffUtilTests:
+[info]   + diff 0.01s
+[info] example.CatsTests:
+[info]   + combine all strings 0.203s
+[info] example.TypeIncompatTests:
+[info]   + type incompat 0.0s
+[info] example.BetterMonadicForTests:
+[info]   + count twice 0.001s
+[info] example.ScalametaTests:
+[info]   + parse Scala expression 0.076s
+|D| example.BuildInfo.scalacOptions = List(-encoding, UTF-8, -target:jvm-1.8, -Xsource:3, -Wunused:imports,privates,locals, -explaintypes)
+[info] example.BuildInfoTests:
+[info]   + scalacOptions 0.003s
+[info] Passed: Total 9, Failed 0, Errors 0, Passed 9
+[success] Total time: 4 s, completed 5 Sep 2023, 16:15:22
+```
+### Install the (Lunatech) "Moving from Scala 2 to Scala 3" course
 
 Installing this course can be done via the `cmtc install` command as follows:
 
@@ -174,6 +242,13 @@ org.lunatechlabs.dotty.sudoku.SudokuDetailProcessorSuite:
 ```
 
 Observe that all (11) tests passed successfully.
+
+### Installing "The Silver Searcher"
+
+The Silver Searcher is a command line utility that combines `find` and `grep` (and more) in a
+single command.
+
+Follow the installation instructions [here](https://github.com/ggreer/the_silver_searcher).
 
 ### Installing an IDE
 
