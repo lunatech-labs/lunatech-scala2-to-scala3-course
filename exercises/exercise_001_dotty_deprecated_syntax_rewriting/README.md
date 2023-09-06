@@ -18,15 +18,19 @@ up on the [scala-lang](https://www.scala-lang.org) website. As an alternative, w
 [`cs`](https://github.com/coursier/coursier) (Coursier) to look up the information. Here's how to do it with `cs`:
 
 ```bash
-$ cs complete-dep org.scala-lang:scala3-compiler_3:
+$ cs complete-dep org.scala-lang:scala3-compiler_3: | grep -v RC
 3.0.0
-3.0.1-RC1
-3.0.1-RC1-bin-20210413-f3c1468-NIGHTLY
-3.0.1-RC1-bin-20210415-59ea58e-NIGHTLY
-3.0.1-RC1-bin-20210416-8086e4b-NIGHTLY
-.
-.
-.
+3.0.1
+3.0.2
+3.1.0
+3.1.1
+3.1.2
+3.1.3
+3.2.0
+3.2.1
+3.2.2
+3.3.0
+3.3.1
 ```
 
 Now that you've figured out what the most recent version of the Scala 3 compiler is,
@@ -34,14 +38,15 @@ adapt the build to utilise this version (change `code/build.sbt`).
 
 As we need to have a look at the options supported by the Scala 3 compiler, we need to install
 the compiler first. Let's use Coursier to do this. For example, if we want to install version
-3.0.2 (which certainly isn't the most recent version at this moment...), we do this as follows:
+3.3.0 (which certainly isn't the most recent version at this moment...), we do this as follows:
 
 ```bash
-$ cs install scalac:3.0.2
+$ cs install scalac:3.3.0
+<elided>
 Wrote scalac
 
 $ scalac -version
-Scala compiler version 3.0.2 -- Copyright 2002-2021, LAMP/EPFL
+Scala compiler version 3.3.0 -- Copyright 2002-2023, LAMP/EPFL
 ```
 
 After having installed the compiler, we can have a look at its options.
@@ -52,38 +57,34 @@ from `scalac -help`. Note that the (reformatted) output you get from this comman
 may be different if you installed a different version.
 
 ```bash
-$ scalac -help
+$ scalac --help
 Usage: scalac <options> <source files>
 where possible standard options include:
      -Dproperty=value  Pass -Dproperty=value directly to the runtime system.
-             -J<flag>  Pass <flag> directly to the runtime system.
-                   -P  Pass an option to a plugin, e.g. -P:<plugin>:<opt>
-                   -V  Print a synopsis of verbose options.
-                   -W  Print a synopsis of warning options.
 ...
-   <elided>
+<elided>
 ...
--new-syntax        Require `then` and `do` in control expressions.
--old-syntax        Require `(...)` around conditions.
+          -new-syntax  Require `then` and `do` in control expressions.
+              -indent  Together with -rewrite, remove {...} syntax when possible
+                       due to significant indentation.
+           -no-indent  Require classical {...} syntax, indentation is not
+                       significant.
+          -old-syntax  Require `(...)` around conditions.
+                       Default 80
+             -rewrite  When used in conjunction with a `...-migration` source
+                       version, rewrites sources to migrate to new version.
+                       (Scala.js only)
 ...
-   <elided>
+<elided>
 ...
--indent            Together with -rewrite, remove {...} syntax when possible
-                   due to significant indentation.
--no-indent         Require classical {...} syntax, indentation is not
-                   significant.
+              -source  source version
+                       Default 3.3
+                       Choices : 3.0-migration, 3.0, 3.1, 3.2-migration, 3.2,
+                       3.3-migration, 3.3, future-migration, future
 ...
-   <elided>
+<elided>
 ...
--rewrite           When used in conjunction with a `...-migration` source
-                   version, rewrites sources to migrate to new version.
-...
-   <elided>
-...
--source            source version
-                   Default 3.2
-                   Choices 3.0-migration, 3.0, 3.1, 3.2-migration, 3.2,
-                   future-migration, future
+              -source  source version
 ```
 
 We will add some code that trigger a number of compiler warnings which can
@@ -108,8 +109,7 @@ Add the following code snippet to the `src/main/scala/org/lunatechlabs/dotty/sud
   root folder:
 
 ```scala
-$ git add -A
-$ git commit -m "Snapshot before Scala 3 compiler rewrite"
+$ git commit -a -m "Snapshot before Scala 3 compiler syntax rewrites"
 ```
 
 - Compile and investigate what the compiler reports.
