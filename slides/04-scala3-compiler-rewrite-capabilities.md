@@ -32,7 +32,7 @@
 
 ---
 
-## Rewriting of deprecated syntax - I
+## Rewriting of deprecated syntax - II
 * The Scala 3 compiler has a number of options that can automatically rewrite some deprecated language features
     * There's a strategy defining how language features will be phased in and out after the Scala 3.0 release
 * Scala 3.0
@@ -41,6 +41,8 @@
 * Scala 3.x (x >= 1)
     * Support of Scala 3.0 syntax which introduced new deprecations
     * Rewrite of these via the ***-rewrite -source:future-migration*** compile options
+* Use the [***Scala 3 Migrate sbt plugin***](https://github.com/scalacenter/scala3-migrate)
+    * Learn how to use it by following the [***Scala 3 Migration Course***](https://github.com/scalacenter/scala3-migration-course)
 
 ---
 <!-- .slide: data-background-color="#94aabb" data-background-image="images/bg-reveal.ps.png" -->
@@ -57,12 +59,12 @@
 ## &#173;
 
 * Scala 3 introduces a number of syntax changes for Scala 2 language constructs such as
-    * Contextual Abstractions (implicits)
-    * Extension methods
+    * [***Contextual Abstractions***](https://dotty.epfl.ch/docs/reference/contextual/index.html) (implicits)
+    * [***Extension methods***](https://dotty.epfl.ch/docs/reference/contextual/extension-methods.html)
     * ...
 * Two other notable syntax changes
-    * New Control Syntax (opt-in)
-    * "Fewer Braces" syntax: indentation is significant
+    * [***New Control Syntax***](https://dotty.epfl.ch/docs/reference/other-new-features/control-syntax.html) (opt-in)
+    * [***Optional Braces syntax***](https://dotty.epfl.ch/docs/reference/other-new-features/indentation.html) - indentation is significant
 
 ---
 
