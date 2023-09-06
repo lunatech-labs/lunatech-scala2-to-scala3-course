@@ -18,7 +18,7 @@
     * 2.13
         * Important progress on compiler performance and collections rewrite
         * New, binary compatible *`Vector`* implementation
-        * Most recent release 2.13.10
+        * Most recent release 2.13.11
         * Allow, under some restrictions to use Scala 3 libraries in Scala 2 code (using Tasty) and vice-versa. See the [Compatibility Reference pages](https://docs.scala-lang.org/scala3/guides/migration/compatibility-intro.html) in the Scala 3 Migration Guide
 
 ---
@@ -28,12 +28,12 @@
 
 * Dotty 0.21.0-RC1: feature complete for Scala 3 (December 2019)
 * 3.0.0 released on May 13, 2021
-* Current release 3.2.2 released on February 1st, 2023 
-* Tooling - Status
-    * Metals:
+* Current [release 3.3.0](https://github.com/lampepfl/dotty/releases/tag/3.3.0) released on May 30th, 2023 
+* IDE support
+    * [Visual Studio Code](https://code.visualstudio.com) with [Metals](https://scalameta.org/metals/)
         * integrated support in Metals including Scala Worksheet support!
-    * IntelliJ
-        * Scala 3 support in Scala Plugin
+    * [IntelliJ](https://www.jetbrains.com/idea/)
+        * Scala 3 support with the [Scala Plugin](https://lp.jetbrains.com/intellij-scala/)
 * There's the [Scala 3 Migration Guide](https://docs.scala-lang.org/scala3/guides/migration/compatibility-intro.html)!
 
 ---
