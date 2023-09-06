@@ -59,8 +59,17 @@ trait Paintable:
 
 def resizeAndPaint(obj: Growable & Paintable): Unit =
   obj.growBy(20).paint(0x10FF00).growBy(40).paint(0x0010FF)
+ 
+```
 
-resizeAndPaint(new Growable with Paintable)
+* and using it:
+
+```scala
+scala> resizeAndPaint(new Growable with Paintable)
+     Growing by 20%
+     Painted with color 1113856
+     Growing by 40%
+     Painted with color 4351
 ```
 
 ---
@@ -103,6 +112,7 @@ enum ToolSupplies:
 def printIt(t: Tools | ToolSupplies): Unit = t match
   case tool: Tools          => println(s"Got a tool: $tool")
   case supply: ToolSupplies => println(s"Got a supply: $supply")
+ 
 ```
 
 * and using it:
@@ -124,9 +134,11 @@ Got a supply: Nail(9)
 ## &#173;
 
 * The behaviour of an Actor is implemented via the ***`akka.actor.typed.Behavior`*** API
+#### &#173;
 * The ***`Behavior`*** takes a type parameter which corresponds to the message types the ***`Behavior`*** can and will handle as formally defined in its ***`Command`*** protocol
+#### &#173;
 * On top of the commands an Actor can process, it will also have to process Responses from other Actors as defined in the latter's ***`Response`*** protocol
-### &#173;
+#### &#173;
 * How do we encode a behaviour so that it can process both commands and responses internally, while limiting the external protocol to ***`Command`***?
 
 ---
@@ -181,10 +193,11 @@ Got a supply: Nail(9)
 ### Akka Typed Actors - encoding
 
 * Message adapters with Response wrappers solve the issue, but
-    * this adds quite a bit of boilerplate
+    * this is quite convoluted and it adds a lot of boilerplate
     * requires an extra effort from anyone trying to understand the code
-### &#173;
+#### &#173;
 * There is a better solution using Scala 3's ***`Union`*** Types!
+#### &#173;
 * Let's explore that
 
 ---
@@ -211,6 +224,7 @@ type CommandAndResponse = Command | Response
 // implicitly[Behavior[CommandAndResponse] <:< Behavior[Command]]
 val internalBehavior: Behavior[CommandAndResponse] = new Behavior[CommandAndResponse]{}
 val externalBehavior: Behavior[Command] = internalBehavior   // Contravariance at work
+ 
 ```
 ```scala
 internalBehavior.treatMsg(Command.Reset)
@@ -220,7 +234,8 @@ internalBehavior.treatMsg(Response.RunFinished)
   
 externalBehavior.treatMsg(Command.Reset)
 externalBehavior.treatMsg(Command.Run(110))
-externalBehavior.treatMsg(Response.RunFailed("Too much to do”))   // Doesn’t compile
+externalBehavior.treatMsg(Response.RunFailed("Too much to do"))   // Doesn't compile
+ 
 ```
 
 ---
