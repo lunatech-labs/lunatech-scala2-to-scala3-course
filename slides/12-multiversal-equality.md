@@ -42,13 +42,13 @@ final case class Item(id: UUID)
 
 * ...but we forget to change the ***`Repository`***...
 
-```scala
+```scala 
 
 class Repository(items: Seq[Item]):
   def findById(id: Id): Option[Item] = {
      // The following type-checks but will always return false
      // so we never find any items
-    items.find(_.id == id)
+    items.find(_.id == id)  // Comparing an `id` with a `UUID`
   }
 ```
 
