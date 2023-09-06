@@ -145,8 +145,7 @@ Hit RETURN to stop solver
 in place in this project. scalafmt supports both Scala 2 and Scala 3. You can
 [re]format the code by running `scalafmtAll` from the sbt prompt. As we switch from
 Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration is
-in place. In any of the exercises, you can run `cmtc pull-template .scalafmt.conf`
-to "pull-in" the correct configuration file.
+in place.
 
 ### Markdown viewer in IntelliJ IDEA
 
