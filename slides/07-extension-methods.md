@@ -14,12 +14,14 @@
 ## &#173;
 
 * Scala's *implicits* enable abstraction over context
+### &#173;
 * *implicits* enables overcoming common phenomena in Functional Programming:
     * Writing out complex instances in full can be very cumbersome
     * Functions lead to long argument lists, which render code less readable and feels like boilerplate
     * The killer application for *implicits* are so-called Type classes
     * Note that using *implicits* to pass in parameters implicitly is powerful but can also be quite confusing.
-
+### &#173;
+* Caveat: *implicits* may make things a bit to easy to ignore. A good example of this is the availability of a global execution context in the Scala Runtime environment 
 ---
 
 ## Contextual Abstractions - II
@@ -30,7 +32,7 @@
     * Adding a separate so-called *implicit parameter* list to a function
     * When such a function is called, the compiler will look-up the *implicit value *in scope (applying various scoping rules) and pass it to the function
     * In case no *implicit value* is found, the code will not compile
-## &#173;
+### &#173;
 * Instead of typing out complex instances in full, contextual abstractions allow one to *"summon"* such instances based on their type
 
 ---
@@ -188,7 +190,7 @@
         case (Some(d), Some(r)) => Some((d, r))
         case _ => None
   
-  import SafeDiv.*; import SafeDiv.*
+  import SafeDiv.*
     
   val d1 = 25.divide(3)   // Some((8,1))
   val d2 = 25.divide(0)   // None
