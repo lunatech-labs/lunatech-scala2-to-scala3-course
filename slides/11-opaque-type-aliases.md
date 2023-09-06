@@ -113,73 +113,77 @@
 
 ---
 
-## Value-class wrappers limitations
+## Value-class wrappers limitations - I
 ## &#173;
 
 * BUT! Allocations happen in many cases (e.g. parametric polymorphism)
 
 ```scala
-  case class Kilometres(value: Double) extends AnyVal
-  case class Miles(value: Double) extends AnyVal
+case class Kilometres(value: Double) extends AnyVal
+case class Miles(value: Double) extends AnyVal
 
-  class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      Kilometres(distanceTravelled.value + distanceToAdvance.value)
-    )
+class Rocket(distanceTravelled: Kilometres):
+  def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
+    Kilometres(distanceTravelled.value + distanceToAdvance.value)
+  )
 
-  type Conversion[A] = A => Kilometres
-  class Booster():
-    def advanceRocket[A: Conversion](rocket: Rocket, distanceToAdvance: A): Rocket = {
-      val distanceInKm = summon[Conversion[A]](distanceToAdvance)
-      rocket.advance(distanceInKm)
-    }
+type Conversion[A] = A => Kilometres
+class Booster():
+  def advanceRocket[A: Conversion](rocket: Rocket, distanceToAdvance: A): Rocket = {
+    val distanceInKm = summon[Conversion[A]](distanceToAdvance)
+    rocket.advance(distanceInKm)
+  }
+ 
 ```
 ```scala
 
-  val rocket1 = new Rocket(Kilometres(0))
-  val rocket2 = new Rocket(Kilometres(0))
-  val booster = new Booster()
+val rocket1 = new Rocket(Kilometres(0))
+val rocket2 = new Rocket(Kilometres(0))
+val booster = new Booster()
 
-  given Conversion[Kilometres] = identity
-  given Conversion[Miles] = miles => Kilometres(miles.value * 1.6)
+given Conversion[Kilometres] = identity
+given Conversion[Miles] = miles => Kilometres(miles.value * 1.6)
 
-  booster.advanceRocket(rocket1, Kilometres(100)) // Allocation of Kilometres object
-  booster.advanceRocket(rocket2, Miles(200))      // Allocation of Miles object
+booster.advanceRocket(rocket1, Kilometres(100)) // Allocation of Kilometres object
+booster.advanceRocket(rocket2, Miles(200))      // Allocation of Miles object
+ 
 ```
 
 ---
 
-## Value-class wrappers limitations
+## Value-class wrappers limitations - II
 ## &#173;
 
 * BUT! Allocations happen in many cases (e.g. subtyping)
 
 ```scala
-  sealed trait Distance extends Any
-  case class Kilometres(value: Double) extends AnyVal with Distance
-  case class Miles(value: Double) extends AnyVal with Distance
+sealed trait Distance extends Any
+case class Kilometres(value: Double) extends AnyVal with Distance
+case class Miles(value: Double) extends AnyVal with Distance
 
-  class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      Kilometres(distanceTravelled.value + distanceToAdvance.value)
-    )
+class Rocket(distanceTravelled: Kilometres):
+  def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
+    Kilometres(distanceTravelled.value + distanceToAdvance.value)
+  )
 
-  class Booster():
-    def advanceRocket(rocket: Rocket, distanceToAdvance: Distance): Rocket = {
-      val distanceInKm = distanceToAdvance match {
-        case miles: Miles => Kilometres(miles.value * 1.6)
-        case km: Kilometres => km
-      }
-      rocket.advance(distanceInKm)
+class Booster():
+  def advanceRocket(rocket: Rocket, distanceToAdvance: Distance): Rocket = {
+    val distanceInKm = distanceToAdvance match {
+      case miles: Miles => Kilometres(miles.value * 1.6)
+      case km: Kilometres => km
     }
+    rocket.advance(distanceInKm)
+  }
+ 
 ```
 ```scala
-  val rocket1 = new Rocket(Kilometres(0))
-  val rocket2 = new Rocket(Kilometres(0))
-  val booster = new Booster()
+val rocket1 = new Rocket(Kilometres(0))
+val rocket2 = new Rocket(Kilometres(0))
+val booster = new Booster()
 
-  booster.advanceRocket(rocket1, Kilometres(100)) // Allocation of Kilometres object
-  booster.advanceRocket(rocket2, Miles(200))      // Allocation of Miles object
+booster.advanceRocket(rocket1, Kilometres(100)) // Allocation of Kilometres object
+booster.advanceRocket(rocket2, Miles(200))      // Allocation of Miles object 
+ 
 ```
 
 ---
@@ -190,10 +194,10 @@
 * BUT! Allocations happen in many cases (e.g. array assignment)
 
 ```scala
-  case class Kilometres(value: Double) extends AnyVal
-  case class Miles(value: Double) extends AnyVal
+case class Kilometres(value: Double) extends AnyVal
+case class Miles(value: Double) extends AnyVal
 
-  val distances: Array[Kilometres] = Array(Kilometres(10)) // Allocation of Kilometres object
+val distances: Array[Kilometres] = Array(Kilometres(10)) // Allocation of Kilometres object
 ```
 
 * Limitation especially significant for numeric computing
@@ -211,9 +215,9 @@
 * Scala 3 introduces the opaque keyword add in front of plain type alias
 
 ```scala
-  object Scala3OpaqueTypeAliasesDefinitions:
-    opaque type Kilometres = Double
-    opaque type Miles = Double
+object Scala3OpaqueTypeAliasesDefinitions:
+  opaque type Kilometres = Double
+  opaque type Miles = Double
 ```
 
 * Must be members of ***`class`***&#173;*es*, ***`trait`***&#173;*s*, or ***`object`***&#173;*s*, or defined at the top-level. They cannot be defined in local blocks.
@@ -249,7 +253,7 @@ object Scala3OpaqueTypeAliasesDefinitions:
     @scala.annotation.targetName("plusMiles")
     def + (b: Miles): Miles = a + b
     def toKm: Kilometres = a * 1.6
-
+ 
 ```
 
 ---
@@ -261,17 +265,17 @@ object Scala3OpaqueTypeAliasesDefinitions:
 * So revisiting our ***`Rocket`*** and ***`Booster`*** example, we get type-safety...
 
 ```scala
-  import Scala3OpaqueTypeAliasesDefinitions._
+import Scala3OpaqueTypeAliasesDefinitions._
 
-  class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+class Rocket(distanceTravelled: Kilometres):
+  def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
+    distanceTravelled + distanceToAdvance
+  )
 
-  class Booster():
-    def advanceRocket(rocket: Rocket, distanceToAdvance: Miles): Rocket = {
-      // Kilometres and Miles are different types. So compiler prevents this bug
-      rocket.advance(distanceToAdvance)
+class Booster():
+  def advanceRocket(rocket: Rocket, distanceToAdvance: Miles): Rocket = {
+    // Kilometres and Miles are different types. So compiler prevents this bug
+    rocket.advance(distanceToAdvance)
 -- [E007] Type Mismatch Error: -------------------------------------------------
 11 |      rocket.advance(distanceToAdvance)
    |                     ^^^^^^^^^^^^^^^^^
@@ -290,29 +294,30 @@ object Scala3OpaqueTypeAliasesDefinitions:
 * ...but without allocation cost, even in context of parametric polymorphism
 
 ```scala
-  import Scala3OpaqueTypeAliasesDefinitions.*
+import Scala3OpaqueTypeAliasesDefinitions.*
 
-  class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+class Rocket(distanceTravelled: Kilometres):
+  def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
+    distanceTravelled + distanceToAdvance
+  )
 
-  type Conversion[A] = A => Kilometres
-  class Booster():
-    def advanceRocket[A: Conversion](rocket: Rocket, distanceToAdvance: A): Rocket = {
-      val distanceInKm = summon[Conversion[A]](distanceToAdvance)
-      rocket.advance(distanceInKm)
-    }
+type Conversion[A] = A => Kilometres
+class Booster():
+  def advanceRocket[A: Conversion](rocket: Rocket, distanceToAdvance: A): Rocket = {
+    val distanceInKm = summon[Conversion[A]](distanceToAdvance)
+    rocket.advance(distanceInKm)
+  }
 
-  val rocket1 = new Rocket(Kilometres(0))
-  val rocket2 = new Rocket(Kilometres(0))
-  val booster = new Booster()
+val rocket1 = new Rocket(Kilometres(0))
+val rocket2 = new Rocket(Kilometres(0))
+val booster = new Booster()
 
-  given Conversion[Kilometres] = identity
-  given Conversion[Miles] = _.toKm
+given Conversion[Kilometres] = identity
+given Conversion[Miles] = _.toKm
 
-  booster.advanceRocket(rocket1, Kilometres(100)) // No allocation of Kilometres object
-  booster.advanceRocket(rocket2, Miles(200))      // No allocation of Miles object
+booster.advanceRocket(rocket1, Kilometres(100)) // No allocation of Kilometres object
+booster.advanceRocket(rocket2, Miles(200))      // No allocation of Miles object
+    
 ```
 
 ---
@@ -323,9 +328,10 @@ object Scala3OpaqueTypeAliasesDefinitions:
 * ...and no allocation costs when assigning to arrays
 
 ```scala
-  import Scala3OpaqueTypeAliasesDefinitions.*
+import Scala3OpaqueTypeAliasesDefinitions.*
 
-  val distances: Array[Kilometres] = Array(Kilometres(10)) // No allocation of Kilometres object
+val distances: Array[Kilometres] = Array(Kilometres(10)) // No allocation of Kilometres object
+ 
 ```
 
 * The wrapper type only exists at compile-time
@@ -341,28 +347,28 @@ object Scala3OpaqueTypeAliasesDefinitions:
 * Buggy version with pattern matching though...
 
 ```scala
-  import Scala3OpaqueTypeAliasesDefinitions.*
+import Scala3OpaqueTypeAliasesDefinitions.*
 
-  class Rocket(distanceTravelled: Kilometres):
-    def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
-      distanceTravelled + distanceToAdvance
-    )
+class Rocket(distanceTravelled: Kilometres):
+  def advance(distanceToAdvance: Kilometres): Rocket = new Rocket(
+    distanceTravelled + distanceToAdvance
+  )
 
-  type Distance = Kilometres | Miles
-  class Booster():
-    // THIS GIVES A WARNING. THE 'Kilometres' CASE IS UNREACHABLE due to erasure.
-    // SO WE HAVE A BUG. Any 'Kilometres' passed to this method will be multiplied by 1.6
-    def advanceRocket(rocket: Rocket, distanceToAdvance: Distance): Rocket =
-      val distanceInKm = distanceToAdvance match {
-        case miles: Miles => miles.toKm
-        case km: Kilometres => km
+type Distance = Kilometres | Miles
+class Booster():
+  // THIS GIVES A WARNING. THE 'Kilometres' CASE IS UNREACHABLE due to erasure.
+  // SO WE HAVE A BUG. Any 'Kilometres' passed to this method will be multiplied by 1.6
+  def advanceRocket(rocket: Rocket, distanceToAdvance: Distance): Rocket =
+    val distanceInKm = distanceToAdvance match {
+      case miles: Miles => miles.toKm
+      case km: Kilometres => km
 [warn] -- [E030] Match case Unreachable Warning: dottyslidescodesnippets/src/main/scala/org/lunatech/dotty/opaquetypes/Units.scala:16:13
 [warn] 16   |        case km: Kilometres => km
 [warn]      |             ^^^^^^^^^^^^^^
 [warn]      |             Unreachable case
 [warn] one warning found
-      }
-      rocket.advance(distanceInKm)
+    }
+    rocket.advance(distanceInKm)
 ```
 ```scala
   val rocket1 = new Rocket(Kilometres(0))
