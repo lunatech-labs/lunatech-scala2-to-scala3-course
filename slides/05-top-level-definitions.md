@@ -12,7 +12,7 @@
 ## Scala 3 Top-level definitions
 
 * In Scala 2:
-    * The source code for a package object is usually put in a separate file called ***`package.scala`***
+    * The source code for a package object is put in a separate file named ***`package.scala`***
     * Each package is allowed to have only one package object
     * Any definitions placed inside a package object are considered members of the package itself
     * ***`type`***, ***`def`***, and ***`val`*** definitions have to be put in an ***`object`***, ***`class`***, or ***`trait`***
@@ -85,7 +85,7 @@ def greetPerson(person: Person): Unit =
 * The compiler generates synthetic objects to wrap top-level definitions
     * In the above example, the contents of the source file ***`ToplevelDefinitions.scala`*** will be put in a synthetic object named ***`ToplevelDefinitions$package
 `***
-* *Top-level definitions don't have the ability to inherit from another ***`trait`*** or ***`class`*** as we could do with ***`package object`***&#173;*s*
+* Top-level definitions don't have the ability to inherit from another ***`trait`*** or ***`class`*** as we could do with ***`package object`***&#173;*s*
 * *A workaround for this is to use a regular object and import all needed members*
 
 ---
@@ -116,7 +116,7 @@ private val private_y = 730
 package org.lunatechlabs.multi
 
 object Application extends App {
-  println(s"$x $y $private_x $private_y”)
+  println(s"$x $y $private_x $private_y")
 }
 ```
 
@@ -126,7 +126,7 @@ object Application extends App {
 ## &#173;
 
 * In this chapter, we have taken a closer look at top-level definitions. 
-    * Package objects are now redundant and will be removed from Scala.
+    * Package objects are now redundant and will be removed from Scala at some point in time
     * A source file can freely mix top-level
         * value
         * methods

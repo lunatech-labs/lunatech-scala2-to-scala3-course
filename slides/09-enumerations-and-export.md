@@ -14,13 +14,15 @@
 
 * Scala 2 has ***`Enumerations`***
     * Their implementation is awkward for even simple use-cases such as defining a finite number of user-defined elements
-### &#173;
+#### &#173;
 * Scala 3 adds the new and versatile ***`enum`*** construct which is syntactic sugar
+#### &#173;
 * The design of ***`enum`*** meets the following objectives:
     * Allow for a concise expression and efficient definition of enumerations
     * Allow the modelling of Java enumerations as Scala enumerations
     * Allow for a concise expression of ADTs
     * Support of all idioms expressible with case classes
+#### &#173;
 * Let's have a short look at each of them
 
 ---
@@ -98,7 +100,8 @@ enum Planet(mass: Double, radius: Double):
 * Defining an explicit companion object for an enum
 
 ```scala
-object Planet:
+object Planets:
+  import Planet.*
   val earthWeight = 1.0
   val mass = earthWeight / Earth.surfaceGravity
   val weightOnPlanets =
@@ -204,7 +207,7 @@ scala> val reset = Command.Reset         // `reset` is a singleton case mapped t
 scala> println(r1 eq r2)
 true
 scala> inc.<TAB>                         // which members are defined on this enum instance?
-→              ->             ne             equals         $ordinal       getClass       formatted      isInstanceOf
+               ->             ne             equals         $ordinal       getClass       formatted      isInstanceOf
 !=             ==             wait           notify         ensuring       hashCode       notifyAll      synchronized
 ##             eq             clone          ordinal        finalize       toString       asInstanceOf
 ```
@@ -225,7 +228,7 @@ scala> enum Command:
 scala> val inc = new Command.IncrementBy(2)    // `inc` IS a case class
        val conf = new Command.Configure(0, 5)  // `conf` IS a case class
 
-scala> println(s"inc.ordinal = ${inc.ordinal}”)
+scala> println(s"inc.ordinal = ${inc.ordinal}")
 inc.ordinal = 1
 
 scala> val conf1 = conf.copy(inc = 7)
@@ -233,12 +236,12 @@ scala> val conf1 = conf.copy(inc = 7)
 Configure(0,7)
 
 scala> conf1.<TAB>                             // which members are defined on this enum instance?
-→                     _2                    wait                  canEqual              formatted             productPrefix
-!=                    eq                    clone                 ensuring              notifyAll             productElement
-##                    ne                    equals                finalize              asInstanceOf          productIterator
-->                    inc                   notify                getClass              isInstanceOf          productElementName
-==                    copy                  ordinal               hashCode              productArity          productElementNames
-_1                    init                  $ordinal              toString              synchronized
+                _2              wait            canEqual        formatted       productPrefix
+!=              eq              clone           ensuring        notifyAll       productElement
+##              ne              equals          finalize        asInstanceOf    productIterator
+->              inc             notify          getClass        isInstanceOf    productElementName
+==              copy            ordinal         hashCode        productArity    productElementNames
+_1              init            $ordinal        toString        synchronized
 ```
 
 ---
@@ -246,7 +249,7 @@ _1                    init                  $ordinal              toString      
 ## Scala 3's ***`export`*** clause - I
 ## &#173;
 
-* Scala 3's export clause allows us to create alias of selected members
+* Scala 3's export clause allows us to create aliases for selected members
 
 ```scala
 object A:
@@ -263,7 +266,7 @@ scala> A.x
 val res1: Int = 5
 ```
 
-* We have only scratched the surface of the ***`export`*** clause. It enables us to compose new functionality rather than going through OOP's inheritance based approach. More details on this in the ***`export`*** [reference documentation](https://dotty.epfl.ch/docs/reference/other-new-features/export.html)
+* We have only scratched the surface of the ***`export`*** clause. It enables us to compose new functionality rather than going through OOP's inheritance based approach. More details on this in the ***`export`*** [***reference documentation***](https://dotty.epfl.ch/docs/reference/other-new-features/export.html)
 
 ---
 

@@ -15,11 +15,14 @@
 
 
 * In the chapters on ***`extension method`***&#173;s, we mentioned abstraction over context 
-* via ***`implicit`***&#173;s in Scala 2
-* via ***given*** and ***`using`*** in Scala 3
+  * via ***`implicit`***&#173;s in Scala 2
+  * via ***`given`*** and ***`using`*** in Scala 3
+#### &#173;
 * ***`given`*** instances define a *"canonical"* value of a certain type that can be used for synthesising arguments for context parameters (***`using`*** clauses)
-* The introduction of the new keywords given and using allow us to make a clear distinction between the <ins>definition</ins> of *"canonical"* values and the actual <ins>use</ins> of them
+#### &#173;
+* The introduction of the new keywords ***`given`*** and ***`using`*** allows us to make a clear distinction between the <ins>definition</ins> of *"canonical"* values and the actual <ins>use</ins> of them
 * This eliminates the confusion that was caused by the multiple distinctive use cases of the Scala 2 ***`implicit`*** keyword
+#### &#173;
 * When moving from Scala 2, we have the benefit to move to Scala 3's *Contextual Abstractions* in steps
 
 ---
@@ -97,9 +100,9 @@ startEngine(Engine("AC-35-B/002"))
 ```
 
 * The synthesised type names use the following rules:
-* The prefix ***given_***
-* The simple name(s) of the implemented type(s)
-* The simple name(s) of the toplevel argument type constructors to these types
+  * The prefix ***given_***
+  * The simple name(s) of the implemented type(s)
+  * The simple name(s) of the toplevel argument type constructors to these types
 
 ---
 
@@ -117,6 +120,7 @@ def startEngine(engine: Engine)(using config: EngineConfig): Unit =
 * We have:
     * A [single] regular parameter list with a single parameter
     * A [single] ***`using`*** clause with a single context parameter
+#### &#173;
 * Scala 3 allows for more than one using clause. Let's have a look at this
 
 ---
@@ -237,7 +241,7 @@ val res5: Int = 3
 ```
 
 * Context bounds in Scala 3 maps to old-style implicit parameters in Scala 3.0 to ease the migration.
-* From Scala 3.1 onwards, they will map to context clauses instead.
+* From Scala 3.1 onwards, they will map to using clauses instead.
 * It means, the following will still be allowed in Scala 3.0, but generate a warning in later versions
 
 ```scala
