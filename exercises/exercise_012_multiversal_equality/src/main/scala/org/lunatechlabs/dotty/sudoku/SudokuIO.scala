@@ -18,7 +18,7 @@ object SudokuIO:
     var cachedLine: Option[String] = None
     var finished: Boolean = false
 
-    override def iterator: Iterator[String] = new Iterator[String] {
+    override def iterator: Iterator[String] = new Iterator[String]:
 
       override def hasNext: Boolean = (cachedLine, finished) match
         case (Some(_), _) => true
@@ -45,18 +45,16 @@ object SudokuIO:
         val currentLine = cachedLine.get
         cachedLine = None
         currentLine
-    }
     override def toString: String =
       "{Lines of " + file.getAbsolutePath + "}"
 
   def convertFromCellsToComplete(cellsIn: Vector[(String, Int)]): Vector[(Int, CellUpdates)] =
     for
       (rowCells, row) <- cellsIn
-      updates = rowCells.zipWithIndex.foldLeft(cellUpdatesEmpty) {
+      updates = rowCells.zipWithIndex.foldLeft(cellUpdatesEmpty):
         case (cellUpdates, (c, index)) if c != ' ' =>
           (index, Set(c.toString.toInt)) +: cellUpdates
         case (cellUpdates, _) => cellUpdates
-      }
     yield (row, updates)
 
   def readSudokuFromFile(sudokuInputFile: java.io.File): Vector[(Int, CellUpdates)] =
