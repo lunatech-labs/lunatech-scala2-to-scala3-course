@@ -57,6 +57,11 @@ pairs.map(_ + _)
 
 - Verify that the application runs correctly
 
+### Next steps
+
+After successfully completing the tasks in this exercise, move to the next one by
+running the `cmtc next-exercise` from the command line.
+
 ## Source code formatting & Markdown viewer in IntelliJ
 
 ### Source code formatting

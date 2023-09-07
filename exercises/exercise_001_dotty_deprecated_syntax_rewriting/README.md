@@ -155,7 +155,10 @@ wildcard import syntax from using an asterix (`*`) instead of an underscore (`_`
 $ git commit -a -m "Snapshot after Scala 3 compiler syntax rewrites"
 ```
 
-- Move to the next exercise by running the `cmtc next-exercise` command from the command line.
+### Next steps
+
+After successfully completing the tasks in this exercise, move to the next one by
+running the `cmtc next-exercise` from the command line.
 
 > NOTE: The extra bit of code that was added via `cmtc pull-template ...` can either be left as-is
 >  or be removed. Your choice.

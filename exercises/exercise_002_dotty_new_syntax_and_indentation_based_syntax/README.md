@@ -72,8 +72,10 @@ documentation.
 $ git commit -a -m "Snapshot after Scala 3 compiler syntax rewrites"
 ```
 
-- You've just completed this exercise. Let's move on to the next exercise by
-  executing the `cmtc next-exercise` command.
+### Next steps
+
+After successfully completing the tasks in this exercise, move to the next one by
+running the `cmtc next-exercise` from the command line.
 
 ## Source code formatting & Markdown viewer in IntelliJ
 
