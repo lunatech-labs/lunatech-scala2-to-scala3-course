@@ -147,6 +147,11 @@ in place in this project. scalafmt supports both Scala 2 and Scala 3. You can
 Scala 2 to Scala 3, you need to make sure that a matching scalafmt configuration is
 in place.
 
+### Next steps
+
+After successfully completing the tasks in this exercise, move to the next one by
+running the `cmtc next-exercise` from the command line.
+
 ### Markdown viewer in IntelliJ IDEA
 
 The font size can be a bit too small for the taste of some people. You can change the

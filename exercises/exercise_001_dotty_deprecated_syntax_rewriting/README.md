@@ -148,6 +148,14 @@ wildcard import syntax from using an asterix (`*`) instead of an underscore (`_`
   changes.
 - The end result should be that, after the compiler has applied its rewrites, the source code
   compiles clean.
+- Remove the `-rewrite` from `scalacOptions` in the sbt build definition.
+- Checkpoint the current state of your code by commiting the changes to git:
+
+```scala
+$ git commit -a -m "Snapshot after Scala 3 compiler syntax rewrites"
+```
+
+- Move to the next exercise by running the `cmtc next-exercise` command from the command line.
 
 > NOTE: The extra bit of code that was added via `cmtc pull-template ...` can either be left as-is
 >  or be removed. Your choice.

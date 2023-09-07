@@ -28,12 +28,11 @@ one came from, the formatting may be different, but semantically equivalent).
   val rewriteOldSyntax = Seq("-rewrite", "-old-syntax")
 ```
 
-- Before proceeding, let's take a snapshot of the current state of the exercises
-  by executing the following commands:
+- If you didn't take a snapshot by committing the code changes at the end of the
+  previous exercise, do so now by executing the following command:
 
 ```scala
-$ git add -A
-$ git commit -m "Snapshot before Scala 3 compiler syntax rewrites"
+$ git commit -a -m "Snapshot before Scala 3 compiler syntax rewrites"
 ```
 
 You can now have the compiler rewrite the source code to switch to one of the
@@ -41,6 +40,11 @@ alternative syntax options.
 
 - The values mentioned above each contain a specific set of compiler options
   for a specific syntax rewrite.
+- Note that syntax rewrites have to be executed one at a time. Also, consecutive
+  syntax rewrites have to be executed in a certain order. Make sure you understand
+  what's explained in the section named `Setting and Rewrites` at the end of the
+  [Optional Braces](https://dotty.epfl.ch/docs/reference/other-new-features/indentation.html)
+  section in the Scala 3 reference documentation.
 
 - Now go through the following sequence of actions:
   - Add one of the syntax rewrite values to the compiler option section.
@@ -61,6 +65,15 @@ documentation.
 
 > For the remainder of the exercises in this course, we will use the New Control
 > Structure syntax and the Fewer Braces syntax.
+
+- Checkpoint the current state of the code by executing the following command:
+
+```scala
+$ git commit -a -m "Snapshot after Scala 3 compiler syntax rewrites"
+```
+
+- You've just completed this exercise. Let's move on to the next exercise by
+  executing the `cmtc next-exercise` command.
 
 ## Source code formatting & Markdown viewer in IntelliJ
 
