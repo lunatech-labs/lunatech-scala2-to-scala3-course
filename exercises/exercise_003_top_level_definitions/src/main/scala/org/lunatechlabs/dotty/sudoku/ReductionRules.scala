@@ -22,9 +22,11 @@ object ReductionRules:
     }
 
     val cellIndexesToValues =
-      CellPossibleValues.zip(valueOccurrences).groupBy { case (value, occurrence) => occurrence }.filter {
-        case (loc, occ) => loc.length == occ.length && loc.length <= 6
-      }
+      CellPossibleValues
+        .zip(valueOccurrences)
+        .groupBy { case (value, occurrence) => occurrence }
+        .filter:
+          case (loc, occ) => loc.length == occ.length && loc.length <= 6
 
     val cellIndexListToReducedValue = cellIndexesToValues.map { case (index, seq) =>
       (index, seq.map { case (value, _) => value }.toSet)
