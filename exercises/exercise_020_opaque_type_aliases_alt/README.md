@@ -1,6 +1,6 @@
 # Opaque Type Aliases
 
-> NOTE: this exercise is optional. It's purpose is to show that certain use
+> NOTE: this exercise is optional. Its purpose is to show that certain use
 >       cases of opaque type aliases sound great at first, but turn out
 >       to be very difficult to implement
 
@@ -12,7 +12,7 @@ any runtime overhead. The aim is to provide additional type-safety at
 compile-time but then be stripped away at runtime. It is a powerful new feature
 of Scala 3 for supporting Information Hiding.
 
-Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the later
+Opaque Type Aliases differ from plain Scala 2 Type Aliases in that the latter
 just provide a new name for a type but wherever this new name is used, the
 call-site still knows the details of the original type being aliased. With
 Opaque Type Aliases, the original type being aliased is hidden (or is opaque) at
@@ -45,7 +45,7 @@ this exercise. Specifically we will convert the last of these type aliases,
 - Use your experience from the exercise on Extension Methods to fix the
   compilation errors of the form `value {name} is not a member of
   org.lunatechlabs.dotty.sudoku.CellUpdates`
-    - Tip: Fix all of the compilation errors of this form `value {name} is not a
+    - Tip: Fix all the compilation errors of this form `value {name} is not a
       member of ...` before tackling the other types of error like `Found: ...
       Required: ...`
     - Tip: Some of the mission members for our new opaque type are generic (i.e.

@@ -11,7 +11,7 @@ class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers:
   override def afterAll(): Unit =
     testKit.shutdownTestKit()
 
-  test("Sending no updates to a sudoku detail processor should result in sending a SudokuDetailUnchanged messsage"):
+  test("Sending no updates to a sudoku detail processor should result in sending a SudokuDetailUnchanged message"):
 
       val probe = testKit.createTestProbe[SudokuDetailProcessor.Response]()
       val detailProcessor = testKit.spawn(SudokuDetailProcessor[Row](id = 0))

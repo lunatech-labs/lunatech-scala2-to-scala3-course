@@ -87,7 +87,7 @@ where possible standard options include:
               -source  source version
 ```
 
-We will add some code that trigger a number of compiler warnings which can
+We will add some code that triggers a number of compiler warnings which can
 be corrected by the compiler's code rewriting capabilities.
 
 Add the following code snippet to the `src/main/scala/org/lunatechlabs/dotty/sudoku/SudokuSolver.scala` source code file:
@@ -147,7 +147,7 @@ wildcard import syntax from using an asterix (`*`) instead of an underscore (`_`
 - Add the "-rewrite" option to have the compiler apply all the reported
   changes.
 - The end result should be that, after the compiler has applied its rewrites, the source code
-  compiles clean.
+  compiles successfully.
 - Remove the `-rewrite` from `scalacOptions` in the sbt build definition.
 - Checkpoint the current state of your code by commiting the changes to git:
 

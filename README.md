@@ -25,7 +25,7 @@ need to be installed:
 * The `cmtc` Course Management Tools Client CLI
 * An IDE
 
-The following sections detail how these components.
+The following sections detail how to install these components.
 
 ### Install Coursier
 
@@ -122,7 +122,7 @@ Exercises in repository:
 
 #### Verifying the course installation
 
-Verify that the the course was installed correctly by launching `sbt test` in the root folder of the
+Verify that the course was installed correctly by launching `sbt test` in the root folder of the
 course exercises. You should see the following output:
 
 ```bash
@@ -199,7 +199,7 @@ As can be seen in the above output, `cmtc` installed the course in the `/Users/e
 
 #### Verifying the course installation
 
-Verify that the the course was installed correctly by launching `sbt test` in the root folder of the
+Verify that the course was installed correctly by launching `sbt test` in the root folder of the
 course exercises. You should see the following output:
 
 ```bash
@@ -228,13 +228,13 @@ org.lunatechlabs.dotty.sudoku.ReductionRuleSuite:
   + Applying reduction rules should eliminate values in isolated complete sets from occurrences in other cells (First reduction rule) 0.045s
   + Applying reduction rules should eliminate values in isolated complete sets of 5 values from occurrences in other cells (First reduction rule) 0.001s
   + Applying reduction rules should eliminate values in 2 isolated complete sets of 3 values from occurrences in other cells (First reduction rule) 0.001s
-  + Applying reduction rules should eliminate values in shadowed complete sets from occurrences in same cells (Second reduction rule) 0.001s
-  + Applying reduction rules should eliminate values in shadowed complete (6 value) sets from occurrences in same cells (Second reduction rule) 0.001s
+  + Applying reduction rules should eliminate values in shadowed complete sets from occurrences in the same cells (Second reduction rule) 0.001s
+  + Applying reduction rules should eliminate values in shadowed complete (6 value) sets from occurrences in the same cells (Second reduction rule) 0.001s
 SLF4J: A number (1) of logging calls during the initialization phase have been intercepted and are
 SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 SLF4J: See also http://www.slf4j.org/codes.html#replay
 org.lunatechlabs.dotty.sudoku.SudokuDetailProcessorSuite:
-  + Sending no updates to a sudoku detail processor should result in sending a SudokuDetailUnchanged messsage 0.007s
+  + Sending no updates to a sudoku detail processor should result in sending a SudokuDetailUnchanged message 0.007s
   + Sending an update to a fresh instance of the SudokuDetailProcessor that sets one cell to a single value should result in sending an update that reflects this update 0.002s
   + Sending a series of subsequent Updates to a SudokuDetailProcessor should result in sending updates and ultimately return no changes 0.003s
 [info] Passed: Total 11, Failed 0, Errors 0, Passed 11
