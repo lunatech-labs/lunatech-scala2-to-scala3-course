@@ -1,5 +1,9 @@
 # Opaque Type Aliases
 
+> NOTE: this exercise is optional. It's purpose is to show that certain use
+>       cases of opaque type aliases sound great at first, but turn out
+>       to be very difficult to implement
+
 ## Background
 
 An Opaque Type Alias can be used to provide the functionality of a "wrapper
@@ -104,6 +108,11 @@ It does raise some questions:
 There are more type aliases in the source code that potentially could be converted to
 opaque versions. One that sticks out is the `Sudoku` type alias
 (`type Sudoku = Vector[ReductionSet`). You may want to take a stab at converting it...
+
+### Next steps
+
+After successfully completing the tasks in this exercise, move to the next one by
+running the `cmtc next-exercise` from the command line.
 
 ## Source code formatting & Markdown viewer in IntelliJ
 

@@ -1,5 +1,9 @@
 # Opaque Type Aliases
 
+> NOTE: this exercise is optional. It's purpose is to show that certain use
+>       cases of opaque type aliases sound great at first, but turn out
+>       to be very difficult to implement
+
 ## Background
 
 An Opaque Type Alias can be used to provide the functionality of a "wrapper
@@ -67,6 +71,11 @@ this exercise. Specifically we will convert the last of these type aliases,
   the `test` command from the `sbt` prompt and verify that all tests pass
 
 - Verify that the application runs correctly
+
+### Next steps
+
+After successfully completing the tasks in this exercise, move to the next one by
+running the `cmtc next-exercise` from the command line.
 
 ## Source code formatting & Markdown viewer in IntelliJ
 
