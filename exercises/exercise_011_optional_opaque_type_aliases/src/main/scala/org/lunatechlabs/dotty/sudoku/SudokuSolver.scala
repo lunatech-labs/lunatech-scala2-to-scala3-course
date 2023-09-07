@@ -36,13 +36,12 @@ object SudokuSolver:
 
   def apply(sudokuSolverSettings: SudokuSolverSettings): Behavior[Command] =
     Behaviors
-      .supervise[CommandAndResponses] {
+      .supervise[CommandAndResponses]:
         Behaviors.withStash(capacity = sudokuSolverSettings.SudokuSolver.StashBufferSize) { buffer =>
           Behaviors.setup { context =>
             new SudokuSolver(context, buffer).idle()
           }
         }
-      }
       .onFailure[Exception](
         SupervisorStrategy.restartWithBackoff(minBackoff = 5.seconds, maxBackoff = 1.minute, randomFactor = 0.2))
       .narrow
@@ -63,7 +62,7 @@ class SudokuSolver private (
     context.spawn(SudokuProgressTracker(rowDetailProcessors, context.self), "sudoku-progress-tracker")
 
   def idle(): Behavior[CommandAndResponses] =
-    Behaviors.receiveMessage {
+    Behaviors.receiveMessage:
 
       case InitialRowUpdates(rowUpdates, sender) =>
         rowUpdates.foreach { case SudokuDetailProcessor.RowUpdate(row, cellUpdates) =>
@@ -76,10 +75,8 @@ class SudokuSolver private (
         context.log.error("Received an unexpected message in 'idle' state: {}", unexpectedMsg)
         Behaviors.same
 
-    }
-
   def processRequest(requestor: Option[ActorRef[Response]], startTime: Long): Behavior[CommandAndResponses] =
-    Behaviors.receiveMessage {
+    Behaviors.receiveMessage:
       case SudokuDetailProcessor.RowUpdate(rowNr, updates) =>
         updates.foreach { (rowCellNr, newCellContent) =>
           context.log.debug("Incoming update for Row({},{})={} ", rowNr, rowCellNr, newCellContent)
@@ -171,7 +168,6 @@ class SudokuSolver private (
       case msg: InitialRowUpdates =>
         buffer.stash(msg)
         Behaviors.same
-    }
 
   private def resetAllDetailProcessors(): Unit =
     for
