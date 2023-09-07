@@ -53,7 +53,7 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: SudokuDetailProcesso
   import SudokuDetailProcessor.*
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
-    Behaviors.receiveMessage {
+    Behaviors.receiveMessage:
       case Update(cellUpdates, replyTo) if !fullyReduced =>
         val previousState = state
         val updatedState = state.mergeState(cellUpdates)
@@ -80,5 +80,3 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: SudokuDetailProcesso
 
       case ResetSudokuDetailState =>
         operational(id, InitialDetailState, fullyReduced = false)
-
-    }

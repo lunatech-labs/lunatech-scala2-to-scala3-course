@@ -51,13 +51,15 @@ extension (reductionSet: ReductionSet)
     }
 
   def stateChanges(updatedState: ReductionSet): CellUpdates =
-    reductionSet.zip(updatedState).zipWithIndex.foldRight(cellUpdatesEmpty) {
-      case (((previousCellContent, updatedCellContent), index), cellUpdates)
-          if updatedCellContent != previousCellContent =>
-        (index, updatedCellContent) +: cellUpdates
+    reductionSet
+      .zip(updatedState)
+      .zipWithIndex
+      .foldRight(cellUpdatesEmpty):
+        case (((previousCellContent, updatedCellContent), index), cellUpdates)
+            if updatedCellContent != previousCellContent =>
+          (index, updatedCellContent) +: cellUpdates
 
-      case (_, cellUpdates) => cellUpdates
-    }
+        case (_, cellUpdates) => cellUpdates
 
   def isFullyReduced: Boolean =
     val allValuesInState = reductionSet.flatten

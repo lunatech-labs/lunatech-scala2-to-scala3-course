@@ -28,23 +28,20 @@ object SudokuDetailProcessor:
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit
     def processorName(id: Int): String
 
-  implicit val rowUpdateSender: UpdateSender[Row] = new UpdateSender[Row] {
+  implicit val rowUpdateSender: UpdateSender[Row] = new UpdateSender[Row]:
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
       sender ! RowUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"row-processor-$id"
-  }
 
-  implicit val columnUpdateSender: UpdateSender[Column] = new UpdateSender[Column] {
+  implicit val columnUpdateSender: UpdateSender[Column] = new UpdateSender[Column]:
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
       sender ! ColumnUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"col-processor-$id"
-  }
 
-  implicit val blockUpdateSender: UpdateSender[Block] = new UpdateSender[Block] {
+  implicit val blockUpdateSender: UpdateSender[Block] = new UpdateSender[Block]:
     def sendUpdate(id: Int, cellUpdates: CellUpdates)(implicit sender: ActorRef[Response]): Unit =
       sender ! BlockUpdate(id, cellUpdates)
     def processorName(id: Int): String = s"blk-processor-$id"
-  }
 
 class SudokuDetailProcessor[DetailType <: SudokuDetailType: SudokuDetailProcessor.UpdateSender] private (
     context: ActorContext[SudokuDetailProcessor.Command]):
@@ -53,7 +50,7 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: SudokuDetailProcesso
   import SudokuDetailProcessor.*
 
   def operational(id: Int, state: ReductionSet, fullyReduced: Boolean): Behavior[Command] =
-    Behaviors.receiveMessage {
+    Behaviors.receiveMessage:
       case Update(cellUpdates, replyTo) if !fullyReduced =>
         val previousState = state
         val updatedState = mergeState(state, cellUpdates)
@@ -81,21 +78,21 @@ class SudokuDetailProcessor[DetailType <: SudokuDetailType: SudokuDetailProcesso
       case ResetSudokuDetailState =>
         operational(id, InitialDetailState, fullyReduced = false)
 
-    }
-
   private def mergeState(state: ReductionSet, cellUpdates: CellUpdates): ReductionSet =
     cellUpdates.foldLeft(state) { case (stateTally, (index, updatedCellContent)) =>
       stateTally.updated(index, stateTally(index) & updatedCellContent)
     }
 
   private def stateChanges(state: ReductionSet, updatedState: ReductionSet): CellUpdates =
-    state.zip(updatedState).zipWithIndex.foldRight(cellUpdatesEmpty) {
-      case (((previousCellContent, updatedCellContent), index), cellUpdates)
-          if updatedCellContent != previousCellContent =>
-        (index, updatedCellContent) +: cellUpdates
+    state
+      .zip(updatedState)
+      .zipWithIndex
+      .foldRight(cellUpdatesEmpty):
+        case (((previousCellContent, updatedCellContent), index), cellUpdates)
+            if updatedCellContent != previousCellContent =>
+          (index, updatedCellContent) +: cellUpdates
 
-      case (_, cellUpdates) => cellUpdates
-    }
+        case (_, cellUpdates) => cellUpdates
 
   private def isFullyReduced(state: ReductionSet): Boolean =
     val allValuesInState = state.flatten
