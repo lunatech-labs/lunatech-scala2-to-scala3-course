@@ -28,7 +28,7 @@ error.
 ## Steps
 
 - Enable multiversal equality at the project level by adding `-language:strictEquality`
-  to the Scalaa compiler options in `project/Build.scala`
+  to the Scala compiler options in `project/Build.scala`
 
 - Use the course notes on Multiversal Equality and your experience from the
   exercise on `given`s to make the code compile with the flag

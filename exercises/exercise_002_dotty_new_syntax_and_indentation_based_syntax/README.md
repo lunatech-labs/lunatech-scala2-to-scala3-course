@@ -11,7 +11,7 @@ Scala 3 introduces some new syntax which can be divided in two categories:
 
 The Scala 3 compiler is able to rewrite existing source code to a different syntax.
 Note that this rewriting is done one step at a time. In other words, rewriting to 
-the new significant indentation based syntax -and- to the new control structure syntax
+the new significant indentation based syntax _and_ to the new control structure syntax
 cannot be done in a single step.
 
 Changing the syntax is a reversible process (except that after going back to where
@@ -42,7 +42,7 @@ alternative syntax options.
   for a specific syntax rewrite.
 - Note that syntax rewrites have to be executed one at a time. Also, consecutive
   syntax rewrites have to be executed in a certain order. Make sure you understand
-  what's explained in the section named `Setting and Rewrites` at the end of the
+  what's explained in the section named `Settings and Rewrites` at the end of the
   [Optional Braces](https://dotty.epfl.ch/docs/reference/other-new-features/indentation.html)
   section in the Scala 3 reference documentation.
 

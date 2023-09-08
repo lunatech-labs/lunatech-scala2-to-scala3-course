@@ -1,6 +1,6 @@
 # Opaque Type Aliases
 
-> NOTE: this exercise is optional. It's purpose is to show that certain use
+> NOTE: this exercise is optional. Its purpose is to show that certain use
 >       cases of opaque type aliases sound great at first, but turn out
 >       to be very difficult to implement
 
@@ -46,7 +46,7 @@ into an Opaque Type Alias.
 - So it seems we need to tackle quite a few compilation errors... Let's get
   started.
 
-> Tip: In general, try to fix all of the compilation errors of this form
+> Tip: In general, try to fix all the compilation errors of this form
 >      `value {name} is not a member of ...` before tackling the other types
 >      of error like `Found: ... Required: ...`
 

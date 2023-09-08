@@ -45,10 +45,10 @@ extension (i: Int)
 ## Steps - part I
 
 You should look for extension methods defined with the Scala 2 syntax. How would
-you approach this. As part of the exercise, you will define a few new extension
+you approach this? As part of the exercise, you will define a few new extension
 methods. In fact, for this exercise, the tests have been modified assuming these
 new extension methods are already present. Let's start with adapting the existing
-extension methods. Wait with running the tests until you start tackling the second
+extension methods. Hold running the tests until you start tackling the second
 part of this exercise (adding the new extension methods).
 
 - Identify all extension methods defined using the _Scala 2 way_.

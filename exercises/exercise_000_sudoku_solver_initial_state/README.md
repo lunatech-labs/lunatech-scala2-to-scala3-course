@@ -55,7 +55,7 @@ SLF4J: now being replayed. These are subject to the filtering rules of the under
 SLF4J: See also http://www.slf4j.org/codes.html#replay
 [info] SudokuDetailProcessorSpec:
 [info] Sending no updates to a sudoku detail processor
-[info] - should result in sending a SudokuDetailUnchanged messsage
+[info] - should result in sending a SudokuDetailUnchanged message
 [info] Sending an update to a fresh instance of the SudokuDetailProcessor that sets one cell to a single value
 [info] - should result in sending an update that reflects this update
 [info] Sending a series of subsequent Updates to a SudokuDetailProcessor
@@ -65,8 +65,8 @@ SLF4J: See also http://www.slf4j.org/codes.html#replay
 [info] - should Eliminate values in isolated complete sets from occurrences in other cells (First reduction rule)
 [info] - should Eliminate values in isolated complete sets of 5 values from occurrences in other cells (First reduction rule)
 [info] - should Eliminate values in 2 isolated complete sets of 3 values from occurrences in other cells (First reduction rule)
-[info] - should Eliminate values in shadowed complete sets from occurrences in same cells (Second reduction rule)
-[info] - should Eliminate values in shadowed complete (6 value) sets from occurrences in same cells (Second reduction rule)
+[info] - should Eliminate values in shadowed complete sets from occurrences in the same cells (Second reduction rule)
+[info] - should Eliminate values in shadowed complete (6 value) sets from occurrences in the same cells (Second reduction rule)
 [info] CellMappingSpec:
 [info] Mapping row coordinates
 [info] - should result in correct column & block coordinates

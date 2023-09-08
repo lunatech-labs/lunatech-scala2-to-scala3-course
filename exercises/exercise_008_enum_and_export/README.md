@@ -3,7 +3,7 @@
 ## Background
 
 The Sudoku solver is an `Akka Typed` based application. It consists of 29 actors
-that interact by exchanging messages and adhering to a well defined protocol,
+that interact by exchanging messages and adhering to a well-defined protocol,
 i.e. each actor has a number of message types it 'understands', the so-called
 `Command`s and a number of messages that it can send to other actors, usually in
 `Response` to messages it received earlier.

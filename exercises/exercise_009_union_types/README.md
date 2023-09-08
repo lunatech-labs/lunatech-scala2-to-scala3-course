@@ -37,8 +37,8 @@ Which of these actors receive messages that are responses from other actors?
   actor's external protocol (`Command`) and the `Response` message types.
   This new type will be the type of the internal protocol.
 
-- Adapt the `apply` method that creates the actor's behaviour so that it
-  still is the original behaviour as seen from the outside, but which
+- Adapt the `apply` method that creates the actor's behaviour in a way that
+  keeps the original behaviour as seen from the outside, but which
   has the extended behaviour (corresponding to `CommandAndResponses`).
   You will need to make a few extra modifications to make everything
   type check. Some hints that may put you on the right track:
@@ -62,7 +62,7 @@ Which of these actors receive messages that are responses from other actors?
   and verify that all tests pass
 
 - Let's take a step back to see what we achieved:
-  - We have removed a lot boilerplate code which improves code reablility
+  - We have removed a lot boilerplate code which improves code readability
     tremendously.
   - We have solved the issue of widening some of the actor's protocol
     in the previous exercise for pure technical reasons.

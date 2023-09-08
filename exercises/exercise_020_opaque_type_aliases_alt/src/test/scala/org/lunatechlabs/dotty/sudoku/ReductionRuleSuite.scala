@@ -124,7 +124,7 @@ class ReductionRuleSuite extends munit.FunSuite with SudokuTestHelpers:
       assertEquals(applyReductionRules(input), reducedInput)
 
   test(
-    "Applying reduction rules should eliminate values in shadowed complete sets from occurrences in same cells (Second reduction rule)"):
+    "Applying reduction rules should eliminate values in shadowed complete sets from occurrences in the same cells (Second reduction rule)"):
       val input = stringToReductionSet(
         Vector(
           "12  5 789", // (1,2,7,8) shadowed & complete
@@ -155,7 +155,7 @@ class ReductionRuleSuite extends munit.FunSuite with SudokuTestHelpers:
       assertEquals(applyReductionRules(reducedInput1), reducedInput1)
 
   test(
-    "Applying reduction rules should eliminate values in shadowed complete (6 value) sets from occurrences in same cells (Second reduction rule)"):
+    "Applying reduction rules should eliminate values in shadowed complete (6 value) sets from occurrences in the same cells (Second reduction rule)"):
       val input = stringToReductionSet(
         Vector(
           "123456 89", // (1,2,3,4,5,6) shadowed & complete
