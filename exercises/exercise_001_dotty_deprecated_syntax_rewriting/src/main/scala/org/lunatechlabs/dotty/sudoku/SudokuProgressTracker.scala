@@ -1,7 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
-import akka.actor.typed.{ActorRef, Behavior}
+import org.apache.pekko.actor.typed.scaladsl.{ActorContext, Behaviors}
+import org.apache.pekko.actor.typed.{ActorRef, Behavior}
 
 object SudokuProgressTracker {
 

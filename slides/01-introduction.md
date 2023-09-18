@@ -100,7 +100,7 @@
 ## &#173;
 
 * _Eric Loots_ (Lunatech Belgium)
-* _Adrien Picquerez_ (EPFL Scala Center Switzerland)
+* _Adrien Piquerez_ (EPFL Scala Center Switzerland)
 * _Trevor Burton-McCreadie_ (Lunatech United Kingdom)
 
 ---
