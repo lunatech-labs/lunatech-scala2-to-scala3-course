@@ -15,10 +15,10 @@
 
 package org.lunatechlabs.dotty
 
-import akka.NotUsed
-import akka.actor.typed.scaladsl.adapter.TypedActorSystemOps
-import akka.actor.typed.scaladsl.{Behaviors, Routers}
-import akka.actor.typed.{ActorSystem, Behavior, Terminated}
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.typed.scaladsl.adapter.TypedActorSystemOps
+import org.apache.pekko.actor.typed.scaladsl.{Behaviors, Routers}
+import org.apache.pekko.actor.typed.{ActorSystem, Behavior, Terminated}
 import org.lunatechlabs.dotty.sudoku.{SudokuProblemSender, SudokuSolver, SudokuSolverSettings}
 import scala.io.StdIn
 import scala.Console.{GREEN, RESET}

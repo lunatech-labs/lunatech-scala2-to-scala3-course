@@ -11,7 +11,7 @@ object CompileOptions {
 }
 
 object Versions {
-  lazy val akkaVer = "2.6.20"
+  lazy val PekkoVersion = "1.0.1"
   lazy val logbackVer = "1.2.3"
   lazy val mUnitVer = "0.7.26"
 }
@@ -19,11 +19,11 @@ object Versions {
 object Dependencies {
 
   private lazy val akkaDeps = Seq(
-    "com.typesafe.akka" %% "akka-actor-typed",
-    "com.typesafe.akka" %% "akka-slf4j",
-    "com.typesafe.akka" %% "akka-stream").map(_ % Versions.akkaVer)
+    "org.apache.pekko" %% "pekko-actor-typed",
+    "org.apache.pekko" %% "pekko-slf4j",
+    "org.apache.pekko" %% "pekko-stream").map(_ % Versions.PekkoVersion)
 
-  private lazy val akkaTestkitDeps = Seq("com.typesafe.akka" %% "akka-actor-testkit-typed" % Versions.akkaVer % Test)
+  private lazy val akkaTestkitDeps = Seq("org.apache.pekko" %% "pekko-actor-testkit-typed" % Versions.PekkoVersion % Test)
 
   private lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic").map(_ % Versions.logbackVer)
 

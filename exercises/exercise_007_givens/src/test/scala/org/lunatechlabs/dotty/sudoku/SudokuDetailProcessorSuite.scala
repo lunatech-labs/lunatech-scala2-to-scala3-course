@@ -1,7 +1,7 @@
 package org.lunatechlabs.dotty.sudoku
 
 import SudokuDetailProcessor.{Update, SudokuDetailUnchanged, BlockUpdate}
-import akka.actor.testkit.typed.scaladsl.ActorTestKit
+import org.apache.pekko.actor.testkit.typed.scaladsl.ActorTestKit
 import java.nio.file.*
 
 class SudokuDetailProcessorSuite extends munit.FunSuite with SudokuTestHelpers:
